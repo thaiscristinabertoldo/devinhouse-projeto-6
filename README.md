@@ -1,6 +1,6 @@
-# Projeto final módulo 3
+# Projeto 06
 
-Repositório para realização do projeto final do módulo 3 do DEVinHouse
+Repositório para realização do projeto 6 do DEVinHouse
 
 ### Descrição
 
