@@ -1,4 +1,4 @@
-# Projeto 06
+# DEVinHouse Projeto 06
 
 Repositório para realização do projeto 6 do DEVinHouse
 
