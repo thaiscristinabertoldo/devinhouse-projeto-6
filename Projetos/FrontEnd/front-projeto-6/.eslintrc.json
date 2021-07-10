@@ -5,7 +5,14 @@
     "es2021": true,
     "jest": true
   },
-  "plugins": ["react", "react-hooks", "prettier", "import", "jsx-a11y"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "prettier",
+    "import",
+    "jsx-a11y",
+    "mui-unused-classes"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
