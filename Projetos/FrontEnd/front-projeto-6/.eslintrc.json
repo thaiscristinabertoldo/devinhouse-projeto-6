@@ -1,6 +1,6 @@
 {
-  // another options: https://github.com/axios/axios/blob/master/.eslintrc.js
   "env": {
+    // another options: https://github.com/axios/axios/blob/master/.eslintrc.js
     "browser": true,
     "es2021": true,
     "jest": true
@@ -42,44 +42,45 @@
     "react/jsx-filename-extension": "off",
     "import/extensions": "off",
     "import/no-unresolved": "error",
-    "no-use-before-define": "off"
-  },
-  "import/order": [
-    "error",
-    {
-      "groups": [
-        "builtin",
-        "external",
-        "internal",
-        ["parent", "sibling", "object", "index"]
-      ],
-      "pathGroups": [
-        {
-          "pattern": "react",
-          "group": "external",
-          "position": "before"
+    "no-use-before-define": "off",
+    "import/prefer-default-export": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "object", "index"]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
         }
-      ],
-      "pathGroupsExcludedImportTypes": ["react"],
-      "newlines-between": "never",
-      "alphabetize": {
-        "order": "asc",
-        "caseInsensitive": true
       }
-    }
-  ],
-  "import/no-extraneous-dependencies": [
-    "error",
-    {
-      "devDependencies": [
-        "jest.setup.ts",
-        "**/*.test.tsx",
-        "**/*.spec.tsx",
-        "**/*.test.ts",
-        "**/*.spec.ts"
-      ]
-    }
-  ],
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "jest.setup.ts",
+          "**/*.test.tsx",
+          "**/*.spec.tsx",
+          "**/*.test.ts",
+          "**/*.spec.ts"
+        ]
+      }
+    ]
+  },
   "settings": {
     "react": {
       "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
