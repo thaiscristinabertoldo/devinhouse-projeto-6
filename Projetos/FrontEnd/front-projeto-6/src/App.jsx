@@ -1,11 +1,26 @@
+import { useMemo, useState } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Header } from './components';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+        },
+      }),
+    [darkMode],
+  );
   return (
-    <div className="App">
-      <Header />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       teste
-    </div>
+    </ThemeProvider>
   );
 }
 
