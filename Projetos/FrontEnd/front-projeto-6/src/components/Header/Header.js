@@ -1,13 +1,15 @@
-import { Typography } from '@material-ui/core';
-import { Spacing, StyledHeader } from './Header.styled';
+import { Typography } from "@material-ui/core";
+import { ThemeAnimation } from "components/ThemeAnimation";
+import { StyledHeader, Spacing } from "./Header.styled";
 
-export function Header() {
+export const Header = () => {
   return (
     <>
       <StyledHeader>
         <Typography>Jboys - Consulta de Processos</Typography>
+        <ThemeAnimation />
       </StyledHeader>
       <Spacing />
     </>
   );
-}
+};
