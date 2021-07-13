@@ -49,3 +49,18 @@ O Layout é livre, porém deve atender aos recursos solicitados. A página com a
 - Assim que o grupo concluir o seu desafio, encaminhe o link dos repositórios no AVA
 - Todos deverão participar da apresentação do projeto que tem tempo máximo de 15 minutos
 - Realize a apresentação de acordo com os requisitos solicitados neste projeto
+
+
+### Telas
+- Login de usuário
+[Login.pdf](https://github.com/thaiscristinabertoldo/devinhouse-projeto-6/files/6805157/Login.pdf)
+
+- Listagem de processos
+[Listagem de processo.pdf](https://github.com/thaiscristinabertoldo/devinhouse-projeto-6/files/6805160/Listagem.de.processo.pdf)
+
+- Cadastro de processo
+[Cadastrar Processo.pdf](https://github.com/thaiscristinabertoldo/devinhouse-projeto-6/files/6805161/Cadastrar.Processo.pdf)
+
+- Edição de processo
+[Editar Processo.pdf](https://github.com/thaiscristinabertoldo/devinhouse-projeto-6/files/6805164/Editar.Processo.pdf)
+
