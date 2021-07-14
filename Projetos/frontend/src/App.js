@@ -1,5 +1,5 @@
-function App() {
-  return <div>Olá</div>;
-}
+import { BaseLayout } from './layouts/BaseLayout';
 
-export default App;
+export const App = () => {
+  return <BaseLayout>Olá</BaseLayout>;
+};

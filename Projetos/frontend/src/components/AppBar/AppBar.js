@@ -1,9 +1,11 @@
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
-import style from './AppBar.style';
+import { AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core';
 
-const useStyle = makeStyles(style);
-
-export default function AppBar() {
-  return <div>Ola</div>;
-}
+export const AppBar = () => {
+  return (
+    <MuiAppBar>
+      <Toolbar>
+        <Typography variant="h6">Processos</Typography>
+      </Toolbar>
+    </MuiAppBar>
+  );
+};
