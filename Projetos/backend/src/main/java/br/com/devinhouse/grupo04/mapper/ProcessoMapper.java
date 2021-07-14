@@ -16,6 +16,8 @@ public interface ProcessoMapper {
 	@Mapping(source = "cdInteressadoId", target = "cdInteressado" )
 	@Mapping(source = "cdAssuntoId", target = "cdAssunto" )
 	Processo toProcesso(ProcessoDTOInput dtoInput);
+	@Mapping(target = "cdInteressado", expression = "java(processo.getCdInteressado())" )
+	@Mapping(target = "cdAssunto", expression = "java(processo.getCdAssunto())" )
 	ProcessoDTOOutput toDto(Processo processo);
 	List<ProcessoDTOOutput> toDto(List<Processo> processos);
 }
