@@ -1,14 +1,13 @@
-import { Typography } from "@material-ui/core";
-import { ThemeAnimation } from "components/ThemeAnimation";
-import { StyledHeader, Spacing } from "./Header.styled";
+import { useViewport } from "context/Viewport";
+import { Spacing } from "./Header.styled";
+import { HeaderLarge } from "./HeaderLarge";
+import { HeaderSmall } from "./HeaderSmall";
 
 export const Header = () => {
+  const { width } = useViewport();
   return (
     <>
-      <StyledHeader>
-        <Typography>Jboys - Consulta de Processos</Typography>
-        <ThemeAnimation />
-      </StyledHeader>
+      {width >= 640 ? <HeaderLarge /> : <HeaderSmall />}
       <Spacing />
     </>
   );
