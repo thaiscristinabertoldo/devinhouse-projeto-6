@@ -1,1 +1,3 @@
-export const style = {};
+export const style = {
+  title: {}
+};
