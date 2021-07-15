@@ -32,8 +32,14 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "warn",
+      {
+        "singleQuote": false
+      }
+    ],
     "no-unused-vars": "warn",
+    "react/prop-types": "off",
     "no-console": "off",
     "func-names": "off",
     "no-process-exit": "off",
@@ -41,7 +47,7 @@
     "class-methods-use-this": "off",
     "react/jsx-filename-extension": "off",
     "import/extensions": "off",
-    "import/no-unresolved": "error",
+    "import/no-unresolved": "off",
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "import/order": [

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useThemes } from "context/theme";
+import { useThemes } from "context/ThemeProvider";
 import Lottie from "react-lottie";
 import animationData from "./Animation.json";
 import { AnimationButton, AnimationGrid } from "./ThemeAnimation.styled";

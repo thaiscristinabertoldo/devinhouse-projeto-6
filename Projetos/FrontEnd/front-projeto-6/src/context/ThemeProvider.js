@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, responsiveFontSizes } from "@material-ui/core/styles";
 import { getTheme } from "theme/themes";
 
 //  const LOCAL_STORAGE_DARKMODE = process.env.REACT_APP_DARK_THEME; Está retornando undefined, verificar depois!!
@@ -31,7 +31,7 @@ const ThemesProvider = ({ children }) => {
 
   return (
     <ThemesContext.Provider value={{ ToggleTheme, darkMode }}>
-      <ThemeProvider theme={theme || getTheme(false)}>
+      <ThemeProvider theme={responsiveFontSizes(theme || getTheme(false))}>
         <CssBaseline />
         {children}
       </ThemeProvider>
