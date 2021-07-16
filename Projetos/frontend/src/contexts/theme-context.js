@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { getTheme } from '../styles/theme';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { getFromStorage, saveIntoStorage } from '../services/storage/local-storage-service';
+import { QUERY } from '../services/constants';
 
 const ThemeContext = createContext();
 
@@ -17,14 +18,14 @@ export function useAppTheme() {
 
 export const AppThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState(getTheme(darkMode));
 
   const onToggleTheme = () => {
     setDarkMode((prev) => !prev);
   };
 
   useEffect(() => {
-    const themeStorage = getFromStorage(process.env.REACT_APP_DARK_THEME);
+    const themeStorage = getFromStorage(QUERY.THEME);
     if (themeStorage) {
       setDarkMode(themeStorage === 'true');
     }
@@ -32,7 +33,7 @@ export const AppThemeProvider = ({ children }) => {
 
   useEffect(() => {
     setTheme(getTheme(darkMode));
-    saveIntoStorage(process.env.REACT_APP_DARK_THEME, darkMode);
+    saveIntoStorage(QUERY.THEME, darkMode);
   }, [darkMode]);
 
   return (
