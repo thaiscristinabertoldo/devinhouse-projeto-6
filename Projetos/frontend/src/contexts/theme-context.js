@@ -9,7 +9,7 @@ export function useAppTheme() {
   const context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider.');
+    throw new Error('useAppTheme must be used within an AppThemeProvider.');
   }
 
   return context;
@@ -36,7 +36,7 @@ export const AppThemeProvider = ({ children }) => {
   }, [darkMode]);
 
   return (
-    <ThemeContext.Provider value={{ onToggleTheme }}>
+    <ThemeContext.Provider value={{ onToggleTheme, darkMode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
