@@ -12,10 +12,12 @@ import br.com.devinhouse.grupo04.service.AssuntoService;
 import br.com.devinhouse.grupo04.service.InteressadoService;
 
 @Mapper(componentModel = "spring", uses = {InteressadoService.class, AssuntoService.class})
-public interface ProcessoMapper {	
+public interface ProcessoMapper {
 	@Mapping(source = "cdInteressadoId", target = "cdInteressado" )
 	@Mapping(source = "cdAssuntoId", target = "cdAssunto" )
 	Processo toProcesso(ProcessoDTOInput dtoInput);
+	@Mapping(target = "cdInteressado", expression = "java(processo.getCdInteressado())" )
+	@Mapping(target = "cdAssunto", expression = "java(processo.getCdAssunto())" )
 	ProcessoDTOOutput toDto(Processo processo);
 	List<ProcessoDTOOutput> toDto(List<Processo> processos);
 }
