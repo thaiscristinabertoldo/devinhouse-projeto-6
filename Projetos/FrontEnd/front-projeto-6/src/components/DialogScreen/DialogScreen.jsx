@@ -8,11 +8,12 @@ import {
   DialogActions,
   useMediaQuery,
 } from "@material-ui/core";
-import { useThemes } from "context/ThemeProvider";
+import PropTypes from "prop-types";
 
-export const Modal = ({ handleClose, handleClickOpen, open }) => {
+export const DialogScreen = ({ setOpen, open, children, title }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const handleClose = () => setOpen(false);
   return (
     <Dialog
       open={open}
@@ -20,12 +21,9 @@ export const Modal = ({ handleClose, handleClickOpen, open }) => {
       fullScreen={fullScreen}
       aria-labelledby="criação de processos"
     >
-      <DialogTitle>Criação de Processo</DialogTitle>
+      {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
+        <DialogContentText>{children}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
@@ -34,4 +32,11 @@ export const Modal = ({ handleClose, handleClickOpen, open }) => {
       </DialogActions>
     </Dialog>
   );
+};
+
+DialogScreen.propTypes = {
+  children: PropTypes.node.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  title: PropTypes.string,
 };
