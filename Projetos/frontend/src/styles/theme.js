@@ -2,10 +2,10 @@ import { createTheme } from '@material-ui/core';
 
 export const getTheme = (darkMode) =>
   createTheme({
-    ...(darkMode ? themeDark : themeLight),
+    ...(darkMode ? darkTheme : lightTheme),
   });
 
-export const themeDark = createTheme({
+export const darkTheme = createTheme({
   palette: {
     type: 'dark',
     primary: {
@@ -17,9 +17,9 @@ export const themeDark = createTheme({
   },
 });
 
-export const themeLight = createTheme({
+export const lightTheme = createTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
     primary: {
       main: '#53afe2',
     },
