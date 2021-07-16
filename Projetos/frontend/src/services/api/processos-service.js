@@ -2,7 +2,7 @@ import { URLS } from '../constants';
 import * as Api from './http-service';
 
 export const getAllProcess = async () => {
-  return await Api.read(URLS.PROCESSOS, data);
+  return await Api.read(URLS.PROCESSOS);
 };
 
 export const getProcess = async (id) => {
