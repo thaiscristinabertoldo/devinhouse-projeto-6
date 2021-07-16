@@ -20,6 +20,7 @@ public class AssuntoService {
 	private AssuntoRepository repository;
 
 	public List<Assunto> findAll() {
+
 		return repository.findAll();
 	}
 

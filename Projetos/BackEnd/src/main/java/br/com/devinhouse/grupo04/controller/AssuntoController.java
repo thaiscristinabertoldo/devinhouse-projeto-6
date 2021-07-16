@@ -2,6 +2,9 @@ package br.com.devinhouse.grupo04.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -28,6 +31,8 @@ import br.com.devinhouse.grupo04.service.AssuntoService;
 @RestController
 @RequestMapping(value = "v1" + "/assuntos")
 public class AssuntoController {
+
+	private static final Logger logger = LoggerFactory.getLogger(AssuntoController.class);
 	
 	@Autowired
 	private AssuntoMapper assuntoMapper;
@@ -39,6 +44,8 @@ public class AssuntoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<AssuntoDTOOutput> findAll() {
+		logger.info("nosso primeiro log");
+
 		List<Assunto> assuntos = service.findAll();
 		
 		return assuntoMapper.toDto(assuntos);
