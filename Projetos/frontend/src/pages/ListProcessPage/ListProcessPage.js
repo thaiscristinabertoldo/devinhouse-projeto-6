@@ -1,13 +1,15 @@
-import { Grid, Slide } from '@material-ui/core';
+import { Grid, makeStyles, Slide } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCardContainer } from '../../components/ProcessCardContainer/ProcessCardContainer';
 import { ProcessCardContainerSkeleton } from '../../components/ProcessCardContainerSkeleton';
 import { SearchBar } from '../../components/SearchBar';
-import { useStyles } from './ListProcessPage.styles';
+import { styles } from './ListProcessPage.styles';
+import { processList as process } from '../../mock';
 
-export const ListProcessPage = (props) => {
-  const { process } = props;
+const useStyles = makeStyles(styles);
+
+export const ListProcessPage = () => {
   const classes = useStyles();
   const [load, setLoad] = useState(true);
 

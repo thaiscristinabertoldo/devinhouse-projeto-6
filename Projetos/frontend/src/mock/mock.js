@@ -1,4 +1,4 @@
-export const process = [
+export const processList = [
   {
     id: 1,
     nuProcesso: 1,
