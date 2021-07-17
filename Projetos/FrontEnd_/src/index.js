@@ -1,12 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import "./index.css";
-// import App from "./App";
-// import reportWebVitals from "./reportWebVitals";
+import "./index.css";
+import App from "./App";
 import keycloak from "./keycloak";
 
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import { AppRouter } from "./routes/Routes";
 
 const eventLogger = (event, error) => {
 	console.log("onKeycloakEvent", event, error);
@@ -23,7 +21,7 @@ ReactDOM.render(
 			onEvent={eventLogger}
 			onTokens={tokenLogger}
 		>
-			<AppRouter />
+			<App />
 		</ReactKeycloakProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
