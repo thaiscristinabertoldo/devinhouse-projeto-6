@@ -9,7 +9,7 @@ function App() {
       <Header />
       teste
       <Button onClick={() => setOpen(true)}>vai</Button>
-      <DialogScreen setOpen={setOpen} open={open} title="Criação de Processo">
+      <DialogScreen setOpen={setOpen} open={open} Raw>
         <ProcessForm />
       </DialogScreen>
     </>
