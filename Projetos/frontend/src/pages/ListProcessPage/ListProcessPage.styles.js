@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles((theme) => ({
+export const styles = createStyles({
   search: {
     marginBottom: 10,
   },
@@ -10,4 +10,4 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: -55,
     width: '90%',
   },
-}));
+});

@@ -1,18 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getTheme } from '../styles/theme';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { getFromStorage, saveIntoStorage } from '../services/storage/local-storage-service';
 import { QUERY } from '../services/constants';
+import { getTheme } from '../styles/theme-utils';
 
 const ThemeContext = createContext();
 
 export function useAppTheme() {
   const context = useContext(ThemeContext);
-
   if (!context) {
     throw new Error('useAppTheme must be used within an AppThemeProvider.');
   }
-
   return context;
 }
 
@@ -24,17 +22,20 @@ export const AppThemeProvider = ({ children }) => {
     setDarkMode((prev) => !prev);
   };
 
-  useEffect(() => {
+  const loadInitialThemeFromStorage = () => {
     const themeStorage = getFromStorage(QUERY.THEME);
     if (themeStorage) {
       setDarkMode(themeStorage === 'true');
     }
-  }, []);
+  };
 
-  useEffect(() => {
+  const saveCurrentThemeIntoStorage = () => {
     setTheme(getTheme(darkMode));
     saveIntoStorage(QUERY.THEME, darkMode);
-  }, [darkMode]);
+  };
+
+  useEffect(loadInitialThemeFromStorage, []);
+  useEffect(saveCurrentThemeIntoStorage, [darkMode]);
 
   return (
     <ThemeContext.Provider value={{ onToggleTheme, darkMode }}>
