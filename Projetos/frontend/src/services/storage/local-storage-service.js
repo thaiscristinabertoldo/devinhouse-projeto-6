@@ -1,11 +1,11 @@
-export const getFromStorage = async (query) => {
+export const getFromStorage = (query) => {
   return localStorage.getItem(query);
 };
 
-export const saveIntoStorage = async (query, data = {}) => {
+export const saveIntoStorage = (query, data = {}) => {
   return localStorage.setItem(query, JSON.stringify(data));
 };
 
-export const removeFromStorage = async (query) => {
+export const removeFromStorage = (query) => {
   return localStorage.removeItem(query);
 };
