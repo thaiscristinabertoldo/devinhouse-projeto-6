@@ -3,9 +3,9 @@ import { Box, Container } from '@material-ui/core';
 
 export const BaseLayout = ({ children }) => {
   return (
-    <Box bgcolor="red">
+    <Box>
       <AppBar />
-      <Container>{children}</Container>
+      <Container style={{marginTop: 85}}>{children}</Container>
     </Box>
   );
 };

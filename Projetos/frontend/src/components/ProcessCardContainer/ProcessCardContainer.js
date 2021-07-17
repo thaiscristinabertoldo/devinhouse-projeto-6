@@ -1,56 +1,61 @@
-import { Button, Card, CardActions, CardContent, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Divider, Grid, Typography } from '@material-ui/core';
 import { useStyles } from './ProcessCardContainer.styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 export const ProcessCardContainer = (props) => {
-  const { processTitle, processNumber, processOrgan, descriptionStatus, processStakeholders, processDescription } =
-    props;
+  const {
+    processTitle,
+    processDate,
+    processNumber,
+    processOrgan,
+    processSubject,
+    subjectDescriptionStatus,
+    processStakeholders,
+    processDescription,
+  } = props;
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} onClick={() => console.log('oi')}>
+    <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2" className={classes.title}>
-          {processTitle}
+        <Grid container justifyContent="space-between">
+          <Typography variant="h5" component="h2" className={classes.title}>
+            {processTitle}
+          </Typography>
+          <Typography component="h2" className={classes.date}>
+            {processDate}
+          </Typography>
+        </Grid>
+        <Divider className={classes.divider} />
+        <Typography className={classes.pos} color="textPrimary">
+          <strong>Número do Processo:</strong> {processNumber}
         </Typography>
         <Typography className={classes.pos} color="textPrimary">
-          Número do Processo: {processNumber}
+          <strong>Órgão/Setor:</strong> {processOrgan}
         </Typography>
-        <Typography className={classes.pos} color="textPrimary">
-          Órgão/Setor: {processOrgan}
-        </Typography>
-        <Grid container direction="row" justifyContent="space-between">
+        <Grid container direction="row">
           <Typography className={classes.pos} color="textPrimary">
-            Descrição: {processDescription}
+            <strong>Assunto:</strong>
           </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            Ativa: {descriptionStatus}
+          <Typography className={subjectDescriptionStatus?.toLowerCase() === 's' ? classes.active : classes.noActive}>
+            {processSubject}
           </Typography>
         </Grid>
         <Typography className={classes.pos} color="textPrimary">
-          Interessados:
+          <strong>Interessado:</strong> {processStakeholders}
         </Typography>
-        <Grid container direction="row" justifyContent="space-between">
-          {
-            /*processStakeholders?.map((element, index) => ( */
-            <Typography className={classes.pos} color="textSecondary">
-              {processStakeholders}
-            </Typography>
-            /* ))*/
-          }
-        </Grid>
-        <Typography variant="body2" component="p" color="textSecondary">
-          {processDescription}
+        <Typography className={classes.pos} color="textPrimary">
+          <strong>Descrição:</strong> {processDescription}
         </Typography>
       </CardContent>
-      <Grid container justifyContent="flex-end">
+      <Grid container justifyContent="flex-end" className={classes.action}>
         <CardActions>
           <Button size="small">
-            <DeleteForeverIcon color="secondary" />
+            <DeleteForeverIcon className={classes.deleteButton} />
           </Button>
-          <Button size="small" color="primary">
-            <EditIcon />
+          <Button size="small">
+            <EditIcon className={classes.editButton} />
           </Button>
         </CardActions>
       </Grid>

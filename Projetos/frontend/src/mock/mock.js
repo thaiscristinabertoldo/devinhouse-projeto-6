@@ -8,7 +8,7 @@ export const process = [
     descricao: 'Processo 1 de testes DEV In House ',
     cdAssunto: {
       id: 34,
-      descricao: 'descrição maneira5000',
+      descricao: 'descrição maneira',
       dtCadastro: '2021-05-21',
       flAtivo: 's',
     },

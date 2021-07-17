@@ -7,6 +7,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginBottom: 7.5,
+    marginRight: 11,
+    marginLeft: 11,
   },
   divider: {
     marginTop: 0,
@@ -15,19 +17,14 @@ export const useStyles = makeStyles((theme) => ({
   pos: {
     marginBottom: 10,
     marginRight: 5,
-    marginLeft: 20,
+    marginLeft: 30,
+    marginRight: 11,
   },
   action: {
     backgroundColor: '#aaaaaaaa',
   },
-  noActive: {
-    color: '#aaaaaa',
-    textDecoration: 'line-through',
-  },
-  editButton: {
-    color: '#5e17eb',
-  },
-  deleteButton: {
-    color: '#38b6ff',
+  button: {
+    width: 35,
+    height: 30,
   },
 }));
