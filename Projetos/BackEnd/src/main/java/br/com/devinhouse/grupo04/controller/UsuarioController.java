@@ -9,7 +9,7 @@ import javax.annotation.security.RolesAllowed;
 @RestController
 public class UsuarioController {
 
-    @RolesAllowed("backend-user") // realm > client > roles
+    @RolesAllowed("user") // realm > client > roles (?)
     @GetMapping(value = "/login")
     public ResponseEntity<String> login() {
 
