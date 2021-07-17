@@ -5,7 +5,7 @@ export const BaseLayout = ({ children }) => {
   return (
     <Box>
       <AppBar />
-      <Container style={{marginTop: 85}}>{children}</Container>
+      <Container style={{ marginTop: 85 }}>{children}</Container>
     </Box>
   );
 };
