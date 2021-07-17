@@ -17,10 +17,10 @@ export const ProcessCardContainerSkeleton = () => {
       <Grid container justifyContent="flex-end" className={classes.action}>
         <CardActions>
           <Button size="small">
-            <Skeleton variant="text" component="button" animation="wave" className={classes.button} />
+            <Skeleton variant="text" component="div" animation="wave" className={classes.button} />
           </Button>
           <Button size="small" color="primary">
-            <Skeleton variant="text" component="button" animation="wave" className={classes.button} />
+            <Skeleton variant="text" component="div" animation="wave" className={classes.button} />
           </Button>
         </CardActions>
       </Grid>

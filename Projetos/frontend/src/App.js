@@ -1,6 +1,6 @@
 import { process } from './mock';
-import { ListProcessPage } from './pages/ListProcessPage';
 import { BaseLayout } from './layouts/BaseLayout';
+import { ListProcessPage } from './pages/ListProcessPage';
 
 export const App = () => {
   return (

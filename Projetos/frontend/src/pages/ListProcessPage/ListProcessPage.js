@@ -1,5 +1,6 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Slide } from '@material-ui/core';
 import { useEffect, useState } from 'react';
+import { AddButton } from '../../components/AddButton';
 import { ProcessCardContainer } from '../../components/ProcessCardContainer/ProcessCardContainer';
 import { ProcessCardContainerSkeleton } from '../../components/ProcessCardContainerSkeleton';
 import { SearchBar } from '../../components/SearchBar';
@@ -20,7 +21,7 @@ export const ListProcessPage = (props) => {
         <SearchBar />
       </Grid>
       <Grid container direction="column" justifyContent="center" alignItems="center">
-        {load && process?.map(() => <ProcessCardContainerSkeleton />)}
+        {load && process?.map((_, index) => <ProcessCardContainerSkeleton key={index} />)}
         {!load &&
           process?.map((element, index) => (
             <ProcessCardContainer
@@ -31,11 +32,19 @@ export const ListProcessPage = (props) => {
               processOrgan={element.sgOrgaoSetor}
               processSubject={element.cdAssunto.descricao}
               subjectDescriptionStatus={element.cdAssunto.flAtivo}
-              processStakeholders={element.cdInteressado.nmInteressado}
+              processStakeholder={element.cdInteressado.nmInteressado}
+              stakeholderStatus={element.cdInteressado.flAtivo}
               processDescription={element.descricao}
             />
           ))}
       </Grid>
+      {!load && (
+        <Slide direction="up" in={!load} mountOnEnter unmountOnExit>
+          <Grid container justifyContent="flex-end" className={classes.addButton}>
+            <AddButton />
+          </Grid>
+        </Slide>
+      )}
     </div>
   );
 };

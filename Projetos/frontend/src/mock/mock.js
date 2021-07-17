@@ -17,7 +17,7 @@ export const process = [
       nmInteressado: 'Mauricio Sampaio',
       nuIdentificacao: '21648758002',
       dtNascimento: '1988-08-03',
-      flAtivo: 'n',
+      flAtivo: 's',
     },
   },
   {

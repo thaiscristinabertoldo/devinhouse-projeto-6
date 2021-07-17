@@ -11,7 +11,8 @@ export const ProcessCardContainer = (props) => {
     processOrgan,
     processSubject,
     subjectDescriptionStatus,
-    processStakeholders,
+    processStakeholder,
+    stakeholderStatus,
     processDescription,
   } = props;
   const classes = useStyles();
@@ -42,9 +43,14 @@ export const ProcessCardContainer = (props) => {
             {processSubject}
           </Typography>
         </Grid>
-        <Typography className={classes.pos} color="textPrimary">
-          <strong>Interessado:</strong> {processStakeholders}
-        </Typography>
+        <Grid container direction="row">
+          <Typography className={classes.pos} color="textPrimary">
+            <strong>Interessado:</strong>
+          </Typography>
+          <Typography className={stakeholderStatus?.toLowerCase() === 's' ? classes.active : classes.noActive}>
+            {processStakeholder}
+          </Typography>
+        </Grid>
         <Typography className={classes.pos} color="textPrimary">
           <strong>Descrição:</strong> {processDescription}
         </Typography>

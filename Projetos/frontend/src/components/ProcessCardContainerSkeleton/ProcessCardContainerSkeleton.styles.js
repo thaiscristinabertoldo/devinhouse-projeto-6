@@ -16,7 +16,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   pos: {
     marginBottom: 10,
-    marginRight: 5,
     marginLeft: 30,
     marginRight: 11,
   },
