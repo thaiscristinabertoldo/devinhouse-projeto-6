@@ -6,6 +6,7 @@ import { ProcessCardContainerSkeleton } from '../../components/ProcessCardContai
 import { SearchBar } from '../../components/SearchBar';
 import { styles } from './ListProcessPage.styles';
 import { processList as process } from '../../mock';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
@@ -16,6 +17,12 @@ export const ListProcessPage = () => {
   useEffect(() => {
     setTimeout(() => setLoad(false), 3000);
   }, []);
+
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push('/processos/cadastro');
+  };
 
   return (
     <div>
@@ -43,7 +50,7 @@ export const ListProcessPage = () => {
       {!load && (
         <Slide direction="up" in={!load} mountOnEnter unmountOnExit>
           <Grid container justifyContent="flex-end" className={classes.addButton}>
-            <AddButton />
+            <AddButton handleClick={handleClick} />
           </Grid>
         </Slide>
       )}

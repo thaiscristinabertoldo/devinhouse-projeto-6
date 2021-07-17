@@ -5,9 +5,16 @@ import { useStyles } from './ProcessRegistrationPage.styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
+import { useHistory } from 'react-router-dom';
 
 export const ProcessRegistrationPage = () => {
   const classes = useStyles();
+
+  const history = useHistory();
+
+  const handleGoBack = () => {
+    history.push('/processos');
+  };
 
   return (
     <Grid container justifyContent="center">
@@ -83,6 +90,7 @@ export const ProcessRegistrationPage = () => {
                   variant="contained"
                   className={classes.button}
                   startIcon={<ForwardRoundedIcon style={{ transform: 'rotate(180deg)' }} />}
+                  onClick={handleGoBack}
                 >
                   <strong>Voltar</strong>
                 </Button>
