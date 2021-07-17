@@ -4,6 +4,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class ProcessoController {
 	@Autowired
 	private ProcessoMapper processoMapper;
 
+	@RolesAllowed("user") 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
@@ -46,6 +48,7 @@ public class ProcessoController {
 
 	}
 
+	@RolesAllowed("user") 
 	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
@@ -53,6 +56,7 @@ public class ProcessoController {
 		return processoMapper.toDto(service.find(id));
 	}
 
+	@RolesAllowed("user") 
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -60,6 +64,7 @@ public class ProcessoController {
 		return processoMapper.toDto(service.create(processoMapper.toProcesso(processoDTO)));
 	}
 
+	@RolesAllowed("user") 
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
@@ -67,6 +72,7 @@ public class ProcessoController {
 		service.update(id, processoMapper.toProcesso(processoDTO));
 	}
 
+	@RolesAllowed("user") 
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
