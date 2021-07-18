@@ -1,0 +1,23 @@
+~ Na hora de editar o processo, não se tem acesso ao ID nem CHAVE! ~
+
+{
+  "id":1,
+  "nuProcesso":38,
+  "sgOrgaoSetor":"VBUA",
+  "nuAno":"1996",
+  "chaveProcesso":"VBUA 38/1996",
+  "descricao":"Persevering tertiary architecture",
+  "cdAssunto":{
+    "id":9,
+    "descricao":"Optional radical moderator",
+    "dtCadastro":"2020-08-26",
+    "flAtivo":false
+  },
+  "cdInteressado":{
+    "id":6,
+    "nmInteressado":"Lily trotter",
+    "nuIdentificacao":"Tazz",
+    "dtNascimento":"2020-07-18",
+    "flAtivo":false
+  }
+}
