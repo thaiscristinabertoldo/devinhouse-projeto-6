@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -29,74 +31,68 @@ import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
+	@Autowired
+	private MessageSource messageSource;
+	
+	private Logger log = LogManager.getLogger(AppExceptionHandler.class);
+	
 	@ExceptionHandler(ProcessoNotFoundException.class)
 	public ResponseEntity<Object> handleProcessoNotFoundException(ProcessoNotFoundException ex, WebRequest request) {
+		logar(ex);
 
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
-
 		return ResponseEntity.status(404).body(validacao);
 	}
 
 	@ExceptionHandler(AssuntoNotFoundException.class)
 	public ResponseEntity<Object> handleAssuntoNotFoundException(AssuntoNotFoundException ex, WebRequest request) {
+		logar(ex);
 
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
-
 		return ResponseEntity.status(404).body(validacao);
 	}
 
 	@ExceptionHandler(AssuntoFlAtivoInvalidException.class)
 	public ResponseEntity<Object> handleAssuntoFlAtivoInvalidException(AssuntoFlAtivoInvalidException ex, WebRequest request){
+		logar(ex);
 		
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
-
 		return ResponseEntity.status(400).body(validacao);
 	}
 	
 	@ExceptionHandler(InteressadoNotFoundException.class)
-	public ResponseEntity<Object> handleInteressadoNotFoundException(InteressadoNotFoundException ex,
-			WebRequest request) {
-
+	public ResponseEntity<Object> handleInteressadoNotFoundException(InteressadoNotFoundException ex, WebRequest request) {
+		logar(ex);
+		
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
-
 		return ResponseEntity.status(404).body(validacao);
 	}
 	
 
 	@ExceptionHandler(InteressadoFlAtivoInvalidException.class)
 	public ResponseEntity<Object> handleInteressadoFlAtivoInvalidException(InteressadoFlAtivoInvalidException ex, WebRequest request) {
-
+		logar(ex);
+		
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
-
 		return ResponseEntity.status(400).body(validacao);
 	}
 
 	@ExceptionHandler(NuIdentificacaoJaExistenteException.class)
-	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex,
-			WebRequest request) {
-
+	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex,	WebRequest request) {
+		logar(ex);
+		
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
-
 		return ResponseEntity.status(400).body(validacao);
 	}
 
-	@Autowired
-	private MessageSource messageSource;
-
-	
-	
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-
-		Validacao validacao = new Validacao(LocalDate.now(),
-				"Um ou mais campos estão incorretos. Corrija e tente novamente", 400);
-
-		new Locale("pt-BR");
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		logar(ex);
+		
+		Validacao validacao = new Validacao(LocalDate.now(), "Um ou mais campos estão incorretos. Corrija e tente novamente", 400);
 
 		List<Validacao.Campo> campos = ex.getBindingResult().getAllErrors().stream()
-				.map(erro -> new Validacao.Campo(((FieldError) erro).getField(),
-						messageSource.getMessage(erro, LocaleContextHolder.getLocale())))
+				.map(erro -> new Validacao.Campo(((FieldError) erro).getField(), messageSource.getMessage(erro, LocaleContextHolder.getLocale())))
 				.collect(Collectors.toList());
 
 		validacao.setCampos(campos);
@@ -105,9 +101,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		logar(ex);
+		
 		Validacao validacao = new Validacao(LocalDate.now(), "Endpoint não cadastrado" , 404);
 		return ResponseEntity.status(404).body(validacao);
+	}
+	
+	private void logar(Throwable ex) {
+		log.warn(ex.getMessage(), ex);
 	}
 }
