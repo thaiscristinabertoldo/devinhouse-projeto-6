@@ -1,4 +1,4 @@
-import { AppBar, Button } from "@material-ui/core";
+import { AppBar } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 
 const headerHeight = 8;
@@ -20,17 +20,8 @@ const Field = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-const AccessButton = styled(Button)({
-  width: "16px",
-  fontSize: "8pt",
-  padding: "2px",
-  color: "#FFF",
-  border: "1px",
-  borderStyle: "solid",
-});
-
 const Spacing = styled("div")(({ theme }) => ({
   height: theme.spacing(headerHeight),
 }));
 
-export { StyledHeader, Spacing, Field, AccessButton };
+export { StyledHeader, Spacing, Field };

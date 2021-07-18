@@ -1,13 +1,10 @@
-import { ViewportProvider } from "context/Viewport";
-import { Header } from "./components";
+import { Header } from "components";
 
 function App() {
   return (
     <>
-      <ViewportProvider>
-        <Header />
-        teste
-      </ViewportProvider>
+      <Header />
+      teste
     </>
   );
 }
