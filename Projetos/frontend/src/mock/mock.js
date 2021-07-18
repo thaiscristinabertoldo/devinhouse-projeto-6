@@ -210,3 +210,101 @@ export const processList = [
     },
   },
 ];
+
+export const stakeholdersList = [
+  {
+    id: 1,
+    nmInteressado: 'Mauricio Sampaio',
+    nuIdentificacao: '21648758002',
+    dtNascimento: '03/08/1988',
+    flAtivo: 'n',
+  },
+  {
+    id: 2,
+    nmInteressado: 'Alanderson pai do apolo',
+    nuIdentificacao: '12834714002',
+    dtNascimento: '03/08/1999',
+    flAtivo: 's',
+  },
+];
+
+export const subjectsList = [
+  {
+    id: 1,
+    descricao: 'huhuhuhuhuhu',
+    dtCadastro: '21/05/2021',
+    flAtivo: 'n',
+  },
+  {
+    id: 2,
+    descricao: '5',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 34,
+    descricao: 'descrição maneira5000',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 35,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 36,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 37,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 38,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 39,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 40,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 41,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 42,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 43,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+  {
+    id: 44,
+    descricao: 'descrição maneirissima',
+    dtCadastro: '21/05/2021',
+    flAtivo: 's',
+  },
+];

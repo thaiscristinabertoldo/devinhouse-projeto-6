@@ -6,6 +6,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import { useHistory } from 'react-router-dom';
+import SearchSubjectComboBox from '../../components/SearchSubjectComboBox/SearchSubjectComboBox';
+import SearchStakeholderComboBox from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
 
 export const ProcessRegistrationPage = () => {
   const classes = useStyles();
@@ -16,6 +18,35 @@ export const ProcessRegistrationPage = () => {
     history.push('/processos');
   };
 
+  const handleSubmit = (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+  };
+
+  const INITIAL_PROCESS = {
+    id: 0,
+    nuProcesso: 0,
+    sgOrgaoSetor: '',
+    nuAno: '',
+    chaveProcesso: '',
+    descricao: '',
+    cdAssunto: {
+      id: 0,
+      descricao: '',
+      dtCadastro: '',
+      flAtivo: '',
+    },
+    cdInteressado: {
+      id: 0,
+      nmInteressado: '',
+      nuIdentificacao: '',
+      dtNascimento: '',
+      flAtivo: '',
+    },
+  };
+
   return (
     <Grid container justifyContent="center">
       <Paper elevation={3} className={classes.container}>
@@ -23,32 +54,26 @@ export const ProcessRegistrationPage = () => {
           <Typography variant="h1" align="center" gutterBottom className={classes.title}>
             <strong>Formulário de Cadastro de Processo</strong>
           </Typography>
-          <Formik>
+          <Formik initialValues={INITIAL_PROCESS} onSubmit={handleSubmit}>
             <Form className={classes.form}>
               <Divider orientation="horizontal" variant="fullWidth" />
               <Grid container direction="row" justifyContent="space-between">
-                <div className={classes.thirdInput}>
+                <div className={classes.halfInput}>
                   <Field
                     autoFocus
                     name="chaveProcesso"
                     as={() => <Input label="Chave do Processo" defaultValue="SOFT 26/2021" disabled="true" />}
                   />
                 </div>
-                <div className={classes.thirdInput}>
+                <div className={classes.halfInput}>
                   <Field
                     autoFocus
                     name="nuProcesso"
                     as={() => <Input label="Número do Processo" defaultValue="26" disabled="true" />}
                   />
                 </div>
-                <div className={classes.thirdInput}>
-                  <Field
-                    autoFocus
-                    name="nuAno"
-                    as={() => <Input label="Ano do Processo" defaultValue="2021" disabled="true" />}
-                  />
-                </div>
               </Grid>
+              <Field autoFocus name="nuAno" as={() => <Input label="Ano do Processo" />} />
               <Field autoFocus name="sgOrgaoSetor" as={() => <Input label="Órgão/Setor" />} />
               <Field autoFocus name="descricao" as={() => <Input label="Descrição" multiline="true" />} />
               <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
@@ -58,13 +83,13 @@ export const ProcessRegistrationPage = () => {
                 </Typography>
               </Grid>
               <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <Field autoFocus name="descricao" as={() => <Input label="Descrição" multiline="true" />} />
+              <SearchSubjectComboBox />
               <Grid container direction="row" justifyContent="space-between">
                 <div className={classes.halfInput}>
-                  <Field autoFocus name="dtCadastro" as={() => <Input label="Data do Cadastro" />} />
+                  <Field autoFocus name="dtCadastro" as={() => <Input label="Data do Cadastro" disabled="true" />} />
                 </div>
                 <div className={classes.halfInput}>
-                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" />} />
+                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" disabled="true" />} />
                 </div>
               </Grid>
               <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
@@ -74,14 +99,18 @@ export const ProcessRegistrationPage = () => {
                 </Typography>
               </Grid>
               <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <Field autoFocus name="nmInteressado" as={() => <Input label="Nome do Interessado" />} />
-              <Field autoFocus name="nuIdentificacao" as={() => <Input label="Número de Indentificação" />} />
+              <SearchStakeholderComboBox />
+              <Field autoFocus name="nmInteressado" as={() => <Input label="Nome do Interessado" disabled="true" />} />
               <Grid container direction="row" justifyContent="space-between">
                 <div className={classes.halfInput}>
-                  <Field autoFocus name="dtNascimento" as={() => <Input label="Data de Nascimento" />} />
+                  <Field
+                    autoFocus
+                    name="dtNascimento"
+                    as={() => <Input label="Data de Nascimento" disabled="true" />}
+                  />
                 </div>
                 <div className={classes.halfInput}>
-                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" />} />
+                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" disabled="true" />} />
                 </div>
               </Grid>
               <br />
