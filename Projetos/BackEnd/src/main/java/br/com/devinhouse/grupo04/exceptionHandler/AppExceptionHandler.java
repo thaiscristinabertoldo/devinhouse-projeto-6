@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.devinhouse.grupo04.service.ProcessoService;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.InteressadoFlAtivoInvalidException;
@@ -26,8 +27,13 @@ import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException
 import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProcessoService.class);
 
 	@ExceptionHandler(ProcessoNotFoundException.class)
 	public ResponseEntity<Object> handleProcessoNotFoundException(ProcessoNotFoundException ex, WebRequest request) {
@@ -108,6 +114,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		Validacao validacao = new Validacao(LocalDate.now(), "Endpoint não cadastrado" , 404);
+		logger.info("tentativa de endpoint não cadastrado");
 		return ResponseEntity.status(404).body(validacao);
 	}
 }

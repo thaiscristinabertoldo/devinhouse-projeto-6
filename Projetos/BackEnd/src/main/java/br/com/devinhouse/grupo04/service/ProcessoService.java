@@ -3,6 +3,9 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
 public class ProcessoService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProcessoService.class);
 
 	@Autowired
 	private ProcessoRepository repository;
@@ -66,6 +71,9 @@ public class ProcessoService {
 	}
 
 	public void delete(Long id) {
+		
+		logger.warn("Processo excluído");
+
 		repository.deleteById(id);
 	}
 
@@ -74,10 +82,12 @@ public class ProcessoService {
 		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
 		
 		if (assuntoFlAtivo != 's') {
+			logger.warn("Tentativa de registro assunto inválida, assunto não está ativo");
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
 		}
 		
 		if (interessadoFlAtivo != 's') {
+			logger.warn("Tentativa de registro interessado inválida, interessado não está ativo");
 			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
 		}
 	}
