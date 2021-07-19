@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { stakeholdersList } from '../../mock';
 import { useStyles } from './SearchStakeholderComboBox.styles';
 
-export default function SearchStakeholderComboBox() {
+export const SearchStakeholderComboBox = (props) => {
   const classes = useStyles();
 
   return (
@@ -17,7 +17,7 @@ export default function SearchStakeholderComboBox() {
       }}
       autoHighlight
       getOptionLabel={(option) => {
-        return option.id + ' - ' + option.nuIdentificacao;
+        return option.nuIdentificacao;
       }}
       renderOption={(option) => (
         <>
@@ -28,14 +28,21 @@ export default function SearchStakeholderComboBox() {
         <TextField
           {...params}
           label="Informe o número de identificação do interessado"
-          variant="filled"
+          variant="outlined"
           inputProps={{
             ...params.inputProps,
-            autoComplete: 'new-password',
+            autoComplete: 'off',
           }}
           className={classes.comboBox}
+          name="cdInteressado"
+          error={props?.error}
         />
       )}
+      {...props}
+      onChange={(e, value) => {
+        console.log('value', value);
+        props.setFieldValue('cdInteressado', value !== null ? value : '');
+      }}
     />
   );
-}
+};

@@ -2,18 +2,19 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
   title: {
+    width: '100%',
     marginTop: 20,
     fontSize: 'XX-large',
     color: '#878788',
   },
   container: {
-    width: 700,
+    width: '100%',
     minHeight: 700,
     marginBottom: 32,
     paddingBottom: 25,
   },
   form: {
-    width: 600,
+    width: "95%",
   },
   thirdInput: {
     width: '30%',
@@ -22,6 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '47.5%',
   },
   divider: {
+    width: '100%',
     marginTop: 15,
   },
   subtitle: {
@@ -29,4 +31,8 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 'X-large',
     color: '#878788',
   },
+  button:{
+      color: "white",
+      backgroundColor: theme.palette.success
+  }
 }));

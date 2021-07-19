@@ -10,9 +10,7 @@ export const ProcessCardContainer = (props) => {
     processNumber,
     processOrgan,
     processSubject,
-    subjectDescriptionStatus,
     processStakeholder,
-    stakeholderStatus,
     processDescription,
   } = props;
   const classes = useStyles();
@@ -29,27 +27,25 @@ export const ProcessCardContainer = (props) => {
           </Typography>
         </Grid>
         <Divider className={classes.divider} />
-        <Typography className={classes.pos} color="textPrimary">
-          <strong>Número do Processo:</strong> {processNumber}
-        </Typography>
-        <Typography className={classes.pos} color="textPrimary">
-          <strong>Órgão/Setor:</strong> {processOrgan}
-        </Typography>
-        <Grid container direction="row">
+        <Grid container justifyContent="space-between">
           <Typography className={classes.pos} color="textPrimary">
-            <strong>Assunto:</strong>
+            <strong>Órgão/Setor:</strong> {processOrgan}
           </Typography>
-          <Typography className={subjectDescriptionStatus?.toLowerCase() === 's' ? classes.active : classes.noActive}>
-            {processSubject}
+          <Typography className={classes.pos} color="textPrimary">
+            <strong>Nº:</strong> {processNumber.toString().padStart(4, '0')}
           </Typography>
         </Grid>
         <Grid container direction="row">
           <Typography className={classes.pos} color="textPrimary">
             <strong>Interessado:</strong>
           </Typography>
-          <Typography className={stakeholderStatus?.toLowerCase() === 's' ? classes.active : classes.noActive}>
-            {processStakeholder}
+          <Typography>{processStakeholder}</Typography>
+        </Grid>
+        <Grid container direction="row">
+          <Typography className={classes.pos} color="textPrimary">
+            <strong>Assunto:</strong>
           </Typography>
+          <Typography>{processSubject}</Typography>
         </Grid>
         <Typography className={classes.pos} color="textPrimary">
           <strong>Descrição:</strong> {processDescription}

@@ -1,15 +1,19 @@
-import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
+import { Box, Button, Divider, Fab, Grid, Paper, Typography } from '@material-ui/core';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Input } from '../../components/Input';
 import { useStyles } from './ProcessRegistrationPage.styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import { useHistory } from 'react-router-dom';
-import SearchSubjectComboBox from '../../components/SearchSubjectComboBox/SearchSubjectComboBox';
-import SearchStakeholderComboBox from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
+import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox/SearchSubjectComboBox';
+import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
+import { initialProcessValues, registrationSchema } from './RegistrationSchema';
+import { DivError } from '../../components/DivError';
+import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-export const ProcessRegistrationPage = () => {
+export const ProcessRegistrationPage = (props) => {
   const classes = useStyles();
 
   const history = useHistory();
@@ -25,123 +29,151 @@ export const ProcessRegistrationPage = () => {
     }, 400);
   };
 
-  const INITIAL_PROCESS = {
-    id: 0,
-    nuProcesso: 0,
-    sgOrgaoSetor: '',
-    nuAno: '',
-    chaveProcesso: '',
-    descricao: '',
-    cdAssunto: {
-      id: 0,
-      descricao: '',
-      dtCadastro: '',
-      flAtivo: '',
-    },
-    cdInteressado: {
-      id: 0,
-      nmInteressado: '',
-      nuIdentificacao: '',
-      dtNascimento: '',
-      flAtivo: '',
-    },
-  };
+  const nuProcesso = 1;
 
   return (
     <Grid container justifyContent="center">
       <Paper elevation={3} className={classes.container}>
-        <Grid container justifyContent="center">
-          <Typography variant="h1" align="center" gutterBottom className={classes.title}>
-            <strong>Formulário de Cadastro de Processo</strong>
-          </Typography>
-          <Formik initialValues={INITIAL_PROCESS} onSubmit={handleSubmit}>
-            <Form className={classes.form}>
-              <Divider orientation="horizontal" variant="fullWidth" />
-              <Grid container direction="row" justifyContent="space-between">
-                <div className={classes.halfInput}>
+        <Box>
+          <Grid container justifyContent="center">
+            <Typography variant="h1" align="center" gutterBottom className={classes.title}>
+              <strong>Formulário de Cadastro de Processo</strong>
+            </Typography>
+            <Formik initialValues={initialProcessValues} onSubmit={handleSubmit} validationSchema={registrationSchema}>
+              {({ values, setFieldValue, isSubmitting, isValid, errors, resetForm, touched }) => (
+                <Form className={classes.form}>
+                  {console.log('errors', errors)}
+                  <Divider orientation="horizontal" variant="fullWidth" />
+                  <Field
+                    name="sgOrgaoSetor"
+                    label="Órgão/Setor"
+                    error={touched?.sgOrgaoSetor && errors.sgOrgaoSetor}
+                    as={Input}
+                  />
+                  <ErrorMessage name="sgOrgaoSetor" component={DivError} />
+                  <Field name="nuAno" label="Ano do Processo" error={touched?.nuAno && errors.nuAno} as={Input} />
+                  <ErrorMessage name="nuAno" component={DivError} />
+                  <Field
+                    name="descricao"
+                    label="Descrição"
+                    multiline="true"
+                    error={touched?.descricao && errors?.descricao}
+                    as={Input}
+                  />
+                  <ErrorMessage name="descricao" component={DivError} />
+                  <Grid container direction="row" justifyContent="space-between">
+                    <div className={classes.halfInput}>
+                      <Field
+                        name="chaveProcesso"
+                        label="Chave do Processo"
+                        value={values.sgOrgaoSetor + ' ' + nuProcesso + '/' + values.nuAno}
+                        disabled="true"
+                        as={Input}
+                      />
+                    </div>
+                    <div className={classes.halfInput}>
+                      <Field
+                        name="nuProcesso"
+                        label="Número do Processo"
+                        defaultValue={nuProcesso.toString().padStart(4, '0')}
+                        disabled="true"
+                        as={Input}
+                      />
+                    </div>
+                  </Grid>
+                  <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
+                  <Grid container justifyContent="center">
+                    <Typography variant="h2" className={classes.subtitle}>
+                      <strong>Assunto</strong>
+                    </Typography>
+                  </Grid>
+                  <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
                   <Field
                     autoFocus
-                    name="chaveProcesso"
-                    as={() => <Input label="Chave do Processo" defaultValue="SOFT 26/2021" disabled="true" />}
+                    name="cdAssunto"
+                    error={touched?.cdAssunto && errors?.cdAssunto}
+                    setFieldValue={setFieldValue}
+                    as={SearchSubjectComboBox}
                   />
-                </div>
-                <div className={classes.halfInput}>
+                  <ErrorMessage name="cdAssunto" component={DivError} />
+
+                  <Field autoFocus name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={Input} />
+
+                  <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
+                  <Grid container justifyContent="center">
+                    <Typography variant="h2" className={classes.subtitle}>
+                      <strong>Interessado</strong>
+                    </Typography>
+                  </Grid>
+                  <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
                   <Field
                     autoFocus
-                    name="nuProcesso"
-                    as={() => <Input label="Número do Processo" defaultValue="26" disabled="true" />}
+                    name="cdInteressado"
+                    error={touched?.cdInteressado && errors?.cdInteressado}
+                    setFieldValue={setFieldValue}
+                    as={SearchStakeholderComboBox}
                   />
-                </div>
-              </Grid>
-              <Field autoFocus name="nuAno" as={() => <Input label="Ano do Processo" />} />
-              <Field autoFocus name="sgOrgaoSetor" as={() => <Input label="Órgão/Setor" />} />
-              <Field autoFocus name="descricao" as={() => <Input label="Descrição" multiline="true" />} />
-              <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <Grid container justifyContent="center">
-                <Typography variant="h2" className={classes.subtitle}>
-                  <strong>Assunto</strong>
-                </Typography>
-              </Grid>
-              <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <SearchSubjectComboBox />
-              <Grid container direction="row" justifyContent="space-between">
-                <div className={classes.halfInput}>
-                  <Field autoFocus name="dtCadastro" as={() => <Input label="Data do Cadastro" disabled="true" />} />
-                </div>
-                <div className={classes.halfInput}>
-                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" disabled="true" />} />
-                </div>
-              </Grid>
-              <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <Grid container justifyContent="center">
-                <Typography variant="h2" className={classes.subtitle}>
-                  <strong>Interessado</strong>
-                </Typography>
-              </Grid>
-              <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-              <SearchStakeholderComboBox />
-              <Field autoFocus name="nmInteressado" as={() => <Input label="Nome do Interessado" disabled="true" />} />
-              <Grid container direction="row" justifyContent="space-between">
-                <div className={classes.halfInput}>
+                  <ErrorMessage name="cdInteressado" component={DivError} />
                   <Field
                     autoFocus
-                    name="dtNascimento"
-                    as={() => <Input label="Data de Nascimento" disabled="true" />}
+                    name="cdInteressado.nmInteressado"
+                    label="Nome do Interessado"
+                    defaultValue=" "
+                    disabled="true"
+                    as={Input}
                   />
-                </div>
-                <div className={classes.halfInput}>
-                  <Field autoFocus name="flAtivo" as={() => <Input label="Ativo" disabled="true" />} />
-                </div>
-              </Grid>
-              <br />
-              <Grid container justifyContent="space-between">
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<ForwardRoundedIcon style={{ transform: 'rotate(180deg)' }} />}
-                  onClick={handleGoBack}
-                >
-                  <strong>Voltar</strong>
-                </Button>
-                <Button variant="contained" className={classes.button} startIcon={<CancelRoundedIcon />}>
-                  <strong>Limpar</strong>
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  className={classes.button}
-                  startIcon={<SaveIcon />}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log('oI');
-                  }}
-                >
-                  <strong>Salvar</strong>
-                </Button>
-              </Grid>
-            </Form>
-          </Formik>
-        </Grid>
+
+                  <Field
+                    autoFocus
+                    name="cdInteressado.dtNascimento"
+                    label="Data de Nascimento"
+                    defaultValue=" "
+                    disabled="true"
+                    as={Input}
+                  />
+                  <br />
+                  <br />
+                  <Grid container justifyContent="space-between">
+                    <Button
+                      style={{ backgroundColor: 'gray' }}
+                      variant="contained"
+                      className={classes.button}
+                      startIcon={<ForwardRoundedIcon style={{ transform: 'rotate(180deg)' }} />}
+                      onClick={handleGoBack}
+                    >
+                      <strong>Voltar</strong>
+                    </Button>
+                    <Button
+                      style={{ backgroundColor: 'lightcoral' }}
+                      variant="contained"
+                      className={classes.button}
+                      startIcon={<CancelRoundedIcon />}
+                      onClick={resetForm}
+                      disabled={isSubmitting}
+                    >
+                      <strong>Limpar</strong>
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      startIcon={<SaveIcon />}
+                      disabled={isSubmitting || !isValid}
+                    >
+                      <strong>Salvar</strong>
+                    </Button>
+                  </Grid>
+                </Form>
+              )}
+            </Formik>
+          </Grid>
+          <ScrollTop {...props}>
+            <Fab color="primary" size="small" aria-label="scroll back to top">
+              <KeyboardArrowUpIcon style={{ color: 'white' }} />
+            </Fab>
+          </ScrollTop>
+        </Box>
       </Paper>
     </Grid>
   );

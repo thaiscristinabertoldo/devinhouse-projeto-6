@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { subjectsList } from '../../mock';
 import { useStyles } from './SearchSubjectComboBox.styles';
 
-export default function SearchSubjectComboBox() {
+export const SearchSubjectComboBox = (props) => {
   const classes = useStyles();
 
   return (
@@ -17,8 +17,7 @@ export default function SearchSubjectComboBox() {
       }}
       autoHighlight
       getOptionLabel={(option) => {
-        console.log(option);
-        return option.id + ' - ' + option.descricao;
+        return option.descricao;
       }}
       renderOption={(option) => (
         <>
@@ -29,14 +28,22 @@ export default function SearchSubjectComboBox() {
         <TextField
           {...params}
           label="Informe a descrição do assunto"
-          variant="filled"
+          variant="outlined"
           inputProps={{
             ...params.inputProps,
-            autoComplete: 'new-password',
+            autoComplete: 'off',
           }}
           className={classes.comboBox}
+          name="cdAssunto"
+          error={props?.error}
+          autoComplete="false"
         />
       )}
+      {...props}
+      onChange={(e, value) => {
+        console.log('value', value);
+        props.setFieldValue('cdAssunto', value !== null ? value : '');
+      }}
     />
   );
-}
+};
