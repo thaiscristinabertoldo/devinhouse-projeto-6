@@ -1,4 +1,13 @@
-import { AppBar as MuiAppBar, Grid, IconButton, makeStyles, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar as MuiAppBar,
+  Grid,
+  IconButton,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import DarkThemeIcon from '@material-ui/icons/Brightness4';
 import LightThemeIcon from '@material-ui/icons/Brightness7';
@@ -16,7 +25,7 @@ export const AppBar = () => {
   const open = Boolean(anchorEl);
 
   const { onToggleTheme, darkMode } = useAppTheme();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,7 +73,7 @@ export const AppBar = () => {
             ) : (
               <>
                 <MenuItem onClick={handleClose}>Meu cadastro</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </>
             )}
           </Menu>

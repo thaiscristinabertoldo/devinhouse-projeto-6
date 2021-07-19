@@ -7,13 +7,17 @@ import { AppThemeProvider } from './contexts/theme-context';
 import { AuthProvider } from './contexts/auth-context';
 import keycloak from './keycloak';
 
-const logger = (event, error) => {
-  console.log('onKeycloakEvent', event, error)
-}
+const eventLogger = (event, error) => {
+  console.log('onKeycloakEvent', event, error);
+};
+
+const tokenLogger = (event, error) => {
+  console.log('onKeycloakToken', event, error);
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactKeycloakProvider authClient={keycloak} onEvent={logger}>
+    <ReactKeycloakProvider authClient={keycloak} onEvent={eventLogger} onToken={tokenLogger}>
       <AppThemeProvider>
         <AuthProvider>
           <App />
@@ -21,5 +25,5 @@ ReactDOM.render(
       </AppThemeProvider>
     </ReactKeycloakProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
