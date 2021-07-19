@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { useKeycloak } from '@react-keycloak/web';
 
 const AuthContext = createContext();
 
@@ -13,11 +14,19 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn] = useState(false);
+  const { keycloak } = useKeycloak();
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(Boolean(keycloak?.authenticated));
+    console.log(keycloak?.authenticated);
+    console.log(isLoggedIn);
+  }, [keycloak?.authenticated]);
+
+  const logout = useCallback(() => {
+    return keycloak?.logout();
+  }, [keycloak]);
+
+  return <AuthContext.Provider value={{ isLoggedIn, logout }}>{children}</AuthContext.Provider>;
 };

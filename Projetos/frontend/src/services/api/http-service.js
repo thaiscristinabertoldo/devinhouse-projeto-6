@@ -1,10 +1,14 @@
+import keycloak from '../../keycloak';
+
 const { default: axios } = require('axios');
 const { URLS } = require('../constants');
+
+const keycloakToken = keycloak?.token ?? '';
 
 const axiosInstance = axios.create({
   baseURL: URLS.BASE,
   headers: {
-    Authorization: 'Bearer ',
+    Authorization: initialized ? `Bearer ${keycloakToken}` : undefined,
     'Content-Type': 'application/json',
   },
 });

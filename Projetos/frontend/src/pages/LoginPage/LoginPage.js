@@ -1,12 +1,20 @@
 import { BaseLayout } from '../../layouts/BaseLayout';
-import { Box, Button, Container, Divider, Grid, Paper, Typography } from '@material-ui/core';
-import { TextInput } from '../../components/TextInput';
+import { Box, Button, Container, Divider, Paper, Typography } from '@material-ui/core';
 import { Pre } from '../../components/Pre/Pre';
+import { useKeycloak } from '@react-keycloak/web';
+import { Redirect } from 'react-router-dom';
 
-export const LoginPage = ({ history }) => {
+export const LoginPage = () => {
+  const { keycloak } = useKeycloak();
+
   const onClickLogin = () => {
-    history.push('/processos');
+    keycloak?.login();
   };
+
+  if (keycloak?.authenticated) {
+    console.log({ auth: keycloak?.authenticated });
+    return <Redirect to={'/processos'} />;
+  }
 
   return (
     <BaseLayout>
@@ -23,11 +31,7 @@ export const LoginPage = ({ history }) => {
                 <br /> Para acessar, utilize as credenciais usuário <Pre>admin</Pre> e senha <Pre>adminpass</Pre>{' '}
               </Typography>
             </Box>
-            <Box marginY={2}>
-              <TextInput label="Usuário" placeholder="Digite seu usuário" />
-              <TextInput label="Senha" placeholder="Digite sua senha" type="password" />
-            </Box>
-            <Grid container justifyContent="flex-end">
+            <Box display="flex" justifyContent="center">
               <Button
                 onClick={onClickLogin}
                 size="large"
@@ -35,9 +39,9 @@ export const LoginPage = ({ history }) => {
                 color="primary"
                 style={{ color: 'white' }}
               >
-                <strong>Entrar</strong>
+                <strong>Fazer Login</strong>
               </Button>
-            </Grid>
+            </Box>
           </Box>
         </Container>
       </Box>
