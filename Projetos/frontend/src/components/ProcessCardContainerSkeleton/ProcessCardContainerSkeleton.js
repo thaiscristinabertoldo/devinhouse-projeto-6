@@ -7,13 +7,18 @@ export const ProcessCardContainerSkeleton = () => {
 
   return (
     <Card className={classes.root}>
-      <Skeleton variant="text" component="h1" animation="wave" className={classes.title} />
-      <Divider className={classes.divider} />
-      <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
-      <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
-      <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
-      <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
-      <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
+      <Grid container justifyContent="center">
+        <Skeleton variant="text" component="h1" animation="wave" className={classes.title} />
+      </Grid>
+      <Grid container justifyContent="center">
+        <Divider className={classes.divider} />
+      </Grid>
+      <Grid container justifyContent="center">
+        <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
+        <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
+        <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
+        <Skeleton variant="text" component="h2" animation="wave" className={classes.pos} />
+      </Grid>
       <Grid container justifyContent="flex-end" className={classes.action}>
         <CardActions>
           <Button size="small">
