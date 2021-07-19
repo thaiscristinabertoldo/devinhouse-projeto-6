@@ -1,5 +1,7 @@
 package br.com.devinhouse.grupo5.controllers;
 
+import java.util.List;
+
 import br.com.devinhouse.grupo5.dto.AssuntoInputDTO;
 import br.com.devinhouse.grupo5.dto.AssuntoOutputDTO;
 import br.com.devinhouse.grupo5.service.AssuntoService;
@@ -19,6 +21,11 @@ public class AssuntoController {
     @PostMapping
     public AssuntoOutputDTO cadastrarAssunto(@RequestBody AssuntoInputDTO novoAssunto){
         return assuntoService.cadastrarAssunto(novoAssunto);
+    }
+
+    @GetMapping
+    public List<AssuntoOutputDTO> listaAssuntos() {
+        return assuntoService.buscarTodosAssuntos();
     }
 
     @GetMapping(value = "/id/{id}")

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
-import { Header, ProcessForm, DialogScreen } from "./components";
+import { Header, ProcessForm } from "./components";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -9,9 +9,7 @@ function App() {
       <Header />
       teste
       <Button onClick={() => setOpen(true)}>vai</Button>
-      <DialogScreen setOpen={setOpen} open={open} Raw>
-        <ProcessForm />
-      </DialogScreen>
+      <ProcessForm setOpen={setOpen} open={open} />
     </>
   );
 }
