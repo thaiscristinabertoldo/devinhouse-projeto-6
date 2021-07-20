@@ -8,14 +8,14 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(false)
 
   const toggleTheme = () => {
-    setDarkMode(oldValue => !oldValue)
+    setDarkMode((oldValue) => !oldValue)
   }
 
   const theme = getTheme(darkMode)
 
   return (
     <ThemeProvider theme={theme}>
-      <HomeContainer />
+      <HomeContainer toggleTheme={toggleTheme} />
       <SearchBar />
     </ThemeProvider>
   )
