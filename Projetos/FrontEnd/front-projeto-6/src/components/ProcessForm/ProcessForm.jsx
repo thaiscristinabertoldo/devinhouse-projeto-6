@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import {
   DialogActions,
@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Dialog,
   MenuItem,
+  Autocomplete,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
@@ -32,6 +33,7 @@ const validationSchema = yup.object({
 });
 
 export const ProcessForm = ({ setOpen, open }) => {
+  const [assuntos, setAssuntos] = useState([]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const handleClose = () => setOpen(false);
@@ -47,21 +49,14 @@ export const ProcessForm = ({ setOpen, open }) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-  const assuntos = [];
+
   useEffect(() => {
-    // TODO: criar uma listagem de todos os assuntos
     axios.get("http://localhost:8080/backend/v1/assunto").then(({ data }) => {
-      console.log(data);
-      data
-        .filter((assunto, index) => {
-          // console.log(assunto.flAtivo, index);
-          return assunto.flAtivo === true;
-        })
-        .forEach((assunto) => {
-          console.log(assunto);
-          assuntos.push(assunto.descricao);
-          console.log(assuntos);
-        });
+      setAssuntos(
+        data
+          .filter((assunto) => assunto.flAtivo === true)
+          .map((assunto) => assunto.descricao),
+      );
     });
   }, []);
 
@@ -70,16 +65,17 @@ export const ProcessForm = ({ setOpen, open }) => {
       open={open}
       onClose={handleClose}
       fullScreen={isSmallScreen}
+      fullWidth="md"
+      maxWidth="md"
       aria-labelledby="criação de processos"
     >
       <form onSubmit={formik.handleSubmit}>
         <DialogTitle>teste</DialogTitle>
         <DialogContent>
           <TextField
-            fullWidth={isSmallScreen}
+            fullWidth
             autoFocus
             required
-            margin="dense"
             id="siglaOrgao"
             name="siglaOrgao"
             label="Sigla do Orgão"
@@ -90,9 +86,19 @@ export const ProcessForm = ({ setOpen, open }) => {
             }
             helperText={formik.touched.siglaOrgao && formik.errors.siglaOrgao}
           />
+          <Autocomplete
+            margin="dense"
+            id="assuntos"
+            options={assuntos}
+            renderInput={(params) => {
+              console.log(params);
+              return <TextField {...params} label="Assunto" />;
+            }}
+          />
           <TextField
             select
             required
+            fullWidth
             margin="dense"
             id="assunto"
             name="assunto"
@@ -103,8 +109,8 @@ export const ProcessForm = ({ setOpen, open }) => {
             helperText={formik.touched.assunto && formik.errors.assunto}
           >
             {assuntos.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+              <MenuItem key={option} value={option}>
+                {option}
               </MenuItem>
             ))}
           </TextField>
