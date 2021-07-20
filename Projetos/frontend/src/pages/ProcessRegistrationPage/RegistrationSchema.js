@@ -13,6 +13,6 @@ export const initialProcessValues = {
   sgOrgaoSetor: '',
   nuAno: '',
   descricao: '',
-  cdAssunto: '',
-  cdInteressado: '',
+  cdAssunto: {},
+  cdInteressado: {},
 };

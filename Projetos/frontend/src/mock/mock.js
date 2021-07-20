@@ -308,3 +308,15 @@ export const subjectsList = [
     flAtivo: 's',
   },
 ];
+
+export const getOneProcess = (id) => {
+  console.log('id:', id);
+  const process = processList.find((element) => element.id == id);
+  return {
+    sgOrgaoSetor: process.sgOrgaoSetor,
+    nuAno: process.nuAno,
+    descricao: process.descricao,
+    cdAssunto: process.cdAssunto,
+    cdInteressado: process.cdInteressado,
+  };
+};

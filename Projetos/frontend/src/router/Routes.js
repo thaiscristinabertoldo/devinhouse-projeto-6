@@ -10,9 +10,9 @@ export const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/login" exact component={LoginPage} />
-        <PrivateRoute path="/processos" exxact component={ListProcessPage} />
-        <PrivateRoute path="/processos/cadastro" component={ProcessRegistrationPage} />
-        <Redirect path="/" to="/processos" />
+        <PrivateRoute path="/processos" exact component={ListProcessPage} />
+        <PrivateRoute path="/processos/cadastro/:id?" component={ProcessRegistrationPage} />
+        <Redirect path="/" exact to="/processos" />
       </Switch>
     </BrowserRouter>
   );

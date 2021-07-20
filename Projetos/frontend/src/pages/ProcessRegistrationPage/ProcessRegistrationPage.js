@@ -5,18 +5,21 @@ import { useStyles } from './ProcessRegistrationPage.styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox/SearchSubjectComboBox';
 import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
 import { initialProcessValues, registrationSchema } from './RegistrationSchema';
 import { DivError } from '../../components/DivError';
 import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { getOneProcess } from '../../mock';
 
 export const ProcessRegistrationPage = (props) => {
   const classes = useStyles();
 
   const history = useHistory();
+
+  const { id } = useParams();
 
   const handleGoBack = () => {
     history.push('/processos');
@@ -29,7 +32,7 @@ export const ProcessRegistrationPage = (props) => {
     }, 400);
   };
 
-  const nuProcesso = 1;
+  const nuProcesso = id || 1;
 
   return (
     <Grid container justifyContent="center">
@@ -39,7 +42,11 @@ export const ProcessRegistrationPage = (props) => {
             <Typography variant="h1" align="center" gutterBottom className={classes.title}>
               <strong>Formulário de Cadastro de Processo</strong>
             </Typography>
-            <Formik initialValues={initialProcessValues} onSubmit={handleSubmit} validationSchema={registrationSchema}>
+            <Formik
+              initialValues={id !== undefined ? getOneProcess(id) : initialProcessValues}
+              onSubmit={handleSubmit}
+              validationSchema={registrationSchema}
+            >
               {({ values, setFieldValue, isSubmitting, isValid, errors, resetForm, touched }) => (
                 <Form className={classes.form}>
                   {console.log('errors', errors)}
@@ -66,7 +73,7 @@ export const ProcessRegistrationPage = (props) => {
                       <Field
                         name="chaveProcesso"
                         label="Chave do Processo"
-                        value={values.sgOrgaoSetor + ' ' + nuProcesso + '/' + values.nuAno}
+                        value={values?.sgOrgaoSetor + ' ' + nuProcesso + '/' + values?.nuAno}
                         disabled="true"
                         as={Input}
                       />
