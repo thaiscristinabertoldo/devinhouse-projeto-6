@@ -47,28 +47,32 @@ public class ProcessoController {
 		return processoMapper.toDto(service.findAll(chave_processo, cd_interessado_id, cd_assunto_id));
 
 	}
-
+	
+	@RolesAllowed("user")
 	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public ProcessoDTOOutput find(@PathVariable Long id) {
 		return processoMapper.toDto(service.find(id));
 	}
-
+	
+	@RolesAllowed("user")
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ProcessoDTOOutput create(@Valid @RequestBody ProcessoDTOInput processoDTO) {
 		return processoMapper.toDto(service.create(processoMapper.toProcesso(processoDTO)));
 	}
-
+	
+	@RolesAllowed("user")
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Long id, @RequestBody ProcessoDTOInput processoDTO) {
 		service.update(id, processoMapper.toProcesso(processoDTO));
 	}
-
+	
+	@RolesAllowed("user")
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
