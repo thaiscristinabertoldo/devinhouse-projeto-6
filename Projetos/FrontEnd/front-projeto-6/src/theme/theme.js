@@ -29,7 +29,7 @@ const ThemeProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    localStorage.setItem('theme', theme?.pallete?.mode);
+    localStorage.setItem('theme', theme?.palette?.mode);
   }, [theme]);
 
   return (
