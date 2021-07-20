@@ -30,7 +30,11 @@ export const ListProcessPage = (props) => {
   const history = useHistory();
 
   const handleClickIntoAddButtonToGoToTheRegistrationProcessPage = () => {
-    history.push('/processos/cadastro');
+    history.push('/processos/cadastro/');
+  };
+
+  const handleEditProcess = (id) => {
+    history.push(`/processos/cadastro/${id}`);
   };
 
   return (
@@ -78,6 +82,7 @@ export const ListProcessPage = (props) => {
                 processStakeholder={element.cdInteressado.nmInteressado}
                 stakeholderStatus={element.cdInteressado.flAtivo}
                 processDescription={element.descricao}
+                handleEditProcess={() => handleEditProcess(element.id)}
               />
             ))}
         </Grid>

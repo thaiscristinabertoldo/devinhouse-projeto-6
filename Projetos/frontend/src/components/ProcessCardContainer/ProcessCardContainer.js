@@ -12,6 +12,7 @@ export const ProcessCardContainer = (props) => {
     processSubject,
     processStakeholder,
     processDescription,
+    handleEditProcess,
   } = props;
   const classes = useStyles();
 
@@ -57,7 +58,7 @@ export const ProcessCardContainer = (props) => {
             <DeleteForeverIcon className={classes.deleteButton} />
           </Button>
           <Button size="small">
-            <EditIcon className={classes.editButton} />
+            <EditIcon className={classes.editButton} onClick={handleEditProcess} />
           </Button>
         </CardActions>
       </Grid>
