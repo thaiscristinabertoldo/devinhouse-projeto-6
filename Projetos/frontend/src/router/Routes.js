@@ -11,7 +11,7 @@ export const Routes = () => {
       <Switch>
         <Route path="/login" exact component={LoginPage} />
         <PrivateRoute path="/processos" exact component={ListProcessPage} />
-        <PrivateRoute path="/processos/cadastro/:id?" component={ProcessRegistrationPage} />
+        <PrivateRoute path="/processos/formulario/:id?" component={ProcessRegistrationPage} />
         <Redirect path="/" exact to="/processos" />
       </Switch>
     </BrowserRouter>
