@@ -1,11 +1,23 @@
 import { Navbar } from './components/Navbar/Navbar'
+import { ThemeProvider } from '@material-ui/core'
+import { getTheme } from './theme/Theme'
+import { useState } from 'react'
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false)
+
+  const toggleTheme = () => {
+    setDarkMode((oldValue) => !oldValue)
+  }
+
+  const theme = getTheme(darkMode)
+
   return (
-    <div>
-      <h2>test</h2>
-      <Navbar />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Navbar toggleTheme={toggleTheme} />
+      </div>
+    </ThemeProvider>
   )
 }
 

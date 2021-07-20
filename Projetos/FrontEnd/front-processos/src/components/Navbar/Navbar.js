@@ -1,9 +1,13 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, IconButton, Tooltip, Toolbar, Typography, useTheme } from '@material-ui/core'
 import { useStyles } from './Navbar.styles'
 import MenuIcon from '@material-ui/icons/Menu'
+import Brightness4Icon from '@material-ui/icons/Brightness4'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
 
-export const Navbar = () => {
+export const Navbar = ({ toggleTheme }) => {
   const classes = useStyles()
+
+  const { palette } = useTheme()
 
   return (
     <div className={classes.root}>
@@ -15,6 +19,15 @@ export const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
+          <Tooltip title="Alterar tema">
+            <IconButton aria-label="delete" onClick={toggleTheme}>
+              {palette?.type === 'dark' ? (
+                <Brightness4Icon className={classes.iconColor} />
+              ) : (
+                <Brightness7Icon className={classes.iconColor} />
+              )}
+            </IconButton>
+          </Tooltip>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
