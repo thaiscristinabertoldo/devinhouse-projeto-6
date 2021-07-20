@@ -40,7 +40,7 @@ export const ProcessRegistrationPage = (props) => {
         <Box>
           <Grid container justifyContent="center">
             <Typography variant="h1" align="center" gutterBottom className={classes.title}>
-              <strong>Formulário de Cadastro de Processo</strong>
+              <strong>Formulário de {id !== undefined ? "Edição" : "Cadastro"} de Processo</strong>
             </Typography>
             <Formik
               initialValues={id !== undefined ? getOneProcess(id) : initialProcessValues}

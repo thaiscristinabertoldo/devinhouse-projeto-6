@@ -30,11 +30,11 @@ export const ListProcessPage = (props) => {
   const history = useHistory();
 
   const handleClickIntoAddButtonToGoToTheRegistrationProcessPage = () => {
-    history.push('/processos/cadastro/');
+    history.push('/processos/formulario/');
   };
 
   const handleEditProcess = (id) => {
-    history.push(`/processos/cadastro/${id}`);
+    history.push(`/processos/formulario/${id}`);
   };
 
   return (
