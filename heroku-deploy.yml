@@ -1,0 +1,27 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Heroku Deploy
+
+on:
+  push:
+    branches: [ developer ]
+  pull_request:
+    branches: [ developer ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy to Heroku
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        # This will be used for authentication. You can find it in your heroku homepage account settings
+        heroku_api_key: aae50dce-98e1-4eb9-8d15-eac2232781b5
+        # Email that you use with heroku
+        heroku_email: brayanbmn@hotmail.com
+        # The appname to use for deploying/updating
+        heroku_app_name: devinhouse-projeto-6
