@@ -7,7 +7,6 @@ import {
   DialogTitle,
   useMediaQuery,
   Dialog,
-  MenuItem,
   Autocomplete,
   Stack,
 } from "@material-ui/core";
@@ -71,7 +70,7 @@ export const ProcessForm = ({ setOpen, open }) => {
       open={open}
       onClose={handleClose}
       fullScreen={isSmallScreen}
-      fullWidth="md"
+      fullWidth
       maxWidth="md"
       aria-labelledby="criação de processos"
     >
