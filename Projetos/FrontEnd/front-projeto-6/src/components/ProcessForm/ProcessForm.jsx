@@ -9,6 +9,7 @@ import {
   Dialog,
   MenuItem,
   Autocomplete,
+  Stack,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
@@ -34,6 +35,7 @@ const validationSchema = yup.object({
 
 export const ProcessForm = ({ setOpen, open }) => {
   const [assuntos, setAssuntos] = useState([]);
+  const [interessados, setInteressados] = useState([]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const handleClose = () => setOpen(false);
@@ -52,12 +54,16 @@ export const ProcessForm = ({ setOpen, open }) => {
 
   useEffect(() => {
     axios.get("http://localhost:8080/backend/v1/assunto").then(({ data }) => {
-      setAssuntos(
-        data
-          .filter((assunto) => assunto.flAtivo === true)
-          .map((assunto) => assunto.descricao),
-      );
+      setAssuntos(data.filter((assunto) => assunto.flAtivo === true));
     });
+
+    axios
+      .get("http://localhost:8080/backend/v1/interessado")
+      .then(({ data }) => {
+        setInteressados(
+          data.filter((interessado) => interessado.flAtivo === true),
+        );
+      });
   }, []);
 
   return (
@@ -72,62 +78,74 @@ export const ProcessForm = ({ setOpen, open }) => {
       <form onSubmit={formik.handleSubmit}>
         <DialogTitle>teste</DialogTitle>
         <DialogContent>
-          <TextField
-            fullWidth
-            autoFocus
-            required
-            id="siglaOrgao"
-            name="siglaOrgao"
-            label="Sigla do Orgão"
-            value={formik.values.siglaOrgao}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.siglaOrgao && Boolean(formik.errors.siglaOrgao)
-            }
-            helperText={formik.touched.siglaOrgao && formik.errors.siglaOrgao}
-          />
-          <Autocomplete
-            margin="dense"
-            id="assuntos"
-            options={assuntos}
-            renderInput={(params) => {
-              console.log(params);
-              return <TextField {...params} label="Assunto" />;
-            }}
-          />
-          <TextField
-            select
-            required
-            fullWidth
-            margin="dense"
-            id="assunto"
-            name="assunto"
-            label="Assunto do Processo"
-            value={formik.values.assunto}
-            onChange={formik.handleChange}
-            error={formik.touched.assunto && Boolean(formik.errors.assunto)}
-            helperText={formik.touched.assunto && formik.errors.assunto}
-          >
-            {assuntos.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            fullWidth={isSmallScreen}
-            required
-            multiline
-            minRows={3}
-            margin="dense"
-            id="descricao"
-            name="descricao"
-            label="Descrição do Processo"
-            value={formik.values.descricao}
-            onChange={formik.handleChange}
-            error={formik.touched.descricao && Boolean(formik.errors.descricao)}
-            helperText={formik.touched.descricao && formik.errors.descricao}
-          />
+          <Stack spacing={2}>
+            <TextField
+              fullWidth
+              sx={{ marginTop: 1 }}
+              autoFocus
+              required
+              id="siglaOrgao"
+              name="siglaOrgao"
+              label="Sigla do Orgão"
+              value={formik.values.siglaOrgao}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.siglaOrgao && Boolean(formik.errors.siglaOrgao)
+              }
+              helperText={formik.touched.siglaOrgao && formik.errors.siglaOrgao}
+            />
+            <Autocomplete
+              id="assuntos"
+              required
+              options={assuntos}
+              getOptionLabel={(assunto) => assunto.descricao}
+              renderInput={(params) => {
+                return <TextField {...params} label="Assunto" />;
+              }}
+            />
+            <Autocomplete
+              id="interessado"
+              required
+              options={interessados}
+              getOptionLabel={(interessado) => interessado.descricao}
+              renderInput={(params) => {
+                return <TextField {...params} label="Assunto" />;
+              }}
+            />
+            {/* <TextField
+              select
+              required
+              fullWidth
+              id="assunto"
+              name="assunto"
+              label="Assunto do Processo"
+              value={formik.values.assunto}
+              onChange={formik.handleChange}
+              error={formik.touched.assunto && Boolean(formik.errors.assunto)}
+              helperText={formik.touched.assunto && formik.errors.assunto}
+            >
+              {assuntos.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField> */}
+            <TextField
+              fullWidth={isSmallScreen}
+              required
+              multiline
+              minRows={3}
+              id="descricao"
+              name="descricao"
+              label="Descrição do Processo"
+              value={formik.values.descricao}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.descricao && Boolean(formik.errors.descricao)
+              }
+              helperText={formik.touched.descricao && formik.errors.descricao}
+            />
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button color="primary" variant="contained" type="submit">
