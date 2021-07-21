@@ -310,7 +310,6 @@ export const subjectsList = [
 ];
 
 export const getOneProcess = (id) => {
-  console.log('id:', id);
   const process = processList.find((element) => element.id == id);
   return {
     sgOrgaoSetor: process.sgOrgaoSetor,
@@ -319,4 +318,24 @@ export const getOneProcess = (id) => {
     cdAssunto: process.cdAssunto,
     cdInteressado: process.cdInteressado,
   };
+};
+
+export const searchProcess = (searchType, searchKey) => {
+  console.log('searchType: ', searchType.toUpperCase() === 'PROCESS');
+
+  const process = [];
+  processList.map((element) => {
+    if (searchType.toUpperCase() === 'PROCESS') {
+      console.log('nuProcesso === searchKey? ', element.nuProcesso == searchKey);
+      if (element.nuProcesso == searchKey) {
+        process.push(element);
+      }
+    } else {
+      console.log('element.cdAssunto.descricao == searchKey', element.cdAssunto.descricao == searchKey);
+      if (element.cdAssunto.descricao == searchKey) {
+        process.push(element);
+      }
+    }
+  });
+  return process;
 };

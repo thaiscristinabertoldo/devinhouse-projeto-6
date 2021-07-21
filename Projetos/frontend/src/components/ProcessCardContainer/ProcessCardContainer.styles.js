@@ -17,6 +17,7 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: 5,
   },
   action: {
+    width: '100%',
     backgroundColor: theme.palette.primary.main,
   },
   noActive: {
@@ -27,6 +28,6 @@ export const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   deleteButton: {
-    color: "white",
+    color: 'white',
   },
 }));
