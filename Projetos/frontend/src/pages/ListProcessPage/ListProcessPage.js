@@ -1,14 +1,31 @@
-import { Box, Container, Fab, FormControlLabel, Grid, makeStyles, Radio, RadioGroup, Slide } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Fab,
+  FormControlLabel,
+  Grid,
+  makeStyles,
+  Paper,
+  Radio,
+  RadioGroup,
+  Slide,
+  Typography,
+} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCardContainer } from '../../components/ProcessCardContainer/ProcessCardContainer';
 import { ProcessCardContainerSkeleton } from '../../components/ProcessCardContainerSkeleton';
 import { SearchBar } from '../../components/SearchBar';
 import { styles } from './ListProcessPage.styles';
-import { processList as process } from '../../mock';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
+import { useSearchContext } from '../../contexts/search-context';
+import { Pre } from '../../components/Pre/Pre';
 
 const useStyles = makeStyles(styles);
 
@@ -17,10 +34,14 @@ export const ListProcessPage = (props) => {
 
   const [load, setLoad] = useState(true);
 
-  const [value, setValue] = useState('processo');
+  const [value, setValue] = useState('PROCESS');
+
+  const { onChangeSearchType, searchType, onChangeSearchKey, searchKey, loadProcessListOfSearch, process } =
+    useSearchContext();
 
   const handleChangeCheckedSearchOption = (event) => {
     setValue(event.target.value);
+    onChangeSearchType(event.target.value);
   };
 
   useEffect(() => {
@@ -53,13 +74,13 @@ export const ListProcessPage = (props) => {
             onChange={handleChangeCheckedSearchOption}
           >
             <FormControlLabel
-              value="processo"
+              value="PROCESS"
               control={<Radio color="primary" />}
               label="Busca por Processo"
               labelPlacement="left"
             />
             <FormControlLabel
-              value="assunto"
+              value="SUBJECT"
               control={<Radio color="primary" />}
               label="Busca por Assunto"
               labelPlacement="left"
@@ -85,6 +106,31 @@ export const ListProcessPage = (props) => {
                 handleEditProcess={() => handleEditProcess(element.id)}
               />
             ))}
+          {process?.length === 0 && (
+            <Card style={{ width: '100%', height: '50%' }}>
+              <CardContent>
+                <Grid direction="column" justifyContent="center" style={{ width: '100%' }}>
+                  <Typography component="h1" align="center" style={{ fontSize: 'x-large' }}>
+                    <strong>Nenhum processo foi encontrado!</strong>
+                  </Typography>
+                  <br />
+                  <Divider />
+                  <br />
+                  <Typography component="h6" align="center">
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        onChangeSearchKey('');
+                        loadProcessListOfSearch();
+                      }}
+                    >
+                      Clique aqui para voltar para a tela anterior!
+                    </Button>
+                  </Typography>
+                </Grid>
+              </CardContent>
+            </Card>
+          )}
         </Grid>
         {!load && (
           <Slide direction="up" in={!load} mountOnEnter unmountOnExit>
