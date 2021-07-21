@@ -1,16 +1,10 @@
 import * as React from 'react'
-import { Route, Redirect, RouteComponentProps } from 'react-router-dom'
-import { RouteProps } from 'react-router-dom'
-
+import { Route, Redirect } from 'react-router-dom'
 import { useKeycloak } from '@react-keycloak/web'
 
-
-export function PrivateRoute({
-  component: Component,
-  ...rest
-}) {
+export function PrivateRoute({ component: Component, ...rest }) {
   const { keycloak } = useKeycloak()
-  
+
   return (
     <Route
       {...rest}
