@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   search: {
-    marginBottom: theme.spacing(8)
-  }
+    marginBottom: theme.spacing(8),
+  },
 }))
