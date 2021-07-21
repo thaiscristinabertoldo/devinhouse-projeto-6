@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,8 @@ import br.com.devinhouse.grupo04.service.ProcessoService;
 @RestController
 @RequestMapping(value = "/v1" + "/processos")
 public class ProcessoController {
+	
+	private static final Logger logger = LogManager.getLogger(ProcessoController.class);
 
 	@Autowired
 	private ProcessoService service;
@@ -44,6 +48,8 @@ public class ProcessoController {
 			@RequestParam(required = false) Long cd_interessado_id,
 			@RequestParam(required = false) Long cd_assunto_id
 			) {
+		logger.info("ProcessoController.findAll chamado com os seguintes params: ", chave_processo, cd_interessado_id, cd_assunto_id);
+		
 		return processoMapper.toDto(service.findAll(chave_processo, cd_interessado_id, cd_assunto_id));
 
 	}
