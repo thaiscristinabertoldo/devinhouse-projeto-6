@@ -3,6 +3,8 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class ProcessoService {
 
 	@Autowired
 	private ProcessoRepository repository;
+
+	private Logger log = LogManager.getLogger(ProcessoService.class);
 
 	public List<Processo> findAll(String chaveProcesso, Long cdInteressadoId, Long cdAssuntoId) {
 
@@ -51,7 +55,9 @@ public class ProcessoService {
 	public Processo create(Processo processo) {
 		verificaFlAtivoInteressadoAssunto(processo);
 
-		return repository.save(processo);
+		processo = repository.save(processo);
+        log.info("Processo " + processo.getId() + " criado com sucesso.");
+		return processo;
 	}
 
 
@@ -63,16 +69,18 @@ public class ProcessoService {
 		verificaFlAtivoInteressadoAssunto(novoProcesso);
 
 		repository.save(novoProcesso);
+        log.info("Processo " + novoProcesso.getId() + " alterado com sucesso.");
 	}
 
 	public void delete(Long id) {
 		repository.deleteById(id);
+		log.info("Processo " + id + " removido com sucesso.");
 	}
 
 	private void verificaFlAtivoInteressadoAssunto(Processo processo) {
 		char assuntoFlAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
 		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
-		
+
 		if (assuntoFlAtivo != 's') {
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
 		}

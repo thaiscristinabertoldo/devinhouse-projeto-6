@@ -3,6 +3,8 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class InteressadoService {
 
 	@Autowired
 	private InteressadoRepository repository;
+	
+	private Logger log = LogManager.getLogger(InteressadoService.class);
 
 	public Interessado create(Interessado interessado) {
 
@@ -29,8 +33,11 @@ public class InteressadoService {
 		if (result.isPresent()) {
 			throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
 		}
-
-		return repository.save(interessado);
+		
+		interessado = repository.save(interessado);
+		log.info("Interessado " + interessado.getId() + " criado com sucesso.");
+		
+		return interessado;
 	}
 
 	public List<Interessado> findAll(String nuIdentificacao) {
@@ -64,11 +71,13 @@ public class InteressadoService {
 		BeanUtils.copyProperties(interessado, novoInteressado, AtualizaColunasUtil.getNullPropertyNames(interessado));
 
 		repository.save(novoInteressado);
+		log.info("Interessado " + interessado.getId() + " alterado com sucesso.");
 
 	}
 
 	public void delete(Long id) {
 		repository.deleteById(id);
+		log.info("Interessado " + id + " deletado com sucesso.");
 
 	}
 
