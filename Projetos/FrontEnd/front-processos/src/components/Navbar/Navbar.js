@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import {
   AppBar,
   Button,
@@ -12,8 +13,18 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Brightness4Icon from '@material-ui/icons/Brightness4'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 
+import {useKeycloak} from '@react-keycloak/web'
+
 export const Navbar = ({ toggleTheme }) => {
   const classes = useStyles()
+
+  const auth = useKeycloak()
+  console.log('teste' , auth)
+  const user =  auth?.keycloak.tokenParsed?.name
+
+  const logout = useCallback(() => {
+    auth?.keycloak?.logout()
+  }, [auth])
 
   const { palette } = useTheme()
 
@@ -30,7 +41,7 @@ export const Navbar = ({ toggleTheme }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Tribunal de Justiça
+            Olá, {user}
           </Typography>
           <Tooltip title='Alterar tema'>
             <IconButton aria-label='delete' onClick={toggleTheme}>
@@ -41,7 +52,7 @@ export const Navbar = ({ toggleTheme }) => {
               )}
             </IconButton>
           </Tooltip>
-          <Button color='inherit'>Login</Button>
+          <Button onClick={logout} color='inherit'>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
