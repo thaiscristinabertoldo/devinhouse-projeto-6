@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "nmInteressado": {
+            "type": "string"
+        },
+        "nuIdentificacao": {
+            "type": "string"
+        },
+        "dtNascimento": {
+            "type": "string"
+        },
+        "flAtivo": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "nmInteressado",
+        "nuIdentificacao",
+        "dtNascimento",
+        "flAtivo"
+    ]
+}

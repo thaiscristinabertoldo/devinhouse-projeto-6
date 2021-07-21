@@ -1,26 +1,34 @@
 # Testes e2e
 
-Teste e2e desenvolvido para aplicação do Projeto ...... 
+Teste e2e desenvolvido para aplicação do Projeto `devinhouse-projeto-6`
 
 
 ## Features a serem testadas 
 
-- Login
-- AppBar
-- DarkTheme
-- Listagem dos Processos
-- CRUD de Processo
-- Busca de Processo por Assunto
+
+### Features Implementadas 
+
+__BackEnd__
+
+- CRUD Assunto
+- CRUD Interessado
+- CRUD Processo
 
 
 ## Bibliotecas utilizadas para a automação 
 
-- Cypress 
-- Keycloack
-- Schema Validador
+- [Cypress](https://www.cypress.io/) 
+- [Schema Validador](https://www.npmjs.com/package/ajv)
+- [gerador-validador-cpf](https://www.npmjs.com/package/gerador-validador-cpf)
 
 
 ## Executar os cenários
+
+- Instalar as dependencias
+
+```
+    npm install
+```
 
 - Abrir o Cypress
 

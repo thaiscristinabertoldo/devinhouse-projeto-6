@@ -1,63 +1,23 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "http://example.com/example.json",
     "type": "object",
-    "title": "The root schema",
-    "description": "The root schema comprises the entire JSON document.",
-    "default": {},
-    "examples": [{
-        "id": 80,
-        "descricao": "criando novo assunto",
-        "dtCadastro": "20/07/2021",
-        "flAtivo": "s"
-    }],
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "descricao": {
+            "type": "string"
+        },
+        "dtCadastro": {
+            "type": "string"
+        },
+        "flAtivo": {
+            "type": "string"
+        }
+    },
     "required": [
         "id",
         "descricao",
         "dtCadastro",
         "flAtivo"
-    ],
-    "properties": {
-        "id": {
-            "$id": "#/properties/id",
-            "type": "integer",
-            "title": "The id schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": 0,
-            "examples": [
-                80
-            ]
-        },
-        "descricao": {
-            "$id": "#/properties/descricao",
-            "type": "string",
-            "title": "The descricao schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-                "criando novo assunto"
-            ]
-        },
-        "dtCadastro": {
-            "$id": "#/properties/dtCadastro",
-            "type": "string",
-            "title": "The dtCadastro schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-                "20/07/2021"
-            ]
-        },
-        "flAtivo": {
-            "$id": "#/properties/flAtivo",
-            "type": "string",
-            "title": "The flAtivo schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-                "s"
-            ]
-        }
-    },
-    "additionalProperties": true
+    ]
 }

@@ -25,18 +25,22 @@ Then(/^todos os assuntos devem ser retornados$/, () => {
     crudAssuntosPages.validoRetornoAssuntos()
 })
 
-Then(/^não deve retornar erro na requisição$/, () => {
+Then(/^não deve retornar erro na requisição de novo Assunto$/, () => {
     crudAssuntosPages.validoRetornoAssuntoCriado()
 })
 
-Then(/^deve retornar o assunto criado$/, () => {
+Then(/^deve retornar o assunto criado de novo Assunto$/, () => {
     crudAssuntosPages.validoRetornoBuscaAssuntoID()
 })
 
-Then(/^deve retornar o Assunto com os dados atualizados$/, () => {
+Then(/^deve retornar o Assunto com os dados atualizados de novo Assunto$/, () => {
     crudAssuntosPages.validoUpdateAssuntoCriado()
 })
 
-Then(/^deve ser salvo a requisição no banco$/, () => {
+Then(/^deve ser salvo a requisição no banco de novo Assunto$/, () => {
     crudAssuntosPages.validoDeleteAssuntoCriado()
+})
+
+And(/^busco por um Assunto ativo$/, () => {
+    crudAssuntosPages.buscoPorAssuntoAtivo()
 })
