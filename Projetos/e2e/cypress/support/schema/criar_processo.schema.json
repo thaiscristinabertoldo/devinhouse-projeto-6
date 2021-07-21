@@ -1,0 +1,83 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "nuProcesso": {
+            "type": "integer"
+        },
+        "sgOrgaoSetor": {
+            "type": "string"
+        },
+        "nuAno": {
+            "type": "string"
+        },
+        "chaveProcesso": {
+            "type": "string"
+        },
+        "descricao": {
+            "type": "string"
+        },
+        "cdAssunto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "dtCadastro": {
+                    "type": "string"
+                },
+                "flAtivo": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "descricao",
+                "dtCadastro",
+                "flAtivo"
+            ]
+        },
+        "cdInteressado": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nmInteressado": {
+                    "type": "string"
+                },
+                "nuIdentificacao": {
+                    "type": "string"
+                },
+                "dtNascimento": {
+                    "type": "string"
+                },
+                "flAtivo": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "nmInteressado",
+                "nuIdentificacao",
+                "dtNascimento",
+                "flAtivo"
+            ]
+        }
+    },
+    "required": [
+        "id",
+        "nuProcesso",
+        "sgOrgaoSetor",
+        "nuAno",
+        "chaveProcesso",
+        "descricao",
+        "cdAssunto",
+        "cdInteressado"
+    ]
+}

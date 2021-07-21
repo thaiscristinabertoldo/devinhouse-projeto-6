@@ -1,6 +1,8 @@
 const token = require('../fixtures/token.json')
+import { generate } from 'gerador-validador-cpf'
 
-Cypress.Commands.add('validar_contrato', (schema, response) => {
+
+Cypress.Commands.add('schema_validator', (schema, response) => {
     const Ajv = require("ajv")
     const ajv = new Ajv({ allErrors: true, strict: false })
 
@@ -24,6 +26,13 @@ Cypress.Commands.add('token', () => {
             password: token.password
         }
     }).then(response => {
-        Cypress.env('token', response.body.access_token)
+        return cy.wrap(response.body.access_token)
+    }).then(token => {
+        Cypress.env('token', token)
     }).as('token')
+})
+
+Cypress.Commands.add('gerar_cpf', () => {
+    var cpf = generate({ format: true }) // Gera um CPF no formato 000.000.000-00
+    Cypress.env('CPF', cpf)
 })

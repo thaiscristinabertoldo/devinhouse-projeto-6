@@ -1,18 +1,19 @@
 /// <reference types="Cypress" />
 const criar_assunto_schema = require('../schema/criar_assunto.schema.json')
-const nova_descricao = require('../../fixtures/Assuntos.json')
 
 var todosAssuntos = ""
 var novoAssunto = ""
 var buscaAssuntoCriado = ""
 var updateAssuntoCriado = ""
 var deleteAssuntoCriado = ""
+var flativo = 'n'
 
 class CRUDAssuntos {
 
     buscoTodosAssuntos() {
         cy.assuntos().then(response => {
             todosAssuntos = response
+            return cy.wrap(todosAssuntos)
         })
     }
 
@@ -46,7 +47,7 @@ class CRUDAssuntos {
     }
 
     validoRetornoAssuntoCriado() {
-        cy.validar_contrato(criar_assunto_schema, novoAssunto)
+        cy.schema_validator(criar_assunto_schema, novoAssunto)
     }
 
     validoRetornoBuscaAssuntoID() {

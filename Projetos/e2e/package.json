@@ -10,7 +10,8 @@
         "cucumber": "^7.0.0-rc.0",
         "cypress": "^8.0.0",
         "cypress-cucumber-preprocessor": "^4.1.4",
-        "cypress-xpath": "^1.6.2"
+        "cypress-xpath": "^1.6.2",
+        "gerador-validador-cpf": "^5.0.1"
     },
     "scripts": {
         "test": "cypress run "

@@ -16,6 +16,8 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './requests/CRUDAssuntos.commands'
+import './requests/CRUDInteressado.commands'
+import './requests/CRUDProcessos.commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

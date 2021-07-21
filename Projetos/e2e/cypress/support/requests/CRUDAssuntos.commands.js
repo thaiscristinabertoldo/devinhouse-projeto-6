@@ -6,7 +6,7 @@ Cypress.Commands.add('assuntos', () => {
         url: '/assuntos',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${Cypress.env('token')}`
+            Authorization: `Bearer ${Cypress.env('token')}`,
         }
     }).then(response => {
         return cy.wrap(response.body)
@@ -20,7 +20,7 @@ Cypress.Commands.add('assuntos_id', () => {
         url: `/assuntos/${Cypress.env('id_assunto_criado')}`,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${Cypress.env('token')}`
+            Authorization: `Bearer ${Cypress.env('token')}`,
         }
     }).then(response => {
         expect(response.status).to.be.eq(200)
@@ -35,7 +35,7 @@ Cypress.Commands.add('criar_assunto', () => {
         url: `/assuntos`,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${Cypress.env('token')}`
+            Authorization: `Bearer ${Cypress.env('token')}`,
         },
         body: {
             "descricao": assunto.descricao_novo_assunto
@@ -54,7 +54,7 @@ Cypress.Commands.add('update_assunto', () => {
         url: `/assuntos/${Cypress.env('id_assunto_criado')}`,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${Cypress.env('token')}`
+            Authorization: `Bearer ${Cypress.env('token')}`,
         },
         body: {
             "descricao": assunto.descricao_update_assunto
@@ -72,7 +72,7 @@ Cypress.Commands.add('delete_assunto', () => {
         url: `/assuntos/${Cypress.env('id_assunto_criado')}`,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${Cypress.env('token')}`
+            Authorization: `Bearer ${Cypress.env('token')}`,
         }
     }).then(response => {
         expect(response.status).to.be.eq(204)
