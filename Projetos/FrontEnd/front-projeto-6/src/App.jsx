@@ -3,11 +3,11 @@ import {
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import { ThemeProvider } from 'theme';
-import { KeycloakProvider } from 'keycloak';
-import { Header } from 'components';
+import { ThemeProvider } from "theme";
+import { KeycloakProvider } from "keycloak";
+import { Header } from "components";
 
 function App() {
   return (
