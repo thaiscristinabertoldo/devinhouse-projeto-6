@@ -30,21 +30,17 @@ export const Navbar = ({ toggleTheme }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='menu'
-          >
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
+
           <Typography variant='h6' className={classes.title}>
             Olá, {user}
-          </Typography>
-          <Tooltip title='Alterar tema'>
-            <IconButton aria-label='delete' onClick={toggleTheme}>
+           </Typography>
+          <Tooltip title="Alterar tema">
+            <IconButton aria-label="delete" onClick={toggleTheme}>
               {palette?.type === 'dark' ? (
                 <Brightness4Icon className={classes.iconColor} />
               ) : (
