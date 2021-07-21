@@ -1,0 +1,23 @@
+{
+    "name": "devinhouse-projeto-6-e2e",
+    "version": "1.0.0",
+    "description": "Automacao do projeto devinhouse-projeto-6",
+    "main": "index.js",
+    "dependencies": {
+        "ajv": "^8.6.2"
+    },
+    "devDependencies": {
+        "cucumber": "^7.0.0-rc.0",
+        "cypress": "^8.0.0",
+        "cypress-cucumber-preprocessor": "^4.1.4",
+        "cypress-xpath": "^1.6.2"
+    },
+    "scripts": {
+        "test": "cypress run "
+    },
+    "cypress-cucumber-preprocessor": {
+        "step_definitions": "cypress/support/steps"
+    },
+    "author": "",
+    "license": "ISC"
+}

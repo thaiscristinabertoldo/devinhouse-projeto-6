@@ -1,0 +1,13 @@
+{
+    "testFiles": "**/*.feature",
+    "ignoreTestFiles": ["*.js", "*.ts", "*.md"],
+    "defaultCommandTimeout": 60000,
+    "watchForFileChanges": true,
+    "baseUrl": "http://localhost:8080/v1",
+    "retries": {
+        "runMode": 3,
+        "openMode": 0
+    },
+    "video": false,
+    "chromeWebSecurity": false
+}
