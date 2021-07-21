@@ -25,7 +25,6 @@ import { Link, useHistory } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import { useSearchContext } from '../../contexts/search-context';
-import { Pre } from '../../components/Pre/Pre';
 
 const useStyles = makeStyles(styles);
 
@@ -36,8 +35,15 @@ export const ListProcessPage = (props) => {
 
   const [value, setValue] = useState('PROCESS');
 
-  const { onChangeSearchType, searchType, onChangeSearchKey, searchKey, loadProcessListOfSearch, process } =
-    useSearchContext();
+  const {
+    onChangeSearchType,
+    searchType,
+    onChangeSearchKey,
+    searchKey,
+    loadProcessListOfSearch,
+    loadProcessListWithRemovedElement,
+    process,
+  } = useSearchContext();
 
   const handleChangeCheckedSearchOption = (event) => {
     setValue(event.target.value);
@@ -56,6 +62,10 @@ export const ListProcessPage = (props) => {
 
   const handleEditProcess = (id) => {
     history.push(`/processos/formulario/${id}`);
+  };
+
+  const handleDeleteItem = (element) => {
+    loadProcessListWithRemovedElement(element);
   };
 
   return (
@@ -104,6 +114,7 @@ export const ListProcessPage = (props) => {
                 stakeholderStatus={element.cdInteressado.flAtivo}
                 processDescription={element.descricao}
                 handleEditProcess={() => handleEditProcess(element.id)}
+                handleDeleteItem={() => handleDeleteItem(element)}
               />
             ))}
           {process?.length === 0 && (
@@ -117,13 +128,8 @@ export const ListProcessPage = (props) => {
                   <Divider />
                   <br />
                   <Typography component="h6" align="center">
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        onChangeSearchKey('');
-                        loadProcessListOfSearch();
-                      }}
-                    >
+                    Tente buscar por outro filtro ou
+                    <Button color="primary" onClick={() => document.location.reload(true)}>
                       Clique aqui para voltar para a tela anterior!
                     </Button>
                   </Typography>

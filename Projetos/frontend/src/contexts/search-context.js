@@ -32,20 +32,42 @@ export const SearchContextProvider = ({ children }) => {
   const loadProcessListOfSearch = () => {
     console.log(searchType);
     console.log('searchType: ', searchType.toUpperCase() === 'PROCESS');
-    console.log("searchKey: ", searchKey);
-   
+    console.log('searchKey: ', searchKey);
+
     if (searchType.toUpperCase() === 'PROCESS') {
       console.log('process: ', searchProcess(searchType, searchKey));
       setProcess(searchProcess(searchType, searchKey));
     } else if (searchType.toUpperCase() === 'SUBJECT') {
       setProcess(searchProcess(searchType, searchKey));
-  }};
+    }
+  };
+
+  const loadProcessListWithRemovedElement = (elementForRemove) => {
+    const newProcessList = [];
+    console.log(elementForRemove);
+    process.map((element) => {
+      console.log(element.id !== elementForRemove.id);
+      if (element.id !== elementForRemove.id) {
+        newProcessList.push(element);
+      }
+    });
+    console.log(newProcessList);
+    setProcess(newProcessList);
+  };
 
   useEffect(loadInitialProcessList, []);
 
   return (
     <SearchContext.Provider
-      value={{ onChangeSearchType, searchType, onChangeSearchKey, searchKey, loadProcessListOfSearch, process }}
+      value={{
+        onChangeSearchType,
+        searchType,
+        onChangeSearchKey,
+        searchKey,
+        loadProcessListOfSearch,
+        loadProcessListWithRemovedElement,
+        process,
+      }}
     >
       {children}
     </SearchContext.Provider>

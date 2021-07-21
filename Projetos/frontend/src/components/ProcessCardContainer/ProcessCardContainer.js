@@ -13,6 +13,7 @@ export const ProcessCardContainer = (props) => {
     processStakeholder,
     processDescription,
     handleEditProcess,
+    handleDeleteItem,
   } = props;
   const classes = useStyles();
 
@@ -55,7 +56,7 @@ export const ProcessCardContainer = (props) => {
       <Grid container justifyContent="flex-end" className={classes.action}>
         <CardActions>
           <Button size="small">
-            <DeleteForeverIcon className={classes.deleteButton} />
+            <DeleteForeverIcon className={classes.deleteButton} onClick={handleDeleteItem} />
           </Button>
           <Button size="small">
             <EditIcon className={classes.editButton} onClick={handleEditProcess} />
