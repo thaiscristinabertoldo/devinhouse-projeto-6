@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import br.com.devinhouse.grupo04.entity.Interessado;
 import br.com.devinhouse.grupo04.mapper.InteressadoMapper;
 import br.com.devinhouse.grupo04.service.InteressadoService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/v1" + "/interessados")
 public class InteressadoController {

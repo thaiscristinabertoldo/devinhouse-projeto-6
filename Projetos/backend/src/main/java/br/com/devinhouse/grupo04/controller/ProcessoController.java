@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import br.com.devinhouse.grupo04.dto.ProcessoDTOOutput;
 import br.com.devinhouse.grupo04.mapper.ProcessoMapper;
 import br.com.devinhouse.grupo04.service.ProcessoService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/v1" + "/processos")
 public class ProcessoController {
