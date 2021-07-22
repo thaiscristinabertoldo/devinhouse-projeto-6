@@ -1,5 +1,6 @@
 import {
   AppBar as MuiAppBar,
+  Box,
   Grid,
   IconButton,
   makeStyles,
@@ -16,6 +17,7 @@ import { useState } from 'react';
 import { style } from './AppBar.style';
 import { useAppTheme } from '../../contexts/theme-context';
 import { useAuth } from '../../contexts/auth-context';
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyle = makeStyles(style);
 
@@ -23,9 +25,8 @@ export const AppBar = () => {
   const classes = useStyle();
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
-
   const { onToggleTheme, darkMode } = useAppTheme();
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, userInformation } = useAuth();
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,10 +72,12 @@ export const AppBar = () => {
             {!isLoggedIn ? (
               <MenuItem onClick={handleClose}>Login</MenuItem>
             ) : (
-              <>
-                <MenuItem onClick={handleClose}>Meu cadastro</MenuItem>
+              <Box>
+                <MenuItem disabled="true" onClick={handleClose}>
+                  {userInformation?.name}
+                </MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
-              </>
+              </Box>
             )}
           </Menu>
         </Toolbar>

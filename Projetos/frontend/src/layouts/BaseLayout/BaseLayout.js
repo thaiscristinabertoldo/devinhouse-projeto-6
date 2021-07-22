@@ -1,11 +1,14 @@
 import { AppBar } from '../../components/AppBar';
 import { Box, Container } from '@material-ui/core';
+import { useAuth } from '../../contexts/auth-context';
 
 export const BaseLayout = ({ children }) => {
+  const { isLoggedIn } = useAuth();
+
   return (
     <Box>
-      <AppBar />
-      <Container style={{ marginTop: 85 }}>{children}</Container>
+      {isLoggedIn && <AppBar />}
+      <Container style={{ marginTop: isLoggedIn ? 85 : "15%" }}>{children}</Container>
     </Box>
   );
 };
