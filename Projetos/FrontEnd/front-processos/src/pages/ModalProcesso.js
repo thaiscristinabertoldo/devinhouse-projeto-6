@@ -1,46 +1,36 @@
-import { Modal } from '@material-ui/core'
+import { Modal, Grid, TextField, Typography, Paper } from '@material-ui/core'
 import { useStyles } from './ModalProcesso.styles'
-import { Grid, Paper, TextField } from '@material-ui/core'
 
 const ModalProcesso = ({ open, onClose }) => {
   const classes = useStyles()
 
   return (
     <Modal open={open} onClose={onClose} className={classes.modal}>
-      <div className={classes.paper}>
-        <h2 id="transition-modal-title">Criando Processo</h2>
+      <Paper elevation="10" className={classes.paper}>
+        <Typography variant="subtitle1">Criando Processo</Typography>
+
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <TextField id="outlined-basic" label="Orgão Setor" variant="outlined" />
-            </Paper>
+            <TextField id="outlined-basic" label="Orgão Setor" variant="outlined" />
           </Grid>
 
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <TextField id="outlined-basic" label="Ano" variant="outlined" />
-            </Paper>
+            <TextField id="outlined-basic" label="Ano" variant="outlined" />
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <TextField id="outlined-basic" label="Descrição" variant="outlined" />
-            </Paper>
+            <TextField id="outlined-basic" fullWidth label="Descrição" variant="outlined" />
           </Grid>
 
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-            </Paper>
+            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </Grid>
 
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-            </Paper>
+            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </Grid>
         </Grid>
-      </div>
+      </Paper>
     </Modal>
   )
 }
