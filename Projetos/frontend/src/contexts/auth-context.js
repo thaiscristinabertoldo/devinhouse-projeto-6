@@ -17,10 +17,15 @@ export const AuthProvider = ({ children }) => {
   const { keycloak } = useKeycloak();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInformation, setUserInformation] = useState();
+  const [applicationToken, setApplicationToken] = useState('');
 
   useEffect(() => {
     setIsLoggedIn(Boolean(keycloak?.authenticated));
     console.log(keycloak?.authenticated);
+    console.log(keycloak?.profile);
+    keycloak?.loadUserInfo().then((userInfo) => setUserInformation(userInfo));
+    console.log(keycloak);
     console.log(isLoggedIn);
   }, [keycloak?.authenticated]);
 
@@ -28,5 +33,9 @@ export const AuthProvider = ({ children }) => {
     return keycloak?.logout();
   }, [keycloak]);
 
-  return <AuthContext.Provider value={{ isLoggedIn, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isLoggedIn, logout, userInformation, applicationToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

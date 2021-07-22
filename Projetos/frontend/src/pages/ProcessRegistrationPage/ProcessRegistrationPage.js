@@ -40,7 +40,7 @@ export const ProcessRegistrationPage = (props) => {
         <Box>
           <Grid container justifyContent="center">
             <Typography variant="h1" align="center" gutterBottom className={classes.title}>
-              <strong>Formulário de {id !== undefined ? "Edição" : "Cadastro"} de Processo</strong>
+              <strong>Formulário de {id !== undefined ? 'Edição' : 'Cadastro'} de Processo</strong>
             </Typography>
             <Formik
               initialValues={id !== undefined ? getOneProcess(id) : initialProcessValues}
@@ -103,9 +103,7 @@ export const ProcessRegistrationPage = (props) => {
                     as={SearchSubjectComboBox}
                   />
                   <ErrorMessage name="cdAssunto" component={DivError} />
-
                   <Field autoFocus name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={Input} />
-
                   <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
                   <Grid container justifyContent="center">
                     <Typography variant="h2" className={classes.subtitle}>
@@ -125,16 +123,13 @@ export const ProcessRegistrationPage = (props) => {
                     autoFocus
                     name="cdInteressado.nmInteressado"
                     label="Nome do Interessado"
-                    defaultValue=" "
                     disabled="true"
                     as={Input}
                   />
-
                   <Field
                     autoFocus
                     name="cdInteressado.dtNascimento"
                     label="Data de Nascimento"
-                    defaultValue=" "
                     disabled="true"
                     as={Input}
                   />
