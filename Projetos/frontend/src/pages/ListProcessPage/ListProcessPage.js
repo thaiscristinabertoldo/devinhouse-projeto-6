@@ -78,7 +78,13 @@ export const ListProcessPage = (props) => {
         <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
       </Box>
       <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
-        {loading && <ProcessCardSkeleton />}
+        {loading && (
+          <>
+            <ProcessCardSkeleton />
+            <ProcessCardSkeleton />
+            <ProcessCardSkeleton />
+          </>
+        )}
         {!loading && !!processList.length && renderProcessList()}
         {!loading && processList.length === 0 && <NoContentMessageCard />}
       </Box>
