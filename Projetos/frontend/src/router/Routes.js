@@ -4,7 +4,6 @@ import { LoginPage } from '../pages/LoginPage';
 import { ListProcessPage } from '../pages/ListProcessPage';
 import { ProcessRegistrationPage } from '../pages/ProcessRegistrationPage';
 import { PrivateRoute } from './components/PrivateRoute';
-import { SearchContextProvider } from '../contexts/search-context';
 import { UserInformationPage } from '../pages/UserInformationPage';
 
 export const Routes = () => {
@@ -15,9 +14,9 @@ export const Routes = () => {
         <PrivateRoute path="/processos/formulario/:id?" component={ProcessRegistrationPage} />
         <PrivateRoute path="/user" component={UserInformationPage} />
         <Redirect path="/" exact to="/processos" />
-        <SearchContextProvider>
-          <PrivateRoute path="/processos" exact component={ListProcessPage} />
-        </SearchContextProvider>
+        {/*<SearchContextProvider>*/}
+        <PrivateRoute path="/processos" exact component={ListProcessPage} />
+        {/*</SearchContextProvider>*/}
       </Switch>
     </BrowserRouter>
   );

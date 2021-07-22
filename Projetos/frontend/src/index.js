@@ -6,18 +6,11 @@ import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { AppThemeProvider } from './contexts/theme-context';
 import { AuthProvider } from './contexts/auth-context';
 import keycloak from './keycloak';
-
-const eventLogger = (event, error) => {
-  console.log('onKeycloakEvent', event, error);
-};
-
-const tokenLogger = (event, error) => {
-  console.log('onKeycloakToken', event, error);
-};
+import { eventLogger } from './utils/logger-util';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactKeycloakProvider authClient={keycloak} onEvent={eventLogger} onToken={tokenLogger}>
+    <ReactKeycloakProvider authClient={keycloak} onEvent={eventLogger} onToken={eventLogger}>
       <AppThemeProvider>
         <AuthProvider>
           <App />

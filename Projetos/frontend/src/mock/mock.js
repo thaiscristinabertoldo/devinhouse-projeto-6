@@ -1,4 +1,4 @@
-export const processList = [
+export const mockedProcessList = [
   {
     id: 1,
     nuProcesso: 1,
@@ -310,7 +310,7 @@ export const subjectsList = [
 ];
 
 export const getOneProcess = (id) => {
-  const process = processList.find((element) => element.id == id);
+  const process = mockedProcessList.find((element) => element.id == id);
   return {
     sgOrgaoSetor: process.sgOrgaoSetor,
     nuAno: process.nuAno,
@@ -324,7 +324,7 @@ export const searchProcess = (searchType, searchKey) => {
   console.log('searchType: ', searchType.toUpperCase() === 'PROCESS');
 
   const process = [];
-  processList.map((element) => {
+  mockedProcessList.map((element) => {
     if (searchType.toUpperCase() === 'PROCESS') {
       console.log('nuProcesso === searchKey? ', element.nuProcesso == searchKey);
       if (element.nuProcesso == searchKey) {

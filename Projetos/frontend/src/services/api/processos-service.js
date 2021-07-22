@@ -14,7 +14,7 @@ export const createProcess = async (data) => {
 };
 
 export const updateProcess = async (data, id) => {
-  return await Api.put(`${URLS.PROCESSOS}/${id}`, data);
+  return await Api.update(`${URLS.PROCESSOS}/${id}`, data);
 };
 
 export const deleteProcess = async (id) => {

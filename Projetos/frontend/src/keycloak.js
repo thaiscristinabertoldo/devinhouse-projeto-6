@@ -9,12 +9,3 @@ const keycloak = Keycloak({
 });
 
 export default keycloak;
-
-// {
-//   "realm": "Grupo02",
-//   "auth-server-url": "https://training.dev.delivery/auth/",
-//   "ssl-required": "external",
-//   "resource": "process-react",
-//   "public-client": true,
-//   "confidential-port": 0
-// }

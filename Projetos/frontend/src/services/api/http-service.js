@@ -8,7 +8,7 @@ const keycloakToken = keycloak?.token ?? '';
 const axiosInstance = axios.create({
   baseURL: URLS.BASE,
   headers: {
-    Authorization: initialized ? `Bearer ${keycloakToken}` : undefined,
+    // Authorization: keycloak. ? `Bearer ${keycloakToken}` : undefined,
     'Content-Type': 'application/json',
   },
 });

@@ -2,7 +2,7 @@ import { Button, Card, CardActions, Divider, Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { useStyles } from './ProcessCardContainerSkeleton.styles';
 
-export const ProcessCardContainerSkeleton = () => {
+export const ProcessCardSkeleton = () => {
   const classes = useStyles();
 
   return (
