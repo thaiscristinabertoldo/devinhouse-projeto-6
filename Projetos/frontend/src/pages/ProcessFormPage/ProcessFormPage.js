@@ -14,7 +14,7 @@ import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getOneProcess } from '../../mock';
 
-export const ProcessRegistrationPage = (props) => {
+export const ProcessFormPage = (props) => {
   const classes = useStyles();
 
   const history = useHistory();

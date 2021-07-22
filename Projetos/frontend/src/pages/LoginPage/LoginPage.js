@@ -8,11 +8,10 @@ export const LoginPage = () => {
   const { keycloak } = useKeycloak();
 
   const onClickLogin = () => {
-    keycloak?.login();
+    keycloak.login();
   };
 
-  if (keycloak?.authenticated) {
-    console.log({ auth: keycloak?.authenticated });
+  if (keycloak.authenticated) {
     return <Redirect to={'/processos'} />;
   }
 

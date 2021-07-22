@@ -10,7 +10,11 @@ import { eventLogger } from './utils/logger-util';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactKeycloakProvider authClient={keycloak} onEvent={eventLogger} onToken={eventLogger}>
+    <ReactKeycloakProvider
+      authClient={keycloak}
+      onEvent={(x) => console.log('onEvent', x)}
+      onToken={(x) => console.log('onToken', x)}
+    >
       <AppThemeProvider>
         <AuthProvider>
           <App />

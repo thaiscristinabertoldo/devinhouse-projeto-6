@@ -1,6 +1,6 @@
 export const URLS = {
-  BASE: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080' : 'http://localhost:8080',
+  BASE: 'http://localhost:3001/v1',
   PROCESSOS: '/processos',
 };
 
-export const QUERY = { THEME: 'darkTheme' }
+export const QUERY = { THEME: 'darkTheme' };

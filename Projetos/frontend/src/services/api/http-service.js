@@ -3,12 +3,12 @@ import keycloak from '../../keycloak';
 const { default: axios } = require('axios');
 const { URLS } = require('../constants');
 
-const keycloakToken = keycloak?.token ?? '';
-
+const { token, authenticated } = keycloak;
 const axiosInstance = axios.create({
   baseURL: URLS.BASE,
   headers: {
-    // Authorization: keycloak. ? `Bearer ${keycloakToken}` : undefined,
+    'Access-Control-Allow-Origin': '*',
+    Authorization: authenticated ? `Bearer ${token}` : undefined,
     'Content-Type': 'application/json',
   },
 });

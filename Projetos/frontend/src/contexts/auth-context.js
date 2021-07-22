@@ -22,11 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setIsLoggedIn(Boolean(keycloak?.authenticated));
-    console.log(keycloak?.authenticated);
-    console.log(keycloak?.profile);
     keycloak?.loadUserInfo().then((userInfo) => setUserInformation(userInfo));
-    console.log(keycloak);
-    console.log(isLoggedIn);
   }, [keycloak?.authenticated]);
 
   const logout = useCallback(() => {

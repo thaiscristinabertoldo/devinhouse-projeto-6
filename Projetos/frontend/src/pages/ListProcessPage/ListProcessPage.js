@@ -8,6 +8,8 @@ import { AddButton } from '../../components/AddButton';
 import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { mockedProcessList } from '../../mock';
+import { getAllProcess } from '../../services/api/processos-service';
+import { handleRequestError } from '../../services/api/error-service';
 
 export const ListProcessPage = (props) => {
   const { history } = props;
@@ -15,19 +17,20 @@ export const ListProcessPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [processList, setProcessList] = useState([]);
 
-  const fetchProcess = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(mockedProcessList);
-      }, 5000);
-    });
-  };
-
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setProcessList(await fetchProcess());
-      setLoading(false);
+      try {
+        const response = await getAllProcess();
+        if (!!response) {
+          // console.log(response);
+          setProcessList(response);
+        }
+      } catch (err) {
+        handleRequestError(err);
+      } finally {
+        setLoading(false);
+      }
     })();
     // getAllProcess().then(setProcessList, handleRequestError);
   }, []);
@@ -78,13 +81,7 @@ export const ListProcessPage = (props) => {
         <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
       </Box>
       <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
-        {loading && (
-          <>
-            <ProcessCardSkeleton />
-            <ProcessCardSkeleton />
-            <ProcessCardSkeleton />
-          </>
-        )}
+        {loading && renderLoadingList()}
         {!loading && !!processList.length && renderProcessList()}
         {!loading && processList.length === 0 && <NoContentMessageCard />}
       </Box>
@@ -94,5 +91,21 @@ export const ListProcessPage = (props) => {
         </Fab>
       </ScrollTop>
     </Container>
+  );
+};
+
+const renderLoadingList = () => {
+  return (
+    <>
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+    </>
   );
 };
