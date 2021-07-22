@@ -7,8 +7,11 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +29,12 @@ import br.com.devinhouse.grupo04.dto.ProcessoDTOOutput;
 import br.com.devinhouse.grupo04.mapper.ProcessoMapper;
 import br.com.devinhouse.grupo04.service.ProcessoService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/v1" + "/processos")
 public class ProcessoController {
+	
+	private static final Logger logger = LogManager.getLogger(ProcessoController.class);
 
 	@Autowired
 	private ProcessoService service;
@@ -44,31 +50,37 @@ public class ProcessoController {
 			@RequestParam(required = false) Long cd_interessado_id,
 			@RequestParam(required = false) Long cd_assunto_id
 			) {
+		logger.info("ProcessoController.findAll chamado com os seguintes params: ", chave_processo, cd_interessado_id, cd_assunto_id);
+		
 		return processoMapper.toDto(service.findAll(chave_processo, cd_interessado_id, cd_assunto_id));
 
 	}
-
+	
+	@RolesAllowed("user")
 	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public ProcessoDTOOutput find(@PathVariable Long id) {
 		return processoMapper.toDto(service.find(id));
 	}
-
+	
+	@RolesAllowed("user")
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ProcessoDTOOutput create(@Valid @RequestBody ProcessoDTOInput processoDTO) {
 		return processoMapper.toDto(service.create(processoMapper.toProcesso(processoDTO)));
 	}
-
+	
+	@RolesAllowed("user")
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Long id, @RequestBody ProcessoDTOInput processoDTO) {
 		service.update(id, processoMapper.toProcesso(processoDTO));
 	}
-
+	
+	@RolesAllowed("user")
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)

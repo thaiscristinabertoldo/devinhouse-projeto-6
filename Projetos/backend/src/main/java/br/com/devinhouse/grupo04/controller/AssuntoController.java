@@ -4,10 +4,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import br.com.devinhouse.grupo04.entity.Assunto;
 import br.com.devinhouse.grupo04.mapper.AssuntoMapper;
 import br.com.devinhouse.grupo04.service.AssuntoService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "v1" + "/assuntos")
 public class AssuntoController {
@@ -35,6 +38,7 @@ public class AssuntoController {
 	@Autowired
 	private AssuntoService service;
 	
+	@RolesAllowed("user")
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
@@ -44,6 +48,7 @@ public class AssuntoController {
 		return assuntoMapper.toDto(assuntos);
 	}
 	
+	@RolesAllowed("user")
 	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
@@ -51,6 +56,7 @@ public class AssuntoController {
 		return assuntoMapper.toDto(service.find(id));
 	}
 	
+	@RolesAllowed("user")
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -60,6 +66,7 @@ public class AssuntoController {
 		return assuntoMapper.toDto(assunto);
 	}
 	
+	@RolesAllowed("user")
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
@@ -67,6 +74,7 @@ public class AssuntoController {
 		service.update(id, assuntoMapper.toAssunto(assuntoDTO));
 	}
 	
+	@RolesAllowed("user")
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
