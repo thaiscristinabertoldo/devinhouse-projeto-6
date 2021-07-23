@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { subjectsList } from '../../mock';
 import { useStyles } from './SearchSubjectComboBox.styles';
 
 export const SearchSubjectComboBox = (props) => {
@@ -11,7 +10,7 @@ export const SearchSubjectComboBox = (props) => {
     <Autocomplete
       id="search_combo_box"
       style={{ width: '100%' }}
-      options={subjectsList}
+      options={[]}
       getOptionDisabled={(option) => option.flAtivo?.toUpperCase() === 'N'}
       classes={{
         option: classes.option,
