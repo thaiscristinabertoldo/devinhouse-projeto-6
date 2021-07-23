@@ -23,6 +23,6 @@ export const update = async (url, data = {}, headers = {}) => {
   return await axiosInstance.put(url, data, headers);
 };
 
-export const remove = async (url) => {
-  return await axiosInstance.delete(url);
+export const remove = async (url, config = {}) => {
+  return await axiosInstance.delete(url, config);
 };

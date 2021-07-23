@@ -1,6 +1,7 @@
-import { Box, Card, CardActions, CardContent, Divider, IconButton, Typography } from '@material-ui/core';
+import { Box, Card, CardActions, CardContent, Divider, Grid, IconButton, Typography } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import { useStyles } from './ProcessCard.styles';
 
 export const ProcessCard = ({ processData, onDelete, onEdit }) => {
   const {
@@ -13,6 +14,8 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
     cdAssunto = '',
     cdInteressado = '',
   } = processData;
+
+  const classes = useStyles();
 
   return (
     <Card style={{ marginBottom: '16px' }}>
@@ -42,17 +45,19 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
           <strong>Descrição:</strong> {descricao}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Box color={'#FFF'} marginX={1}>
-          <IconButton color="default" onClick={() => onDelete(idProcesso)} size="small">
-            <DeleteForeverIcon color="inherit" />
-          </IconButton>
-        </Box>
-        <Box marginX={1}>
-          <IconButton color="default" onClick={() => onDelete(idProcesso)} size="small">
-            <EditIcon color="inherit" onClick={() => onEdit(idProcesso)} />
-          </IconButton>
-        </Box>
+      <CardActions className={classes.cardAction}>
+        <Grid container justifyContent="flex-end">
+          <Box color={'#FFF'} marginX={1}>
+            <IconButton onClick={() => onDelete(idProcesso)} size="small">
+              <DeleteForeverIcon className={classes.icons} />
+            </IconButton>
+          </Box>
+          <Box marginX={1}>
+            <IconButton onClick={() => onDelete(idProcesso)} size="small">
+              <EditIcon onClick={() => onEdit(idProcesso)} className={classes.icons} />
+            </IconButton>
+          </Box>
+        </Grid>
       </CardActions>
     </Card>
   );

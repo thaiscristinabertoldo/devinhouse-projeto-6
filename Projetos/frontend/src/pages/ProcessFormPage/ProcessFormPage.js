@@ -14,6 +14,7 @@ import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getOneProcess } from '../../mock';
 import { BaseLayout } from '../../layouts/BaseLayout';
+import { createProcess } from '../../services/api/processos-service';
 
 export const ProcessFormPage = (props) => {
   const classes = useStyles();
@@ -27,6 +28,7 @@ export const ProcessFormPage = (props) => {
   };
 
   const handleSubmit = (values, { setSubmitting }) => {
+    createProcess(values);
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);

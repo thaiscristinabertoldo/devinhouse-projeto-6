@@ -12,6 +12,7 @@ export const SearchSubjectComboBox = (props) => {
       id="search_combo_box"
       style={{ width: '100%' }}
       options={subjectsList}
+      getOptionDisabled={(option) => option.flAtivo?.toUpperCase() === 'N'}
       classes={{
         option: classes.option,
       }}
@@ -21,7 +22,7 @@ export const SearchSubjectComboBox = (props) => {
       }}
       renderOption={(option) => (
         <>
-          {option.id} - {option.descricao} - {option.dtCadastro} - {option.flAtivo}
+          {option.id} - {option.descricao} - {option.dtCadastro}
         </>
       )}
       renderInput={(params) => (
