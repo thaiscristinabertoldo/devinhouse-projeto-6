@@ -82,6 +82,8 @@ export const AppBar = () => {
           </Menu>
         </Toolbar>
       </MuiAppBar>
+      <Toolbar />
+
       <Grid id="back-to-top-anchor" />
     </>
   );

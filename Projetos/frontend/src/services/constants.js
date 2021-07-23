@@ -3,4 +3,4 @@ export const URLS = {
   PROCESSOS: '/processos',
 };
 
-export const QUERY = { THEME: 'darkTheme' };
+export const QUERY = { THEME: 'darkTheme', TOKEN: 'userToken' };

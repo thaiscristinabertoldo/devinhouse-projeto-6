@@ -7,33 +7,51 @@ import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
-import { mockedProcessList } from '../../mock';
 import { getAllProcess } from '../../services/api/processos-service';
 import { handleRequestError } from '../../services/api/error-service';
+import { BaseLayout } from '../../layouts/BaseLayout';
+
+const SEARCH_BY = {
+  PROCESS: 'PROCESS',
+  SUBJECT: 'SUBJECT',
+};
 
 export const ListProcessPage = (props) => {
   const { history } = props;
 
   const [loading, setLoading] = useState(false);
   const [processList, setProcessList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState();
+  const [searchContext, setSearchContext] = useState('PROCESS');
+
+  const fetchProcess = async ({ cdAssunto = null, chaveProcesso = null }) => {
+    setLoading(true);
+    try {
+      const response = await getAllProcess({ cdAssunto, chaveProcesso });
+      if (!!response) {
+        setProcessList(response);
+      }
+    } catch (err) {
+      handleRequestError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-      try {
-        const response = await getAllProcess();
-        if (!!response) {
-          // console.log(response);
-          setProcessList(response);
-        }
-      } catch (err) {
-        handleRequestError(err);
-      } finally {
-        setLoading(false);
-      }
+      return await fetchProcess({ cdAssunto: null, chaveProcesso: null });
     })();
-    // getAllProcess().then(setProcessList, handleRequestError);
   }, []);
+
+  const handleSearchProcess = async () => {
+    if (searchContext === SEARCH_BY.PROCESS) {
+      fetchProcess({ chaveProcesso: searchTerm });
+    }
+    if (searchContext === SEARCH_BY.SUBJECT) {
+      fetchProcess({ cdAssunto: searchTerm });
+    }
+  };
 
   const goToProcessForm = () => {
     history.push('/processos/formulario/');
@@ -59,38 +77,47 @@ export const ListProcessPage = (props) => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Grid container justifyContent="center">
-        <SearchBar term="termo de busca" setTerm={() => {}} />
-      </Grid>
-      <Box justifyContent="space-between" display="flex" width="100%" alignItems="center" marginY={2}>
-        <RadioGroup row aria-label="position" name="position" defaultValue="top" value={''} onChange={console.log}>
-          <FormControlLabel
-            value="PROCESS"
-            control={<Radio color="primary" />}
-            label="Busca por Processo"
-            labelPlacement="left"
-          />
-          <FormControlLabel
-            value="SUBJECT"
-            control={<Radio color="primary" />}
-            label="Busca por Assunto"
-            labelPlacement="left"
-          />
-        </RadioGroup>
-        <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
-      </Box>
-      <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
-        {loading && renderLoadingList()}
-        {!loading && !!processList.length && renderProcessList()}
-        {!loading && processList.length === 0 && <NoContentMessageCard />}
-      </Box>
-      <ScrollTop {...props}>
-        <Fab color="primary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon style={{ color: 'white' }} />
-        </Fab>
-      </ScrollTop>
-    </Container>
+    <BaseLayout>
+      <Container maxWidth="xl">
+        <Grid container justifyContent="center">
+          <SearchBar term={searchTerm} setTerm={setSearchTerm} onSearch={handleSearchProcess} />
+        </Grid>
+        <Box justifyContent="space-between" display="flex" width="100%" alignItems="center" marginY={2}>
+          <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
+          <RadioGroup
+            row
+            aria-label="position"
+            name="position"
+            defaultValue="top"
+            value={searchContext}
+            onChange={(e) => setSearchContext(e.target.value)}
+          >
+            <FormControlLabel
+              value="PROCESS"
+              control={<Radio color="primary" />}
+              label="Busca por Processo"
+              labelPlacement="left"
+            />
+            <FormControlLabel
+              value="SUBJECT"
+              control={<Radio color="primary" />}
+              label="Busca por Assunto"
+              labelPlacement="left"
+            />
+          </RadioGroup>
+        </Box>
+        <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
+          {loading && renderLoadingList()}
+          {!loading && !!processList.length && renderProcessList()}
+          {!loading && processList.length === 0 && <NoContentMessageCard />}
+        </Box>
+        <ScrollTop {...props}>
+          <Fab color="primary" size="small" aria-label="scroll back to top">
+            <KeyboardArrowUpIcon style={{ color: 'white' }} />
+          </Fab>
+        </ScrollTop>
+      </Container>
+    </BaseLayout>
   );
 };
 

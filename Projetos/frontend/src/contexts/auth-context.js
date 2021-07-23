@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
+import { removeFromStorage } from '../services/storage/local-storage-service';
+import { QUERY } from '../services/constants';
 
 const AuthContext = createContext();
 
@@ -18,20 +20,18 @@ export const AuthProvider = ({ children }) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInformation, setUserInformation] = useState();
-  const [applicationToken, setApplicationToken] = useState('');
+  const [token, setToken] = useState();
 
   useEffect(() => {
     setIsLoggedIn(Boolean(keycloak?.authenticated));
-    keycloak?.loadUserInfo().then((userInfo) => setUserInformation(userInfo));
   }, [keycloak?.authenticated]);
 
   const logout = useCallback(() => {
+    removeFromStorage(QUERY.TOKEN);
     return keycloak?.logout();
   }, [keycloak]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, logout, userInformation, applicationToken }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ isLoggedIn, logout, userInformation, setToken }}>{children}</AuthContext.Provider>
   );
 };

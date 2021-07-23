@@ -17,7 +17,15 @@ export const SearchBar = ({ onSearch, term, setTerm }) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={onSearch}>
+                <IconButton
+                  type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSearch();
+                  }}
+                >
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
