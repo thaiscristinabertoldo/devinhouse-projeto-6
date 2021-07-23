@@ -17,7 +17,7 @@ export const LoginPage = () => {
 
   if (initialized) {
     if (keycloak.authenticated) {
-      return <Redirect path={'/processo'} />;
+      return <Redirect to="/processos" />;
     }
   } else {
     return (
@@ -45,9 +45,11 @@ export const LoginPage = () => {
           </Typography>
           <Divider variant="fullWidth" />
           <Box marginY={2}>
-            <Typography variant="body1">
+            <Typography variant="h6" gutterBottom>
               Seja bem vindo!
-              <br /> Para acessar, utilize as credenciais usuário <Pre>admin</Pre> e senha <Pre>adminpass</Pre>{' '}
+            </Typography>
+            <Typography variant="body1" component="span">
+              Para acessar, utilize as credenciais usuário <Pre>alberto</Pre> e senha <Pre>123</Pre>{' '}
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center">

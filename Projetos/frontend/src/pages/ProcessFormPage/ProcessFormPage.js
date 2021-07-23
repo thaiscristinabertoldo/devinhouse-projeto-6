@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Fab, Grid, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Input } from '../../components/Input';
 import { useStyles } from './ProcessRegistrationPage.styles';
@@ -10,8 +10,6 @@ import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox/Se
 import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
 import { initialProcessValues, registrationSchema } from './RegistrationSchema';
 import { DivError } from '../../components/DivError';
-import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getOneProcess } from '../../mock';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { createProcess } from '../../services/api/processos-service';
@@ -174,11 +172,6 @@ export const ProcessFormPage = (props) => {
                 )}
               </Formik>
             </Grid>
-            <ScrollTop {...props}>
-              <Fab color="primary" size="small" aria-label="scroll back to top">
-                <KeyboardArrowUpIcon style={{ color: 'white' }} />
-              </Fab>
-            </ScrollTop>
           </Box>
         </Paper>
       </Grid>

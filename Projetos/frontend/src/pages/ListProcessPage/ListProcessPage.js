@@ -1,9 +1,7 @@
-import { Box, Container, Fab, FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core';
+import { Box, Container, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { ProcessCardSkeleton } from '../components/ProcessCardSkeleton';
 import { SearchBar } from '../../components/SearchBar';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
@@ -62,7 +60,6 @@ export const ListProcessPage = (props) => {
   };
 
   const handleDeleteProcess = (id) => {
-    console.log(id);
     deleteProcess(id);
     fetchProcess({ cdAssunto: null, chaveProcesso: null });
   };
@@ -83,9 +80,7 @@ export const ListProcessPage = (props) => {
   return (
     <BaseLayout>
       <Container maxWidth="xl">
-        <Grid container justifyContent="center">
-          <SearchBar term={searchTerm} setTerm={setSearchTerm} onSearch={handleSearchProcess} />
-        </Grid>
+        <SearchBar term={searchTerm} setTerm={setSearchTerm} onSearch={handleSearchProcess} />
         <Box justifyContent="space-between" display="flex" width="100%" alignItems="center" marginY={2}>
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
           <RadioGroup
@@ -100,13 +95,13 @@ export const ListProcessPage = (props) => {
               value="PROCESS"
               control={<Radio color="primary" />}
               label="Busca por Processo"
-              labelPlacement="left"
+              labelPlacement="end"
             />
             <FormControlLabel
               value="SUBJECT"
               control={<Radio color="primary" />}
               label="Busca por Assunto"
-              labelPlacement="left"
+              labelPlacement="end"
             />
           </RadioGroup>
         </Box>
@@ -115,11 +110,6 @@ export const ListProcessPage = (props) => {
           {!loading && !!processList.length && renderProcessList()}
           {!loading && processList.length === 0 && <NoContentMessageCard />}
         </Box>
-        <ScrollTop {...props}>
-          <Fab color="primary" size="small" aria-label="scroll back to top">
-            <KeyboardArrowUpIcon style={{ color: 'white' }} />
-          </Fab>
-        </ScrollTop>
       </Container>
     </BaseLayout>
   );
