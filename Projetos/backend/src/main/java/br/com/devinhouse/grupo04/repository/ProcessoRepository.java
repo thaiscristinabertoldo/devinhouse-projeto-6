@@ -10,12 +10,10 @@ import br.com.devinhouse.grupo04.entity.Processo;
 @Repository
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
-	List<Processo> findAllByChaveProcesso(String chaveProcesso);
+	List<Processo> findAllByChaveProcessoContainingIgnoreCase(String chaveProcesso);
 
-	List<Processo> findAllByCdInteressadoIdAndCdAssuntoId(Long interessadoId, Long assuntoId);
+	List<Processo> findAllByCdAssuntoDescricaoContainingIgnoreCase(String assuntoDescricao);
 
-	List<Processo> findAllByCdAssuntoId(Long assuntoId);
-
-	List<Processo> findAllByCdInteressadoId(Long interessadoId);
+	List<Processo> findAllByNuProcesso(Long nuProcesso);
 
 }

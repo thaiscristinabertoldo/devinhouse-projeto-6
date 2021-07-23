@@ -20,22 +20,18 @@ public class ProcessoService {
 	@Autowired
 	private ProcessoRepository repository;
 
-	public List<Processo> findAll(String chaveProcesso, Long cdInteressadoId, Long cdAssuntoId) {
+	public List<Processo> findAll(String chaveProcesso, Long nuProcesso, String cdAssuntoDescricao) {
 
-		if (chaveProcesso != null) {
-			return repository.findAllByChaveProcesso(chaveProcesso);
+		if (chaveProcesso != null && !chaveProcesso.isBlank()) {
+			return repository.findAllByChaveProcessoContainingIgnoreCase(chaveProcesso);
 		}
 
-		if (cdInteressadoId != null && cdAssuntoId != null) {
-			return repository.findAllByCdInteressadoIdAndCdAssuntoId(cdInteressadoId, cdAssuntoId);
+		if (nuProcesso != null) {
+			return repository.findAllByNuProcesso(nuProcesso);
 		}
 
-		if (cdInteressadoId != null) {
-			return repository.findAllByCdInteressadoId(cdInteressadoId);
-		}
-
-		if (cdAssuntoId != null) {
-			return repository.findAllByCdAssuntoId(cdAssuntoId);
+		if (cdAssuntoDescricao != null && !cdAssuntoDescricao.isBlank()) {
+			return repository.findAllByCdAssuntoDescricaoContainingIgnoreCase(cdAssuntoDescricao);
 		}
 
 		return repository.findAll();
