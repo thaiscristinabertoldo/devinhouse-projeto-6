@@ -24,8 +24,6 @@ export const ListProcessPage = (props) => {
   const [searchTerm, setSearchTerm] = useState();
   const [searchContext, setSearchContext] = useState('PROCESS');
 
-  const [highestProcessNumber, setHighestProcessNumber] = useState(1);
-
   const fetchProcess = async ({ cdAssunto = null, chaveProcesso = null }) => {
     setLoading(true);
     try {
@@ -71,9 +69,6 @@ export const ListProcessPage = (props) => {
 
   const renderProcessList = () => {
     return processList.map((process) => {
-      if (process.nuProcesso > highestProcessNumber) {
-        highestProcessNumber = process.nuProcesso;
-      }
       return (
         <ProcessCard
           key={process.id}
