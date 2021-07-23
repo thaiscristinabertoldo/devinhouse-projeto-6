@@ -1,6 +1,6 @@
 import Keycloak from "keycloak-js";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Box } from "@material-ui/core";
 import { SELF_URI } from "env";
 
 const keycloak = new Keycloak({
@@ -17,7 +17,19 @@ const KeycloakProvider = ({ children }) => {
         onLoad: "check-sso",
         silentCheckSsoRedirectUri: SELF_URI + "/#/silent-check-sso",
       }}
-      LoadingComponent={<CircularProgress />}
+      LoadingComponent={
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      }
     >
       {children}
     </ReactKeycloakProvider>

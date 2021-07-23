@@ -9,23 +9,25 @@ import {
   Dialog,
   Autocomplete,
   Stack,
+  MenuItem,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import * as yup from "yup";
+import { useKeycloak } from "@react-keycloak/web";
 
 const validationSchema = yup.object({
-  siglaOrgao: yup
+  sgOrgaoSetor: yup
     .string("Defina a sigla do órgão")
     .length(4, "A sigla deve conter 4 caracteres")
     .required("A sigla é obrigatória"),
-  assunto: yup
-    .string("Descreva o processo")
+  cdAssunto: yup
+    .number("Descreva o processo")
     .required("A descrição é obrigatória"),
-  interessado: yup
-    .string("Descreva o processo")
+  cdInteressado: yup
+    .number("Descreva o processo")
     .required("A descrição é obrigatória"),
   descricao: yup
     .string("Descreva o processo")
@@ -37,32 +39,50 @@ export const ProcessForm = ({ setOpen, open }) => {
   const [interessados, setInteressados] = useState([]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const { keycloak } = useKeycloak();
   const handleClose = () => setOpen(false);
+  const instance = axios.create({
+    baseURL: "http://localhost:8080/backend",
+    headers: { Authorization: "Bearer " + keycloak.token },
+  });
+
   const formik = useFormik({
     initialValues: {
-      siglaOrgao: "",
-      assunto: "",
-      interessado: "",
+      sgOrgaoSetor: "",
+      cdassunto: 0,
+      cdInteressado: 0,
       descricao: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      alert(
+        JSON.stringify({ ...values, nuAno: new Date().getFullYear() }, null, 2),
+      );
+      axios
+        .post(
+          "http://localhost:8080/backend/v1/processo",
+          JSON.stringify({ ...values, nuAno: new Date().getFullYear() }, null),
+          {
+            headers: {
+              Authorization: "Bearer " + keycloak.token,
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then((data) => console.log(data));
     },
   });
 
   useEffect(() => {
-    axios.get("http://localhost:8080/backend/v1/assunto").then(({ data }) => {
+    instance.get("/v1/assunto").then(({ data }) => {
       setAssuntos(data.filter((assunto) => assunto.flAtivo === true));
     });
 
-    axios
-      .get("http://localhost:8080/backend/v1/interessado")
-      .then(({ data }) => {
-        setInteressados(
-          data.filter((interessado) => interessado.flAtivo === true),
-        );
-      });
+    instance.get("/v1/interessado").then(({ data }) => {
+      setInteressados(
+        data.filter((interessado) => interessado.flAtivo === true),
+      );
+    });
   }, []);
 
   return (
@@ -83,52 +103,66 @@ export const ProcessForm = ({ setOpen, open }) => {
               sx={{ marginTop: 1 }}
               autoFocus
               required
-              id="siglaOrgao"
-              name="siglaOrgao"
+              id="sgOrgaoSetor"
+              name="sgOrgaoSetor"
               label="Sigla do Orgão"
-              value={formik.values.siglaOrgao}
+              value={formik.values.sgOrgaoSetor}
               onChange={formik.handleChange}
               error={
-                formik.touched.siglaOrgao && Boolean(formik.errors.siglaOrgao)
+                formik.touched.sgOrgaoSetor &&
+                Boolean(formik.errors.sgOrgaoSetor)
               }
-              helperText={formik.touched.siglaOrgao && formik.errors.siglaOrgao}
+              helperText={
+                formik.touched.sgOrgaoSetor && formik.errors.sgOrgaoSetor
+              }
             />
-            <Autocomplete
-              id="assuntos"
-              required
-              options={assuntos}
-              getOptionLabel={(assunto) => assunto.descricao}
-              renderInput={(params) => {
-                return <TextField {...params} label="Assunto" />;
-              }}
-            />
-            <Autocomplete
-              id="interessado"
-              required
-              options={interessados}
-              getOptionLabel={(interessado) => interessado.descricao}
-              renderInput={(params) => {
-                return <TextField {...params} label="Assunto" />;
-              }}
-            />
-            {/* <TextField
+            {console.log(assuntos, interessados)}
+            <TextField
               select
               required
               fullWidth
-              id="assunto"
-              name="assunto"
+              id="cdAssunto"
+              name="cdAssunto"
               label="Assunto do Processo"
-              value={formik.values.assunto}
+              value={formik.values.cdAssunto}
               onChange={formik.handleChange}
-              error={formik.touched.assunto && Boolean(formik.errors.assunto)}
-              helperText={formik.touched.assunto && formik.errors.assunto}
+              error={
+                formik.touched.cdAssunto && Boolean(formik.errors.cdAssunto)
+              }
+              helperText={formik.touched.cdAssunto && formik.errors.cdAssunto}
             >
-              {assuntos.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {assuntos.map((assuntos) => (
+                <MenuItem key={assuntos.descricao} value={assuntos.id}>
+                  {assuntos.descricao}
                 </MenuItem>
               ))}
-            </TextField> */}
+            </TextField>
+            <TextField
+              select
+              required
+              fullWidth
+              id="cdInteressado"
+              name="cdInteressado"
+              label="interessado"
+              value={formik.values.cdInteressado}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.cdInteressado &&
+                Boolean(formik.errors.cdInteressado)
+              }
+              helperText={
+                formik.touched.cdInteressado && formik.errors.cdInteressado
+              }
+            >
+              {interessados.map((interessado) => (
+                <MenuItem
+                  key={interessado.nmInteressado}
+                  value={interessado.id}
+                >
+                  {interessado.nmInteressado}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               fullWidth={isSmallScreen}
               required
@@ -148,7 +182,7 @@ export const ProcessForm = ({ setOpen, open }) => {
         </DialogContent>
         <DialogActions>
           <Button color="primary" variant="contained" type="submit">
-            Submit
+            Criar Processo
           </Button>
         </DialogActions>
       </form>

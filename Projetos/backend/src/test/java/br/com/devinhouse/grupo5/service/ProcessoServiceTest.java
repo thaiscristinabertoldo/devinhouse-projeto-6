@@ -51,7 +51,6 @@ class ProcessoServiceTest {
 		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(false);
 		when(interessadoService.buscarInteressadoPeloId(any())).thenReturn(interessadoOutputDTO);
 		when(modelMapper.map(interessadoOutputDTO, Interessado.class)).thenReturn(interessado);
@@ -61,26 +60,6 @@ class ProcessoServiceTest {
 		processoService.salvarProcesso(processoInputDTO);
 
 		verify(processoRepository, times(1)).save(processo);
-	}
-
-	@Test
-	void deveRetornarErroDeNuProcessoJaExistente() {
-
-		Processo processo = new Processo();
-		ProcessoInputDTO processoInputDTO = new ProcessoInputDTO();
-
-		Interessado interessado = new Interessado();
-		InteressadoOutputDTO interessadoOutputDTO = new InteressadoOutputDTO();
-		Assunto assunto = new Assunto();
-		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
-
-		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(true);
-
-		Throwable error = catchThrowable(() ->
-				processoService.salvarProcesso(processoInputDTO)
-		);
-		assertThat(error).isInstanceOf(NuProcessoJaCadastradoException.class);
 	}
 
 	@Test
@@ -95,7 +74,6 @@ class ProcessoServiceTest {
 		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(true);
 
 		Throwable error = catchThrowable(() ->
@@ -122,7 +100,6 @@ class ProcessoServiceTest {
 		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(false);
 		when(interessadoService.buscarInteressadoPeloId(any())).thenReturn(interessadoOutputDTO);
 
@@ -144,7 +121,6 @@ class ProcessoServiceTest {
 		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(false);
 		when(interessadoService.buscarInteressadoPeloId(any())).thenReturn(null);
 
@@ -171,7 +147,6 @@ class ProcessoServiceTest {
 		);
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(false);
 		when(interessadoService.buscarInteressadoPeloId(any())).thenReturn(interessadoOutputDTO);
 		when(modelMapper.map(interessadoOutputDTO, Interessado.class)).thenReturn(interessado);
@@ -195,7 +170,6 @@ class ProcessoServiceTest {
 		AssuntoOutputDTO assuntoOutputDTO = new AssuntoOutputDTO();
 
 		when(modelMapper.map(processoInputDTO, Processo.class)).thenReturn(processo);
-		when(processoRepository.existsByNuProcesso(any())).thenReturn(false);
 		when(processoRepository.existsByChaveProcesso(any())).thenReturn(false);
 		when(interessadoService.buscarInteressadoPeloId(any())).thenReturn(interessadoOutputDTO);
 		when(modelMapper.map(interessadoOutputDTO, Interessado.class)).thenReturn(interessado);
@@ -302,7 +276,6 @@ class ProcessoServiceTest {
 		InteressadoOutputDTO interessadoOutputDTO = new InteressadoOutputDTO();
 
 		ProcessoInputDTO processoInputDTO = new ProcessoInputDTO(
-				1L,
 				"SOFT",
 				"2020",
 				"Teste",
@@ -310,7 +283,6 @@ class ProcessoServiceTest {
 				1L
 		);
 		Processo processo = new Processo(
-				processoInputDTO.getNuProcesso(),
 				processoInputDTO.getSgOrgaoSetor(),
 				processoInputDTO.getNuAno(),
 				processoInputDTO.getDescricao(),

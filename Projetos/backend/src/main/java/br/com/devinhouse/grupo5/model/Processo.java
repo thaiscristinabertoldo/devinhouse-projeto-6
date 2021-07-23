@@ -20,9 +20,6 @@ public class Processo {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@NotNull
-	@Column
-	private Long nuProcesso;
-	@NotNull
 	@Column(length = 4)
 	private String sgOrgaoSetor;
 	@NotNull
@@ -44,14 +41,13 @@ public class Processo {
 	private Interessado cdInteressado;
 
 	@Builder(toBuilder = true)
-	public Processo(Long nuProcesso, String sgOrgaoSetor, String nuAno, String descricao, Assunto cdAssunto,
+	public Processo(String sgOrgaoSetor, String nuAno, String descricao, Assunto cdAssunto,
 					Interessado cdInteressado) {
-		this.nuProcesso = nuProcesso;
 		this.sgOrgaoSetor = sgOrgaoSetor;
 		this.nuAno = nuAno;
 		this.descricao = descricao;
 		this.cdAssunto = cdAssunto;
 		this.cdInteressado = cdInteressado;
-		this.chaveProcesso = this.sgOrgaoSetor + " " + this.nuProcesso + "/" + this.nuAno;
+		this.chaveProcesso = this.sgOrgaoSetor + " " + this.id + "/" + this.nuAno;
 	}
 }

@@ -4,6 +4,7 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core/styles";
 import { deepPurple, indigo, lightBlue, pink } from "@material-ui/core/colors";
+import { CssBaseline, responsiveFontSizes } from "@material-ui/core";
 
 const darkTheme = createTheme({
   palette: {
@@ -33,8 +34,9 @@ const ThemeProvider = ({ children }) => {
   }, [theme]);
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={responsiveFontSizes(theme)}>
       <ThemeContext.Provider value={{ toggleTheme }}>
+        <CssBaseline />
         {children}
       </ThemeContext.Provider>
     </MuiThemeProvider>
