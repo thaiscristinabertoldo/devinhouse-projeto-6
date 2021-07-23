@@ -47,12 +47,12 @@ public class ProcessoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<ProcessoDTOOutput> findAll(@RequestParam(required = false) String chave_processo,
-			@RequestParam(required = false) Long cd_interessado_id,
-			@RequestParam(required = false) Long cd_assunto_id
+			@RequestParam(required = false) Long nu_processo,
+			@RequestParam(required = false) String cd_assunto_descricao
 			) {
-		logger.info("ProcessoController.findAll chamado com os seguintes params: ", chave_processo, cd_interessado_id, cd_assunto_id);
+		logger.info("ProcessoController.findAll chamado com os seguintes params: chave_processo = {}, nu_processo = {}, cd_assunto_descricao = {}", chave_processo, nu_processo, cd_assunto_descricao);
 		
-		return processoMapper.toDto(service.findAll(chave_processo, cd_interessado_id, cd_assunto_id));
+		return processoMapper.toDto(service.findAll(chave_processo, nu_processo, cd_assunto_descricao));
 
 	}
 	
