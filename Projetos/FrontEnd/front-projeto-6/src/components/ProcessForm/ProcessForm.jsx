@@ -7,7 +7,6 @@ import {
   DialogTitle,
   useMediaQuery,
   Dialog,
-  Autocomplete,
   Stack,
   MenuItem,
 } from "@material-ui/core";
@@ -34,44 +33,92 @@ const validationSchema = yup.object({
     .required("A descrição é obrigatória"),
 });
 
-export const ProcessForm = ({ setOpen, open }) => {
+export const ProcessForm = (props) => {
+  const {
+    open,
+    setOpen,
+    isEditing,
+    setIsEditing,
+    editingData,
+    setEditingData,
+  } = props;
+  // FIXME: comentários de teste
+  // const isEditing = true;
+  // const editingData = {
+  //   descricao: "Compromisso",
+  //   dtCadastro: "2020-08-07",
+  //   flAtivo: true,
+  //   id: 50,
+  // };
   const [assuntos, setAssuntos] = useState([]);
   const [interessados, setInteressados] = useState([]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { keycloak } = useKeycloak();
   const handleClose = () => setOpen(false);
+
   const instance = axios.create({
     baseURL: "http://localhost:8080/backend",
     headers: { Authorization: "Bearer " + keycloak.token },
   });
 
-  const formik = useFormik({
-    initialValues: {
-      sgOrgaoSetor: "",
-      cdassunto: 0,
-      cdInteressado: 0,
-      descricao: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(
-        JSON.stringify({ ...values, nuAno: new Date().getFullYear() }, null, 2),
-      );
-      axios
-        .post(
-          "http://localhost:8080/backend/v1/processo",
-          JSON.stringify({ ...values, nuAno: new Date().getFullYear() }, null),
-          {
-            headers: {
-              Authorization: "Bearer " + keycloak.token,
-              "Content-Type": "application/json",
-            },
+  const FORM_INITIAL_VALUES = {
+    sgOrgaoSetor: "",
+    cdassunto: "",
+    cdInteressado: "",
+    descricao: "",
+  };
+  // FIXME: tá quebrado, tem que ajeitar o backend
+  const formEditingValues = {
+    sgOrgaoSetor: editingData.sgOrgaoSetor,
+    cdassunto: editingData.cdassunto,
+    cdInteressado: editingData.cdInteressado,
+    descricao: editingData.descricao,
+  };
+
+  const submitNewProcess = (formData) => {
+    axios
+      .post(
+        "http://localhost:8080/backend/v1/processo",
+        JSON.stringify({ ...formData, nuAno: new Date().getFullYear() }, null),
+        {
+          headers: {
+            Authorization: "Bearer " + keycloak.token,
+            "Content-Type": "application/json",
           },
-        )
-        .then((data) => console.log(data));
-    },
-  });
+        },
+      )
+      .then((data) => console.log(data));
+  };
+
+  const submitUpdatedProcess = (formData) => {
+    axios
+      .put(
+        `http://localhost:8080/backend/v1/processo/${editingData.id}`,
+        JSON.stringify({ ...formData, nuAno: editingData.nuAno }, null),
+        {
+          headers: {
+            Authorization: "Bearer " + keycloak.token,
+            "Content-Type": "application/json",
+          },
+        },
+      )
+      .then((data) => console.log(data));
+  };
+
+  const formik = useFormik(
+    isEditing
+      ? {
+          initialValues: formEditingValues,
+          validationSchema: validationSchema,
+          onSubmit: (formData) => submitNewProcess(formData),
+        }
+      : {
+          initialValues: FORM_INITIAL_VALUES,
+          validationSchema: validationSchema,
+          onSubmit: (formData) => submitUpdatedProcess(formData),
+        },
+  );
 
   useEffect(() => {
     instance.get("/v1/assunto").then(({ data }) => {
@@ -83,6 +130,8 @@ export const ProcessForm = ({ setOpen, open }) => {
         data.filter((interessado) => interessado.flAtivo === true),
       );
     });
+
+    instance.get("/v1/assunto/id/1").then(({ data }) => console.log(data));
   }, []);
 
   return (
@@ -95,7 +144,7 @@ export const ProcessForm = ({ setOpen, open }) => {
       aria-labelledby="criação de processos"
     >
       <form onSubmit={formik.handleSubmit}>
-        <DialogTitle>teste</DialogTitle>
+        <DialogTitle>Criação de Processo</DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
             <TextField
@@ -116,7 +165,6 @@ export const ProcessForm = ({ setOpen, open }) => {
                 formik.touched.sgOrgaoSetor && formik.errors.sgOrgaoSetor
               }
             />
-            {console.log(assuntos, interessados)}
             <TextField
               select
               required
@@ -164,7 +212,7 @@ export const ProcessForm = ({ setOpen, open }) => {
               ))}
             </TextField>
             <TextField
-              fullWidth={isSmallScreen}
+              fullWidth
               required
               multiline
               minRows={3}
@@ -191,6 +239,10 @@ export const ProcessForm = ({ setOpen, open }) => {
 };
 
 ProcessForm.propTypes = {
-  setOpen: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool,
+  setIsEditing: PropTypes.func,
+  editingData: PropTypes.object,
+  setEditingData: PropTypes.func,
 };

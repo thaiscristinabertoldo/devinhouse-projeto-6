@@ -13,6 +13,9 @@ import { ProcessForm } from "components";
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingData, setEditingData] = useState({});
+
   return (
     <Router>
       <Switch>
@@ -31,7 +34,14 @@ function App() {
             <Route>
               <Header />
               teste
-              <ProcessForm open={open} setOpen={setOpen} />
+              <ProcessForm
+                open={open}
+                setOpen={setOpen}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editingData={editingData}
+                setEditingData={setEditingData}
+              />
               <button onClick={() => setOpen((a) => !a)}>abre</button>
             </Route>
           </KeycloakProvider>
