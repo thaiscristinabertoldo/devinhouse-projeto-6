@@ -167,7 +167,6 @@ resources:
       mimeType: application/json
       text: |
         {
-          "nuProcesso": 33,
           "sgOrgaoSetor": "TJRS",
           "nuAno": 2010,
           "descricao": "segund teste descricao",
@@ -340,7 +339,6 @@ resources:
       mimeType: application/json
       text: |-
         {
-          "nuProcesso": 20,
           "sgOrgaoSetor": "SOFT",
           "nuAno": 2020,
           "descricao": "Atualizando2",

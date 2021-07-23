@@ -17,7 +17,7 @@ export const Header = () => {
       <Styled.Header>
         <Typography>
           {keycloak.authenticated
-            ? `Bem-vindo, ${keycloak.idTokenParsed.given_name}`
+            ? `Bem-vindo, ${keycloak.idTokenParsed.preferred_username}`
             : "Jboys - Consultoria"}
         </Typography>
 

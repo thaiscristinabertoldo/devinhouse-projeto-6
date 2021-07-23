@@ -1,5 +1,8 @@
 package br.com.devinhouse.grupo5.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.com.devinhouse.grupo5.domain.exceptions.AssuntoNaoEncontradoException;
 import br.com.devinhouse.grupo5.dto.AssuntoInputDTO;
 import br.com.devinhouse.grupo5.dto.AssuntoOutputDTO;
@@ -26,8 +29,16 @@ public class AssuntoService {
         return toDTO(assuntoRepository.findById(id).orElseThrow(AssuntoNaoEncontradoException::new));
     }
 
+    public List<AssuntoOutputDTO> buscarTodosAssuntos() {
+      return toDTO(assuntoRepository.findAll());
+    }
+
     private AssuntoOutputDTO toDTO(Assunto assunto){
         return modelMapper.map(assunto, AssuntoOutputDTO.class);
+    }
+
+    private List<AssuntoOutputDTO> toDTO(List<Assunto> assuntos) {
+      return assuntos.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     private Assunto toAssunto(AssuntoInputDTO assuntoInputDTO){
