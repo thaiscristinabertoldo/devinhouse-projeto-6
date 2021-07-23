@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { useKeycloak } from '@react-keycloak/web';
 import { removeFromStorage } from '../services/storage/local-storage-service';
 import { QUERY } from '../services/constants';
+import { UserInformationPage } from '../pages/UserInformationPage';
 
 const AuthContext = createContext();
 
@@ -23,7 +24,11 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    setIsLoggedIn(Boolean(keycloak?.authenticated));
+    setUserInformation(keycloak?.tokenParsed?.name);
+    keycloak?.loadUserInfo().then((userInfo) => {
+      console.log(userInfo);
+      setUserInformation(userInfo);
+    });
   }, [keycloak?.authenticated]);
 
   const logout = useCallback(() => {

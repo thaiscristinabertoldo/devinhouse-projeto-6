@@ -12,7 +12,7 @@ export const NoContentMessageCard = () => {
           <Divider />
           <br />
           <Typography component="h6" align="center">
-            Tente buscar por outro filtro ou
+            Tente buscar por outro filtro ou<br/>
             <Button color="primary" onClick={() => document.location.reload(true)}>
               Clique aqui para voltar para a tela anterior!
             </Button>

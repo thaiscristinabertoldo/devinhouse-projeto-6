@@ -16,7 +16,10 @@ export const getProcess = async (id) => {
 };
 
 export const createProcess = async (data) => {
-  return await Api.create(URLS.PROCESSOS, data);
+  const reqConfig = {
+    headers: { Authorization: `Bearer ${keycloak.token}` },
+  };
+  return await Api.create(URLS.PROCESSOS, data, reqConfig);
 };
 
 export const updateProcess = async (data, id) => {
@@ -24,5 +27,8 @@ export const updateProcess = async (data, id) => {
 };
 
 export const deleteProcess = async (id) => {
-  return await Api.remove(`${URLS.PROCESSOS}/${id}`);
+  const reqConfig = {
+    headers: { Authorization: `Bearer ${keycloak.token}` },
+  };
+  return await Api.remove(`${URLS.PROCESSOS}/${id}`, reqConfig);
 };
