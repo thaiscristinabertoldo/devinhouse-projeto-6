@@ -3,6 +3,8 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
 public class InteressadoService {
+	
+	private static final Logger logger = LogManager.getLogger(InteressadoService.class);
 
 	@Autowired
 	private InteressadoRepository repository;
@@ -27,6 +31,8 @@ public class InteressadoService {
 		Optional<Interessado> result = repository.findByNuIdentificacao(interessado.getNuIdentificacao());
 		
 		if (result.isPresent()) {
+			logger.error("InteressadoService.create: CPF informado já cadastrado");
+			
 			throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
 		}
 
@@ -54,6 +60,8 @@ public class InteressadoService {
 		char flAtivo = Character.toLowerCase(interessado.getFlAtivo());
 
 		if ((flAtivo != 's') && (flAtivo != 'n')) {
+			logger.error("InteressadoService.update: O flAtivo deve ser 's' ou 'n'");
+			
 			throw new InteressadoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		}
 
@@ -75,6 +83,10 @@ public class InteressadoService {
 	private Interessado recuperaInteressado(Long id) {
 
 		Optional<Interessado> result = repository.findById(id);
+		
+		if (!result.isPresent()) {
+			logger.error("InteressadoService: Interessado não encontrado");
+		}
 
 		Interessado novoInteressado = result.orElseThrow(() -> new InteressadoNotFoundException());
 		return novoInteressado;
