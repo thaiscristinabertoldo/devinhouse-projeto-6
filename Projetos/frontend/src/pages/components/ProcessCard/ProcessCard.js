@@ -53,7 +53,7 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
             </IconButton>
           </Box>
           <Box marginX={1}>
-            <IconButton onClick={() => onDelete(idProcesso)} size="small">
+            <IconButton size="small">
               <EditIcon onClick={() => onEdit(idProcesso)} className={classes.icons} />
             </IconButton>
           </Box>
