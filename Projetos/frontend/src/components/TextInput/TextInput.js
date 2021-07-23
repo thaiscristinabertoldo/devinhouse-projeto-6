@@ -1,17 +1,13 @@
-import { Box, TextField } from '@material-ui/core';
+import { makeStyles, TextField } from '@material-ui/core';
 
-export const TextInput = ({ label = 'Titulo do campo', ...props }) => {
-  const defaultLabelProps = { shrink: true };
-
-  return (
-    <Box paddingY={2}>
-      <TextField
-        fullWidth
-        variant='outlined'
-        InputLabelProps={defaultLabelProps}
-        label={label}
-        {...props}
-      />
-    </Box>
-  );
+export const TextInput = (props) => {
+  const classes = useStyles();
+  return <TextField variant="outlined" inputProps={{ autoComplete: 'off' }} {...props} className={classes.input} />;
 };
+
+const useStyles = makeStyles((theme) => ({
+  input: {
+    marginTop: theme.spacing(1.5),
+    width: '100%',
+  },
+}));

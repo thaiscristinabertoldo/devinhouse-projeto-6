@@ -7,7 +7,7 @@ import { AppThemeProvider } from './contexts/theme-context';
 import { AuthProvider } from './contexts/auth-context';
 import keycloak from './keycloak';
 
-//import './styles/globals.css';
+import './styles/globals.css';
 
 ReactDOM.render(
   <React.StrictMode>

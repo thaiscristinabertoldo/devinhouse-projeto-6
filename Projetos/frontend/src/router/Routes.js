@@ -17,7 +17,7 @@ export const Routes = () => {
         <PR isAuthenticated={keycloak.authenticated} path="/processos" exact component={ListProcessPage} />
         <PR isAuthenticated={keycloak.authenticated} path="/processos/formulario/:id?" component={ProcessFormPage} />
         <PR isAuthenticated={keycloak.authenticated} path="/user" component={UserInformationPage} />
-        <Redirect path="/" exact to={'/processos'} />
+        <Redirect exact to={'/processos'} />
       </Switch>
     </BrowserRouter>
   );

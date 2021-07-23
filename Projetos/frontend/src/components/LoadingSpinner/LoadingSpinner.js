@@ -8,14 +8,7 @@ export const LoadingSpinner = (props) => {
 
   return (
     <div className={classes.root}>
-      <CircularProgress
-        variant="determinate"
-        className={classes.bottom}
-        size={80}
-        thickness={6}
-        {...props}
-        value={100}
-      />
+      <CircularProgress variant="determinate" className={classes.bottom} size={80} thickness={6} value={100} />
       <CircularProgress
         variant="indeterminate"
         disableShrink
@@ -25,7 +18,6 @@ export const LoadingSpinner = (props) => {
         }}
         size={80}
         thickness={6}
-        {...props}
       />
     </div>
   );

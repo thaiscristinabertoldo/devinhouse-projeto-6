@@ -1,12 +1,15 @@
 import { Button } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import { useStyles } from './AddButton.styles';
 
 export const AddButton = ({ children: label = 'Adicionar', onClick }) => {
+  const classes = useStyles();
+
   return (
     <Button
       variant="contained"
       color="primary"
-      style={{ color: 'white' }}
+      className={classes.button}
       startIcon={<PostAddIcon />}
       onClick={onClick}
     >

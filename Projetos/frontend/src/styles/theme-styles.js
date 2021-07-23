@@ -2,9 +2,9 @@ import { createTheme } from '@material-ui/core';
 
 export const darkTheme = createTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
     primary: {
-      main: '#0f2c3d',
+      main: '#39516a',
     },
     secondary: {
       main: '#ffb300',
@@ -14,7 +14,7 @@ export const darkTheme = createTheme({
 
 export const lightTheme = createTheme({
   palette: {
-    type: 'light',
+    type: 'dark',
     primary: {
       /* main: '#ed143d',*/
       main: '#53afe2',

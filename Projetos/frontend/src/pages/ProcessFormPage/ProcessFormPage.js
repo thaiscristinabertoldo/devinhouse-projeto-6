@@ -1,6 +1,6 @@
-import { Box, Button, Divider, Fab, Grid, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { Input } from '../../components/Input';
+import { TextInput } from '../../components/TextInput';
 import { useStyles } from './ProcessRegistrationPage.styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
@@ -10,8 +10,6 @@ import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox/Se
 import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
 import { initialProcessValues, registrationSchema } from './RegistrationSchema';
 import { DivError } from '../../components/DivError';
-import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { getOneProcess } from '../../mock';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { createProcess } from '../../services/api/processos-service';
@@ -59,17 +57,17 @@ export const ProcessFormPage = (props) => {
                       name="sgOrgaoSetor"
                       label="Órgão/Setor"
                       error={touched?.sgOrgaoSetor && errors.sgOrgaoSetor}
-                      as={Input}
+                      as={TextInput}
                     />
                     <ErrorMessage name="sgOrgaoSetor" component={DivError} />
-                    <Field name="nuAno" label="Ano do Processo" error={touched?.nuAno && errors.nuAno} as={Input} />
+                    <Field name="nuAno" label="Ano do Processo" error={touched?.nuAno && errors.nuAno} as={TextInput} />
                     <ErrorMessage name="nuAno" component={DivError} />
                     <Field
                       name="descricao"
                       label="Descrição"
                       multiline="true"
                       error={touched?.descricao && errors?.descricao}
-                      as={Input}
+                      as={TextInput}
                     />
                     <ErrorMessage name="descricao" component={DivError} />
                     <Grid container direction="row" justifyContent="space-between">
@@ -79,7 +77,7 @@ export const ProcessFormPage = (props) => {
                           label="Chave do Processo"
                           value={values?.sgOrgaoSetor + ' ' + nuProcesso + '/' + values?.nuAno}
                           disabled="true"
-                          as={Input}
+                          as={TextInput}
                         />
                       </div>
                       <div className={classes.halfInput}>
@@ -88,7 +86,7 @@ export const ProcessFormPage = (props) => {
                           label="Número do Processo"
                           defaultValue={nuProcesso.toString().padStart(4, '0')}
                           disabled="true"
-                          as={Input}
+                          as={TextInput}
                         />
                       </div>
                     </Grid>
@@ -107,7 +105,13 @@ export const ProcessFormPage = (props) => {
                       as={SearchSubjectComboBox}
                     />
                     <ErrorMessage name="cdAssunto" component={DivError} />
-                    <Field autoFocus name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={Input} />
+                    <Field
+                      autoFocus
+                      name="cdAssunto.dtCadastro"
+                      label="Data do Cadastro"
+                      disabled="true"
+                      as={TextInput}
+                    />
                     <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
                     <Grid container justifyContent="center">
                       <Typography variant="h2" className={classes.subtitle}>
@@ -128,14 +132,14 @@ export const ProcessFormPage = (props) => {
                       name="cdInteressado.nmInteressado"
                       label="Nome do Interessado"
                       disabled="true"
-                      as={Input}
+                      as={TextInput}
                     />
                     <Field
                       autoFocus
                       name="cdInteressado.dtNascimento"
                       label="Data de Nascimento"
                       disabled="true"
-                      as={Input}
+                      as={TextInput}
                     />
                     <br />
                     <br />
@@ -174,11 +178,6 @@ export const ProcessFormPage = (props) => {
                 )}
               </Formik>
             </Grid>
-            <ScrollTop {...props}>
-              <Fab color="primary" size="small" aria-label="scroll back to top">
-                <KeyboardArrowUpIcon style={{ color: 'white' }} />
-              </Fab>
-            </ScrollTop>
           </Box>
         </Paper>
       </Grid>
