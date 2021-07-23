@@ -3,6 +3,8 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
 public class AssuntoService {
+	
+	private static final Logger logger = LogManager.getLogger(AssuntoService.class);
 
 	@Autowired
 	private AssuntoRepository repository;
@@ -40,6 +44,8 @@ public class AssuntoService {
 		char flAtivo = Character.toLowerCase(assunto.getFlAtivo());
 
 		if ((flAtivo != 's') && (flAtivo != 'n')) {
+			logger.error("AssuntoService.update: O flAtivo deve ser 's' ou 'n'");
+			
 			throw new AssuntoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		}
 
@@ -60,6 +66,10 @@ public class AssuntoService {
 	private Assunto recuperaAssunto(Long id) {
 		Optional<Assunto> result = repository.findById(id);
 
+		if (!result.isPresent()) {
+			logger.error("AssuntoService: Assunto não encontrado");
+		}
+		
 		Assunto assunto = result.orElseThrow(() -> new AssuntoNotFoundException());
 		return assunto;
 	}
