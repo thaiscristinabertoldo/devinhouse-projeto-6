@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { LoginPage } from '../pages/LoginPage';
 import { ListProcessPage } from '../pages/ListProcessPage';
 import { ProcessFormPage } from '../pages/ProcessFormPage';
-import { PrivateRoute as PR } from './components/PrivateRoute';
+import { PrivateRoute } from './components/PrivateRoute';
 import { UserInformationPage } from '../pages/UserInformationPage';
 import { useKeycloak } from '@react-keycloak/web';
 
@@ -14,9 +14,13 @@ export const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/login" exact component={LoginPage} />
-        <PR isAuthenticated={keycloak.authenticated} path="/processos" exact component={ListProcessPage} />
-        <PR isAuthenticated={keycloak.authenticated} path="/processos/formulario/:id?" component={ProcessFormPage} />
-        <PR isAuthenticated={keycloak.authenticated} path="/user" component={UserInformationPage} />
+        <PrivateRoute isAuthenticated={keycloak.authenticated} path="/processos" exact component={ListProcessPage} />
+        <PrivateRoute
+          isAuthenticated={keycloak.authenticated}
+          path="/processos/formulario/:id?"
+          component={ProcessFormPage}
+        />
+        <PrivateRoute isAuthenticated={keycloak.authenticated} path="/user" component={UserInformationPage} />
         <Redirect exact to={'/processos'} />
       </Switch>
     </BrowserRouter>

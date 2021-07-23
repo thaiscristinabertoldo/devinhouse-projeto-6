@@ -7,7 +7,7 @@ import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { deleteProcess, getAllProcess } from '../../services/api/processos-service';
 import { BaseLayout } from '../../layouts/BaseLayout';
-import { initialState, reducer, STATUS } from '../../contexts/processos-context';
+import { initialState, reducer, STATUS } from '../../reducers/processos-reducer';
 
 const SEARCH_BY = {
   PROCESS: 'PROCESS',
