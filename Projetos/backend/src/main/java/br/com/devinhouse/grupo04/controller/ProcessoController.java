@@ -61,6 +61,8 @@ public class ProcessoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public ProcessoDTOOutput find(@PathVariable Long id) {
+		logger.info("ProcessoController.find chamado com seguinte id: {}", id);
+		
 		return processoMapper.toDto(service.find(id));
 	}
 	
@@ -69,6 +71,8 @@ public class ProcessoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ProcessoDTOOutput create(@Valid @RequestBody ProcessoDTOInput processoDTO) {
+		logger.info("ProcessoController.create chamado");
+		
 		return processoMapper.toDto(service.create(processoMapper.toProcesso(processoDTO)));
 	}
 	
@@ -77,6 +81,8 @@ public class ProcessoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Long id, @RequestBody ProcessoDTOInput processoDTO) {
+		logger.info("ProcessoController.update chamado");
+		
 		service.update(id, processoMapper.toProcesso(processoDTO));
 	}
 	
@@ -85,6 +91,8 @@ public class ProcessoController {
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
+		logger.info("ProcessoController.delete chamado com seguinte id: {}", id);
+		
 		service.delete(id);
 	}
 }

@@ -3,6 +3,8 @@ package br.com.devinhouse.grupo04.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
 public class ProcessoService {
+	
+	private static final Logger logger = LogManager.getLogger(ProcessoService.class);
 
 	@Autowired
 	private ProcessoRepository repository;
@@ -40,6 +44,10 @@ public class ProcessoService {
 
 	public Processo find(Long id) {
 		Optional<Processo> result = repository.findById(id);
+		
+		if (!result.isPresent()) {
+			logger.error("ProcessoService find: Processo não encontrado");
+		}
 
 		return result.orElseThrow(() -> new ProcessoNotFoundException());
 	}
@@ -70,10 +78,14 @@ public class ProcessoService {
 		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
 		
 		if (assuntoFlAtivo != 's') {
+			logger.error("ProcessoService create/update: O Assunto deve estar ativo");
+			
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
 		}
 		
 		if (interessadoFlAtivo != 's') {
+			logger.error("ProcessoService create/update: O Interessado deve estar ativo");
+			
 			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
 		}
 	}

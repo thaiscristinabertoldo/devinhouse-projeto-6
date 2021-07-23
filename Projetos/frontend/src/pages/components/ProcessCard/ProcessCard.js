@@ -33,7 +33,7 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
           <strong>Órgão/Setor:</strong> {sgOrgaoSetor}
         </Typography>
         <Typography color="textPrimary">
-          <strong>Nº:</strong> {nuAno}
+          <strong>Ano:</strong> {nuAno}
         </Typography>
         <Typography color="textPrimary">
           <strong>Interessado:</strong> {cdInteressado.nmInteressado}
