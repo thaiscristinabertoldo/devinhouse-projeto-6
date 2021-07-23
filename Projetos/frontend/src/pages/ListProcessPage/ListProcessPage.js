@@ -7,7 +7,7 @@ import { ScrollTop } from '../../components/BackToTopButton/BackToTopButton';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
-import { getAllProcess } from '../../services/api/processos-service';
+import { deleteProcess, getAllProcess } from '../../services/api/processos-service';
 import { handleRequestError } from '../../services/api/error-service';
 import { BaseLayout } from '../../layouts/BaseLayout';
 
@@ -24,6 +24,8 @@ export const ListProcessPage = (props) => {
   const [searchTerm, setSearchTerm] = useState();
   const [searchContext, setSearchContext] = useState('PROCESS');
 
+  const [highestProcessNumber, setHighestProcessNumber] = useState(1);
+
   const fetchProcess = async ({ cdAssunto = null, chaveProcesso = null }) => {
     setLoading(true);
     try {
@@ -34,7 +36,7 @@ export const ListProcessPage = (props) => {
     } catch (err) {
       handleRequestError(err);
     } finally {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 2000);
     }
   };
 
@@ -61,19 +63,26 @@ export const ListProcessPage = (props) => {
     history.push(`/processos/formulario/${id}`);
   };
 
-  const handleDeleteProcess = () => {
-    // TODO implementar deleção
+  const handleDeleteProcess = (id) => {
+    console.log(id);
+    deleteProcess(id);
+    fetchProcess({ cdAssunto: null, chaveProcesso: null });
   };
 
   const renderProcessList = () => {
-    return processList.map((process) => (
-      <ProcessCard
-        key={process.id}
-        processData={process}
-        onDelete={(id) => handleDeleteProcess(id)}
-        onEdit={(id) => goToEditProcessForm(id)}
-      />
-    ));
+    return processList.map((process) => {
+      if (process.nuProcesso > highestProcessNumber) {
+        highestProcessNumber = process.nuProcesso;
+      }
+      return (
+        <ProcessCard
+          key={process.id}
+          processData={process}
+          onDelete={(id) => handleDeleteProcess(id)}
+          onEdit={(id) => goToEditProcessForm(id)}
+        />
+      );
+    });
   };
 
   return (

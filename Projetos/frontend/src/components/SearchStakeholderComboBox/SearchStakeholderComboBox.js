@@ -12,6 +12,7 @@ export const SearchStakeholderComboBox = (props) => {
       id="search_combo_box"
       style={{ width: '100%' }}
       options={stakeholdersList}
+      getOptionDisabled={(option) => option.flAtivo?.toUpperCase() === 'N'}
       classes={{
         option: classes.option,
       }}
@@ -21,7 +22,7 @@ export const SearchStakeholderComboBox = (props) => {
       }}
       renderOption={(option) => (
         <>
-          {option.nuIdentificacao} - {option.nmInteressado} - {option.flAtivo}
+          {option.nuIdentificacao} - {option.nmInteressado}
         </>
       )}
       renderInput={(params) => (

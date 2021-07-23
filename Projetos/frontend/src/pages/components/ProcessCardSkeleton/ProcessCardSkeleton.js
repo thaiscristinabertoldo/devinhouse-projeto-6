@@ -1,9 +1,9 @@
-import { Box, Card, CardActions, CardContent, Divider, IconButton, Typography } from '@material-ui/core';
+import { Box, Card, CardActions, CardContent, Divider, Grid, IconButton, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
 export const ProcessCardSkeleton = () => {
   return (
-    <Card style={{ marginBottom: '16px', minWidth: '30%' }}>
+    <Card style={{ marginBottom: '16px', minWidth: '32%' }}>
       <CardContent>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="h5" component="h2">
@@ -31,16 +31,18 @@ export const ProcessCardSkeleton = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Box color={'#FFF'} marginX={1}>
-          <IconButton color="default" size="small">
-            <Skeleton width={26} height={26} variant="circle" animation="wave" />
-          </IconButton>
-        </Box>
-        <Box marginX={1}>
-          <IconButton color="default" size="small">
-            <Skeleton width={26} height={26} variant="circle" animation="wave" />
-          </IconButton>
-        </Box>
+        <Grid container justifyContent="flex-end">
+          <Box color={'#FFF'} marginX={1}>
+            <IconButton color="default" size="small">
+              <Skeleton width={26} height={26} variant="circle" animation="wave" />
+            </IconButton>
+          </Box>
+          <Box marginX={1}>
+            <IconButton color="default" size="small">
+              <Skeleton width={26} height={26} variant="circle" animation="wave" />
+            </IconButton>
+          </Box>
+        </Grid>
       </CardActions>
     </Card>
   );

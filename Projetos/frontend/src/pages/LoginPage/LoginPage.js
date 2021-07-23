@@ -1,11 +1,12 @@
 import { BaseLayout } from '../../layouts/BaseLayout';
-import { Box, Button, Container, Divider, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Container, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { Pre } from '../../components/Pre/Pre';
 import { useKeycloak } from '@react-keycloak/web';
 import { useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 import { saveIntoStorage } from '../../services/storage/local-storage-service';
 import { QUERY } from '../../services/constants';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 
 export const LoginPage = () => {
   const { keycloak, initialized } = useKeycloak();
@@ -22,7 +23,14 @@ export const LoginPage = () => {
     return (
       <Box minHeight="100%" width="100%" display="flex" justifyContent="center" alignItems="center">
         <Container component={Paper} elevation={3} maxWidth="sm">
-          <Box padding={4}>Carregando ...</Box>
+          <Box padding={4}>
+            <Grid container justifyContent="center">
+              <LoadingSpinner />
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography component="h1">Carregando...</Typography>
+            </Grid>
+          </Box>
         </Container>
       </Box>
     );
