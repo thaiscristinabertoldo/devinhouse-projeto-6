@@ -1,101 +1,150 @@
 import { useEffect, useState } from "react";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import AlertDialog from "components/Dialogs/AlertDialog";
-import { mockProcces } from "./mock";
-import { ProcessAccordion } from "./ProcessAccordion";
+import AlertDialog from "components/AlertDialog/AlertDialog";
+import { ProcessAccordion } from "./ProcessAccordion/ProcessAccordion";
 import * as Styled from "./ProcessesList.styled";
-import { ProcessLargeHeader } from "./ProcessLargeHeader";
-import { ProcessSmallHeader } from "./ProcessSmallHeader";
-
-const mock = mockProcces;
+import { ProcessHeader } from "./ProcessHeader/ProcessHeader";
+import { ProcessForm } from "components/ProcessForm/ProcessForm";
+import axios from "axios";
+import { Typography } from "@material-ui/core";
 
 export function ProcessesList() {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   const [processes, setProcesses] = useState();
-  const [find, setFind] = useState("");
-  const [buttonFind, setButtonFind] = useState(false);
-  const [alertDialog, setAlertDialog] = useState({
-    id: 0,
-    open: false,
-  });
 
-  function ToggleAlert() {
-    setAlertDialog((old) => ({ ...old, id: 0, open: !old }));
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const [deleteProcessId, setDeleteProcessId] = useState("");
+  const [clearButton, setClearButton] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingData, setEditingData] = useState({});
+
+  function toggleIsCreateProcess() {
+    setIsEditing((old) => !old);
+    setOpenForm((old) => !old);
   }
 
-  async function DELETEProcess() {
-    //  await console.log("Excluiu " + alertDialog.id);
-    ToggleAlert();
-    getProcess();
+  function toggleOpenAlert() {
+    setOpenAlert((old) => !old);
   }
 
-  function ChangeFind(event) {
-    setFind(event.target.value);
+  function toggleClearButton() {
+    setClearButton((old) => !old);
   }
 
-  function ClearFind() {
-    setButtonFind((old) => !old);
-    setFind("");
-    getProcess();
+  function onChangeDeleteProcessId(id) {
+    setOpenAlert((old) => !old);
+    setDeleteProcessId(id);
   }
 
-  async function getProcessesFind() {
-    if (find !== "") {
-      setButtonFind((old) => !old);
-      console.log("find");
+  function changeProcessKey(key) {
+    if (key !== "") {
+      toggleClearButton();
+      getProcessKey(key);
     }
   }
 
-  async function getProcess() {
-    await setProcesses(mock);
-    console.log("mock");
+  function toggleIsEditing(id) {
+    processes.map((process) => {
+      if (process.id === id) {
+        setEditingData(process);
+      }
+    });
+    setIsEditing((old) => !old);
+    setOpenForm((old) => !old);
+  }
+
+  function deleteProcess() {
+    axios
+      .delete("http://localhost:8080/backend/v1/processo/id/" + deleteProcessId)
+      .then(function (response) {
+        if (response.status == 200) {
+          toggleOpenAlert();
+          getProcessList();
+        }
+      })
+      .catch(function (error) {
+        console.log("error: ", error);
+      });
+  }
+
+  function getProcessKey(key) {
+    axios
+      .get("http://localhost:8080/backend/v1/processo/chaveprocesso?=" + key)
+      .then(function (response) {
+        setProcesses(response.data);
+      })
+      .catch(function (error) {
+        console.log("error: ", error);
+      });
+  }
+
+  function getProcessList() {
+    axios
+      .get("http://localhost:8080/backend/v1/processo/")
+      .then(function (response) {
+        setProcesses(response.data);
+      })
+      .catch(function (error) {
+        console.log("error: ", error);
+      });
   }
 
   useEffect(() => {
-    getProcess();
+    getProcessList();
   }, []);
 
+  console.log(editingData);
   return (
     <>
-      <AlertDialog
-        open={alertDialog.open}
-        ToggleAlert={ToggleAlert}
-        onClick={DELETEProcess}
-        title="Exclusão de processo"
-        desc="Você tem certeza que deseja excluir esse processo? Essa operação será permanente."
+      <ProcessForm
+        open={openForm}
+        setOpen={setOpenForm}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        editingData={editingData}
+        setEditingData={setEditingData}
       />
+      <AlertDialog
+        open={openAlert}
+        toggleOpenAlert={toggleOpenAlert}
+        onAccepted={deleteProcess}
+        title="Exclusão de processo"
+        description="Você tem certeza que deseja excluir esse processo? Essa operação será permanente."
+      />
+      {!processes && (
+        <Styled.Box>
+          <Styled.Paper>
+            <Typography>
+              Não temos nenhum processo criado, que tal criar um?
+            </Typography>
+            <Styled.Button
+              size="large"
+              variant="contained"
+              onClick={() => toggleIsCreateProcess()}
+            >
+              Novo
+            </Styled.Button>
+          </Styled.Paper>
+        </Styled.Box>
+      )}
       {processes && (
-        <Styled.BOX>
-          <Styled.PAPER sx={{ width: "90%", overflow: "hidden" }}>
-            {isSmallScreen ? (
-              <ProcessSmallHeader
-                find={find}
-                ChangeFind={ChangeFind}
-                getProcessesFind={getProcessesFind}
-                buttonFind={buttonFind}
-                ClearFind={ClearFind}
-              />
-            ) : (
-              <ProcessLargeHeader
-                find={find}
-                ChangeFind={ChangeFind}
-                getProcessesFind={getProcessesFind}
-                buttonFind={buttonFind}
-                ClearFind={ClearFind}
-              />
-            )}
+        <Styled.Box>
+          <Styled.Paper>
+            <ProcessHeader
+              changeProcessKey={changeProcessKey}
+              clearButton={clearButton}
+              toggleClearButton={toggleClearButton}
+              toggleIsCreateProcess={toggleIsCreateProcess}
+            />
             {processes.map((process) => (
               <ProcessAccordion
                 key={process.id}
                 process={process}
-                setAlertDialog={setAlertDialog}
+                onChangeDeleteProcessId={onChangeDeleteProcessId}
+                toggleIsEditing={toggleIsEditing}
               />
             ))}
-          </Styled.PAPER>
-        </Styled.BOX>
+          </Styled.Paper>
+        </Styled.Box>
       )}
     </>
   );

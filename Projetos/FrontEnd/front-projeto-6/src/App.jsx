@@ -7,15 +7,9 @@ import {
 
 import { ThemeProvider } from "theme";
 import { KeycloakProvider } from "keycloak";
-import { Header } from "components";
-import { useState } from "react";
-import { ProcessForm } from "components";
+import { Header, ProcessesList } from "components";
 
 function App() {
-  const [open, setOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingData, setEditingData] = useState({});
-
   return (
     <Router>
       <Switch>
@@ -33,16 +27,7 @@ function App() {
           <KeycloakProvider>
             <Route>
               <Header />
-              teste
-              <ProcessForm
-                open={open}
-                setOpen={setOpen}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                editingData={editingData}
-                setEditingData={setEditingData}
-              />
-              <button onClick={() => setOpen((a) => !a)}>abre</button>
+              <ProcessesList />
             </Route>
           </KeycloakProvider>
         </ThemeProvider>

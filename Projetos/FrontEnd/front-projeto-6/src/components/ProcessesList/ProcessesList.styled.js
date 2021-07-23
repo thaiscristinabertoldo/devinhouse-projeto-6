@@ -1,57 +1,27 @@
-import { Box, Paper } from "@material-ui/core";
+import {
+  Box as MuiBox,
+  Paper as MuiPaper,
+  Button as MuiButton,
+} from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 
-const BOX = styled(Box)({
+const Box = styled(MuiBox)(({ theme }) => ({
   width: "90%",
   marginLeft: "5%",
+  marginTop: theme.spacing(4),
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-});
-
-const PAPER = styled(Paper)({
-  padding: "16px",
-});
-
-const BOXSMALLBUTTON = styled(Box)({
-  width: "100%",
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: "8px",
-});
-
-const BOXCOLUMN = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-});
-
-const BOXROW = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: theme.spacing(2),
 }));
 
-const BOXHEADER = styled(Box)({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginBottom: "16px",
-});
+const Paper = styled(MuiPaper)(({ theme }) => ({
+  width: "90%",
+  overflow: "hidden",
+  padding: theme.spacing(4),
+}));
 
-const BOXFIELD = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "center",
-  padding: "8px",
-});
-
-export { BOXSMALLBUTTON, BOX, PAPER, BOXCOLUMN, BOXROW, BOXHEADER, BOXFIELD };
+const Button = styled(MuiButton)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
+export { Box, Paper, Button };

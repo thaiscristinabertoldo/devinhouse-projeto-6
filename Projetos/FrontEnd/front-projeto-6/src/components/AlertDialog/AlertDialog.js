@@ -7,21 +7,21 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function AlertDialog({
   title,
-  desc,
-  onClick,
+  description,
+  onAccepted,
   open,
-  ToggleAlert,
+  toggleOpenAlert,
 }) {
   return (
     <div>
-      <Dialog open={open} onClose={ToggleAlert}>
-        <DialogTitle>{title}</DialogTitle>
+      <Dialog open={open} onClose={toggleOpenAlert}>
+        <DialogTitle className="AlertTitle">{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{desc}</DialogContentText>
+          <DialogContentText>{description}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ToggleAlert}>Voltar</Button>
-          <Button onClick={onClick} autoFocus>
+          <Button onClick={toggleOpenAlert}>Voltar</Button>
+          <Button onClick={onAccepted} autoFocus>
             Aceitar
           </Button>
         </DialogActions>
