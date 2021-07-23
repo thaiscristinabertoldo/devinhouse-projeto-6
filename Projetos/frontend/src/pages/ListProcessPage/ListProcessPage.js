@@ -1,13 +1,13 @@
 import { Box, Container, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { ProcessCardSkeleton } from '../components/ProcessCardSkeleton';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
 import { ProcessCard } from '../components/ProcessCard';
 import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { deleteProcess, getAllProcess } from '../../services/api/processos-service';
-import { handleRequestError } from '../../services/api/error-service';
 import { BaseLayout } from '../../layouts/BaseLayout';
+import { initialState, reducer, STATUS } from '../../contexts/processos-context';
 
 const SEARCH_BY = {
   PROCESS: 'PROCESS',
@@ -17,30 +17,19 @@ const SEARCH_BY = {
 export const ListProcessPage = (props) => {
   const { history } = props;
 
-  const [loading, setLoading] = useState(false);
-  const [processList, setProcessList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState();
-  const [searchContext, setSearchContext] = useState('PROCESS');
-
-  const fetchProcess = async ({ cdAssunto = null, chaveProcesso = null }) => {
-    setLoading(true);
-    try {
-      const response = await getAllProcess({ cdAssunto, chaveProcesso });
-      if (!!response) {
-        setProcessList(response);
-      }
-    } catch (err) {
-      handleRequestError(err);
-    } finally {
-      setTimeout(() => setLoading(false), 2000);
-    }
-  };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { processList, searchTerm, searchContext, status } = state;
 
   useEffect(() => {
     (async () => {
       return await fetchProcess({ cdAssunto: null, chaveProcesso: null });
     })();
   }, []);
+
+  const fetchProcess = async ({ cdAssunto = null, chaveProcesso = null }) => {
+    dispatch({ type: 'loading' });
+    getAllProcess({ cdAssunto, chaveProcesso }).then((data) => dispatch({ type: 'load', payload: data }));
+  };
 
   const handleSearchProcess = async () => {
     if (searchContext === SEARCH_BY.PROCESS) {
@@ -80,7 +69,11 @@ export const ListProcessPage = (props) => {
   return (
     <BaseLayout>
       <Container maxWidth="xl">
-        <SearchBar term={searchTerm} setTerm={setSearchTerm} onSearch={handleSearchProcess} />
+        <SearchBar
+          term={searchTerm}
+          setTerm={(value) => dispatch({ type: 'searchTerm', payload: value })}
+          onSearch={handleSearchProcess}
+        />
         <Box justifyContent="space-between" display="flex" width="100%" alignItems="center" marginY={2}>
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
           <RadioGroup
@@ -89,7 +82,7 @@ export const ListProcessPage = (props) => {
             name="position"
             defaultValue="top"
             value={searchContext}
-            onChange={(e) => setSearchContext(e.target.value)}
+            onChange={(e) => dispatch({ type: 'searchContext', payload: e.target.value })}
           >
             <FormControlLabel
               value="PROCESS"
@@ -105,10 +98,11 @@ export const ListProcessPage = (props) => {
             />
           </RadioGroup>
         </Box>
+
         <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
-          {loading && renderLoadingList()}
-          {!loading && !!processList.length && renderProcessList()}
-          {!loading && processList.length === 0 && <NoContentMessageCard />}
+          {status === STATUS.LOADING && renderLoadingList()}
+          {status === STATUS.COMPLETE && renderProcessList()}
+          {status === STATUS.COMPLETE && processList.length === 0 && <NoContentMessageCard />}
         </Box>
       </Container>
     </BaseLayout>

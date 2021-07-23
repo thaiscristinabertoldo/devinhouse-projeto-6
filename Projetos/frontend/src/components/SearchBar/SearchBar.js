@@ -1,6 +1,5 @@
-import { Box, IconButton, InputAdornment, Paper, TextField } from '@material-ui/core';
+import { Box, IconButton, InputAdornment, makeStyles, Paper, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { useStyles } from './SearchBar.styles';
 
 export const SearchBar = ({ onSearch, term, setTerm }) => {
   const classes = useStyles();
@@ -36,3 +35,9 @@ export const SearchBar = ({ onSearch, term, setTerm }) => {
     </Box>
   );
 };
+
+const useStyles = makeStyles({
+  iconButton: {
+    padding: 10,
+  },
+});
