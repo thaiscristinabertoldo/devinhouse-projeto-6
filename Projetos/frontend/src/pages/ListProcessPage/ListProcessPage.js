@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Box, Container, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
-import { useProcessList } from '../../contexts/process-context';
+import { useProcessList } from '../../contexts/process-list-context';
 import { ProcessCardSkeleton } from '../components/ProcessCardSkeleton';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
@@ -10,6 +10,7 @@ import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { deleteProcess } from '../../services/api/processos-service';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { STATUS } from '../../reducers/process-reducer';
+import { PageError } from '../components/PageError';
 
 export const ListProcessPage = ({ history }) => {
   const { state, actions } = useProcessList();
@@ -67,6 +68,7 @@ export const ListProcessPage = ({ history }) => {
         <Box display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center">
           {status === STATUS.LOADING && renderLoadingList()}
           {status === STATUS.COMPLETE && renderProcessList()}
+          {status === STATUS.ERROR && <PageError errorMessage={state.error} />}
           {status === STATUS.COMPLETE && processList.length === 0 && <NoContentMessageCard />}
         </Box>
       </Container>

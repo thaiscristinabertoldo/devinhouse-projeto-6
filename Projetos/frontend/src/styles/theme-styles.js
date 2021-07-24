@@ -9,6 +9,12 @@ export const darkTheme = createTheme({
     secondary: {
       main: '#ffb300',
     },
+    error: {
+      main: '#C11515',
+    },
+    contrasted: {
+      main: '#e5eeff',
+    },
   },
 });
 
@@ -16,11 +22,13 @@ export const lightTheme = createTheme({
   palette: {
     type: 'dark',
     primary: {
-      /* main: '#ed143d',*/
       main: '#53afe2',
     },
     secondary: {
       main: '#ffb300',
+    },
+    error: {
+      main: '#C11515',
     },
   },
 });

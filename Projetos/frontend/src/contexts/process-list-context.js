@@ -30,7 +30,10 @@ export const ProcessListProvider = ({ children }) => {
         searchParams = null;
     }
     dispatch({ type: 'loading' });
-    getAllProcess(searchParams).then((data) => dispatch({ type: 'loaded', payload: data }));
+    getAllProcess(searchParams).then(
+      (data) => dispatch({ type: 'loaded', payload: data }),
+      (error) => dispatch({ type: 'error', payload: error?.message })
+    );
   }, [state.searchTerm]);
 
   const searchProcess = useCallback((searchTerm) => {
@@ -38,7 +41,6 @@ export const ProcessListProvider = ({ children }) => {
   }, []);
 
   const setSearchContext = useCallback((type) => {
-    console.log('aaaaaaaaaaaaaa');
     dispatch({ type: 'searchContext', payload: type });
   }, []);
 
