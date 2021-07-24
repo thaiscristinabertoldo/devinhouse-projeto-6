@@ -6,11 +6,10 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import { useHistory, useParams } from 'react-router-dom';
-import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox/SearchSubjectComboBox';
-import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox/SearchStakeholderComboBox';
+import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox';
+import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox';
 import { initialProcessValues, registrationSchema } from './RegistrationSchema';
 import { DivError } from '../../components/DivError';
-import { getOneProcess } from '../../mock';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { createProcess } from '../../services/api/processos-service';
 
@@ -45,13 +44,12 @@ export const ProcessFormPage = (props) => {
                 <strong>Formulário de {id !== undefined ? 'Edição' : 'Cadastro'} de Processo</strong>
               </Typography>
               <Formik
-                initialValues={id !== undefined ? getOneProcess(id) : initialProcessValues}
+                initialValues={initialProcessValues}
                 onSubmit={handleSubmit}
                 validationSchema={registrationSchema}
               >
                 {({ values, setFieldValue, isSubmitting, isValid, errors, resetForm, touched }) => (
                   <Form className={classes.form}>
-                    {console.log('errors', errors)}
                     <Divider orientation="horizontal" variant="fullWidth" />
                     <Field
                       name="sgOrgaoSetor"

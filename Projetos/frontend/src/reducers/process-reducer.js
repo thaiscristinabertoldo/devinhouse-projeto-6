@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
-const SEARCH_BY = {
+const log = console.log;
+export const SEARCH_BY = {
   PROCESS: 'PROCESS',
   SUBJECT: 'SUBJECT',
 };
@@ -14,25 +13,29 @@ export const STATUS = {
 
 export const initialState = {
   processList: [],
-  searchTerm: null,
-  searchContext: SEARCH_BY.PROCESS,
-  status: STATUS.IDLE,
+  searchTerm: '',
+  searchContext: 'PROCESS',
+  status: 'idle',
 };
 
 export const reducer = (state = initialState, action) => {
+  log('CHAMOU REDUCER');
   switch (action.type) {
     case 'loading':
+      log(action);
       return { ...state, status: STATUS.LOADING };
-    case 'load':
-      console.log(action.payload);
+    case 'loaded':
+      log(action);
       return { ...state, processList: action.payload, status: STATUS.COMPLETE };
     case 'error':
+      log(action);
       return { ...state, status: STATUS.ERROR };
     case 'searchTerm':
+      log(action);
       return { ...state, searchTerm: action.payload };
     case 'searchContext':
-      const ctx = action.payload === SEARCH_BY.PROCESS ? SEARCH_BY.PROCESS : SEARCH_BY.SUBJECT;
-      return { ...state, searchContext: ctx };
+      log(action);
+      return { ...state, searchContext: action.payload };
     default:
       return { ...state };
   }
