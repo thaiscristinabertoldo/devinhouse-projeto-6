@@ -8,7 +8,7 @@ import { AuthProvider } from './contexts/auth-context';
 import keycloak from './keycloak';
 
 import './styles/globals.css';
-import { ProcessListProvider } from './contexts/process-context';
+import { ProcessListProvider } from './contexts/process-list-context';
 
 ReactDOM.render(
   <React.StrictMode>
