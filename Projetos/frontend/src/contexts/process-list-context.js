@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useReducer } from 'react';
 import { initialState, reducer, SEARCH_BY } from '../reducers/process-reducer';
-import { getAllProcess } from '../services/api/processos-service';
+import { deleteProcessById, getAllProcess } from '../services/api/processos-service';
 
 const ProcessListContext = createContext();
 
@@ -17,7 +17,7 @@ export function useProcessList() {
 export const ProcessListProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchProcess = useCallback(() => {
+  const fetchProcessList = useCallback(() => {
     let searchParams = null;
     switch (state.searchContext) {
       case SEARCH_BY.PROCESS:
@@ -30,15 +30,20 @@ export const ProcessListProvider = ({ children }) => {
         searchParams = null;
     }
     dispatch({ type: 'loading' });
-    getAllProcess(searchParams).then(
-      (data) => dispatch({ type: 'loaded', payload: data }),
-      (error) => dispatch({ type: 'error', payload: error?.message })
-    );
+    getAllProcess(searchParams)
+      .then((data) => dispatch({ type: 'loaded', payload: data }))
+      .catch((error) => dispatch({ type: 'error', payload: error?.message }));
   }, [state.searchTerm]);
 
   const searchProcess = useCallback((searchTerm) => {
     dispatch({ type: 'searchTerm', payload: searchTerm });
   }, []);
+
+  const deleteProcess = useCallback((processId) => {
+    deleteProcessById(processId)
+      .then(async () => await getAllProcess())
+      .catch((error) => dispatch({ type: 'error', payload: error?.message }));
+  });
 
   const setSearchContext = useCallback((type) => {
     dispatch({ type: 'searchContext', payload: type });
@@ -46,11 +51,12 @@ export const ProcessListProvider = ({ children }) => {
 
   const actions = useMemo(
     () => ({
-      fetchProcess,
+      fetchProcessList,
       searchProcess,
       setSearchContext,
+      deleteProcess,
     }),
-    [fetchProcess, searchProcess, setSearchContext]
+    [fetchProcessList, searchProcess, setSearchContext, deleteProcess]
   );
 
   return <ProcessListContext.Provider value={{ state, actions }}>{children}</ProcessListContext.Provider>;

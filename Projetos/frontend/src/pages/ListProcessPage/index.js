@@ -1,1 +1,1 @@
-export * from './ListProcessPage';
+export * from './ProcessListPage';
