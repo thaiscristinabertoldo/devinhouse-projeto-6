@@ -1,8 +1,10 @@
 import { Box, IconButton, InputAdornment, makeStyles, Paper, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import { useState } from 'react';
 
-export const SearchBar = ({ onSearch, term, setTerm }) => {
+export const SearchBar = ({ onSearch }) => {
   const classes = useStyles();
+  const [term, setTerm] = useState('');
 
   return (
     <Box component="form" width="100%">
@@ -22,7 +24,7 @@ export const SearchBar = ({ onSearch, term, setTerm }) => {
                   aria-label="search"
                   onClick={(e) => {
                     e.preventDefault();
-                    onSearch();
+                    onSearch(term);
                   }}
                 >
                   <SearchIcon />

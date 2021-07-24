@@ -1,16 +1,17 @@
 import { AddButton } from './AddButton';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 describe('Componente AddButton', function () {
   test('Deve renderizar o componente corretamente', () => {
-    const { getByRole } = render(<AddButton />);
-    expect(getByRole('button')).toBeInTheDocument();
+    render(<AddButton />);
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
   test('Deve chamar uma função quando clicado', () => {
     const mockFn = jest.fn();
-    const { getByRole } = render(<AddButton onClick={mockFn} />);
-    fireEvent.click(getByRole('button'));
+    render(<AddButton onClick={mockFn} />);
+    userEvent.click(screen.getByRole('button'));
     expect(mockFn).toBeCalled();
   });
 });
