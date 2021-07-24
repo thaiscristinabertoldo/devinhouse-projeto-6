@@ -11,7 +11,7 @@ export const getAllProcess = async ({ cdAssunto = '', chaveProcesso = '' }) => {
 };
 
 export const getProcessById = async (id) => {
-  return await Api.read(`${URLS.PROCESSOS}/${id}`);
+  return await Api.read(`${URLS.PROCESSOS}/${id}`).then((response) => response.data);
 };
 
 export const createProcess = async (data) => {

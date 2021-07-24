@@ -8,16 +8,16 @@ import { AuthProvider } from './contexts/auth-context';
 import keycloak from './keycloak';
 
 import './styles/globals.css';
-import { ProcessListProvider } from './contexts/process-list-context';
+import { ProcessProvider } from './contexts/process-context';
 
 ReactDOM.render(
   <React.StrictMode>
     <ReactKeycloakProvider authClient={keycloak}>
       <AppThemeProvider>
         <AuthProvider>
-          <ProcessListProvider>
+          <ProcessProvider>
             <App />
-          </ProcessListProvider>
+          </ProcessProvider>
         </AuthProvider>
       </AppThemeProvider>
     </ReactKeycloakProvider>

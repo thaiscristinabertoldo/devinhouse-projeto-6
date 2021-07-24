@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { STATUS } from '../../reducers/process-reducer';
-import { useProcessList } from '../../contexts/process-list-context';
+import { useProcess } from '../../contexts/process-context';
 
 import { Section } from '../../components/Section';
 import { PageError } from '../components/PageError';
@@ -15,7 +15,7 @@ import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { Selector, SelectorGroup } from '../../components/Selector';
 
 export const ProcessListPage = ({ history }) => {
-  const { state, actions } = useProcessList();
+  const { state, actions } = useProcess();
   const { processList, searchContext, status } = state;
   const { fetchProcessList, searchProcess, setSearchContext, deleteProcess } = actions;
 
@@ -43,8 +43,10 @@ export const ProcessListPage = ({ history }) => {
   return (
     <BaseLayout>
       <Container>
-        <SearchBar onSearch={searchProcess} />
         <Section>
+          <SearchBar onSearch={searchProcess} />
+        </Section>
+        <Section display="flex" justifyContent="space-between" alignItems="center">
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
           <SelectorGroup value={searchContext} onChange={setSearchContext}>
             <Selector value={'PROCESS'} label={'Busca por Processo'} />

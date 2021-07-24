@@ -1,7 +1,7 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { LoginPage } from '../pages/LoginPage';
-import { ProcessListPage } from '../pages/ListProcessPage';
+import { ProcessListPage } from '../pages/ProcessListPage';
 import { ProcessFormPage } from '../pages/ProcessFormPage';
 import { PrivateRoute } from './components/PrivateRoute';
 import { UserInformationPage } from '../pages/UserInformationPage';

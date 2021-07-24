@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles({
   comboBox: {
-    marginTop: 15,
+    marginTop: 13,
   },
   option: {
     fontSize: 15,

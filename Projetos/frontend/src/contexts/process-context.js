@@ -2,35 +2,22 @@ import { createContext, useCallback, useContext, useMemo, useReducer } from 'rea
 import { initialState, reducer, SEARCH_BY } from '../reducers/process-reducer';
 import { deleteProcessById, getAllProcess } from '../services/api/processos-service';
 
-const ProcessListContext = createContext();
+const ProcessContext = createContext();
 
-export function useProcessList() {
-  const context = useContext(ProcessListContext);
-
+export function useProcess() {
+  const context = useContext(ProcessContext);
   if (!context) {
     throw new Error('useStorage must be used within an StorageProvider.');
   }
-
   return context;
 }
 
-export const ProcessListProvider = ({ children }) => {
+export const ProcessProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchProcessList = useCallback(() => {
-    let searchParams = null;
-    switch (state.searchContext) {
-      case SEARCH_BY.PROCESS:
-        searchParams = { chaveProcesso: state.searchTerm };
-        break;
-      case SEARCH_BY.SUBJECT:
-        searchParams = { cdAssunto: state.searchTerm };
-        break;
-      default:
-        searchParams = null;
-    }
     dispatch({ type: 'loading' });
-    getAllProcess(searchParams)
+    getAllProcess(buildSearchParams(state.searchContext))
       .then((data) => dispatch({ type: 'loaded', payload: data }))
       .catch((error) => dispatch({ type: 'error', payload: error?.message }));
   }, [state.searchTerm]);
@@ -43,7 +30,7 @@ export const ProcessListProvider = ({ children }) => {
     deleteProcessById(processId)
       .then(async () => await getAllProcess())
       .catch((error) => dispatch({ type: 'error', payload: error?.message }));
-  });
+  }, []);
 
   const setSearchContext = useCallback((type) => {
     dispatch({ type: 'searchContext', payload: type });
@@ -59,5 +46,16 @@ export const ProcessListProvider = ({ children }) => {
     [fetchProcessList, searchProcess, setSearchContext, deleteProcess]
   );
 
-  return <ProcessListContext.Provider value={{ state, actions }}>{children}</ProcessListContext.Provider>;
+  return <ProcessContext.Provider value={{ state, actions }}>{children}</ProcessContext.Provider>;
 };
+
+function buildSearchParams(context) {
+  switch (context) {
+    case SEARCH_BY.PROCESS:
+      return { chaveProcesso: context.searchTerm };
+    case SEARCH_BY.SUBJECT:
+      return { cdAssunto: context.searchTerm };
+    default:
+      return null;
+  }
+}
