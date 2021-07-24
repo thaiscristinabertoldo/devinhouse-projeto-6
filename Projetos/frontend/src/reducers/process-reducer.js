@@ -16,6 +16,7 @@ export const initialState = {
   searchTerm: '',
   searchContext: 'PROCESS',
   status: 'idle',
+  error: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -26,10 +27,10 @@ export const reducer = (state = initialState, action) => {
       return { ...state, status: STATUS.LOADING };
     case 'loaded':
       log(action);
-      return { ...state, processList: action.payload, status: STATUS.COMPLETE };
+      return { ...state, processList: action.payload, status: STATUS.COMPLETE, error: null };
     case 'error':
       log(action);
-      return { ...state, status: STATUS.ERROR };
+      return { ...state, status: STATUS.ERROR, error: action.payload };
     case 'searchTerm':
       log(action);
       return { ...state, searchTerm: action.payload };

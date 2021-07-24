@@ -19,7 +19,7 @@ import { style } from './AppBar.style';
 
 const useStyle = makeStyles(style);
 
-export const AppBar = ({ onToggleTheme, isDarkMode, userName, onLogout }) => {
+export const AppBar = ({ onToggleTheme, isDarkMode, userName = 'Visitante', onLogout }) => {
   const classes = useStyle();
 
   const [anchorEl, setAnchorEl] = useState();
@@ -35,7 +35,7 @@ export const AppBar = ({ onToggleTheme, isDarkMode, userName, onLogout }) => {
 
   return (
     <>
-      <MuiAppBar className={classes.root}>
+      <MuiAppBar>
         <Toolbar>
           <Typography variant="h6" style={{ color: 'white' }} className={classes.title}>
             Processos
