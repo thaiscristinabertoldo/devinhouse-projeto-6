@@ -53,7 +53,7 @@ export const ProcessHeader = ({
           variant="contained"
           onClick={toggleIsCreateProcess}
         >
-          Novo
+          Novo Processo
         </Button>
       </Styled.Box>
     </Styled.Box>

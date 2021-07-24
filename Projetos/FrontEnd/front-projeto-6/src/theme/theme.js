@@ -11,6 +11,7 @@ const darkTheme = createTheme({
     mode: "dark",
     primary: pink,
     secondary: deepPurple,
+    white: "#fff",
   },
 });
 
@@ -19,6 +20,7 @@ const lightTheme = createTheme({
     mode: "light",
     primary: indigo,
     secondary: lightBlue,
+    white: "#fff",
   },
 });
 

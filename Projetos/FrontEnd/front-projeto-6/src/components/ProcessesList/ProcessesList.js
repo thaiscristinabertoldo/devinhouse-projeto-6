@@ -6,6 +6,8 @@ import { ProcessHeader } from "./ProcessHeader/ProcessHeader";
 import { ProcessForm } from "components/ProcessForm/ProcessForm";
 import axios from "axios";
 import { Typography } from "@material-ui/core";
+import { BACKEND_URI } from "env";
+import { useKeycloak } from "@react-keycloak/web";
 
 export function ProcessesList() {
   const [processes, setProcesses] = useState();
@@ -17,9 +19,17 @@ export function ProcessesList() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingData, setEditingData] = useState({});
 
+  const { keycloak } = useKeycloak();
+
   function toggleIsCreateProcess() {
-    setIsEditing((old) => !old);
-    setOpenForm((old) => !old);
+    setIsEditing(false);
+    setOpenForm(true);
+  }
+
+  function toggleIsEditing(process) {
+    setEditingData(process);
+    setIsEditing(true);
+    setOpenForm(true);
   }
 
   function toggleOpenAlert() {
@@ -42,19 +52,14 @@ export function ProcessesList() {
     }
   }
 
-  function toggleIsEditing(id) {
-    processes.map((process) => {
-      if (process.id === id) {
-        setEditingData(process);
-      }
-    });
-    setIsEditing((old) => !old);
-    setOpenForm((old) => !old);
-  }
+  const instance = axios.create({
+    baseURL: BACKEND_URI,
+    headers: { Authorization: "Bearer " + keycloak.token },
+  });
 
   function deleteProcess() {
-    axios
-      .delete("http://localhost:8080/backend/v1/processo/id/" + deleteProcessId)
+    instance
+      .delete("/v1/processo/id/" + deleteProcessId)
       .then(function (response) {
         if (response.status == 200) {
           toggleOpenAlert();
@@ -67,9 +72,10 @@ export function ProcessesList() {
   }
 
   function getProcessKey(key) {
-    axios
-      .get("http://localhost:8080/backend/v1/processo/chaveprocesso?=" + key)
-      .then(function (response) {
+    instance
+      .get("http://localhost:8080/backend/v1/processo/chaveProcesso?q=" + key)
+      .then((response) => {
+        console.log(response.data);
         setProcesses(response.data);
       })
       .catch(function (error) {
@@ -78,8 +84,8 @@ export function ProcessesList() {
   }
 
   function getProcessList() {
-    axios
-      .get("http://localhost:8080/backend/v1/processo/")
+    instance
+      .get("http://localhost:8080/backend/v1/processo")
       .then(function (response) {
         setProcesses(response.data);
       })
@@ -92,17 +98,18 @@ export function ProcessesList() {
     getProcessList();
   }, []);
 
-  console.log(editingData);
   return (
     <>
-      <ProcessForm
-        open={openForm}
-        setOpen={setOpenForm}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-        editingData={editingData}
-        setEditingData={setEditingData}
-      />
+      {openForm && (
+        <ProcessForm
+          open={openForm}
+          setOpen={setOpenForm}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          editingData={editingData}
+          setEditingData={setEditingData}
+        />
+      )}
       <AlertDialog
         open={openAlert}
         toggleOpenAlert={toggleOpenAlert}
@@ -113,16 +120,24 @@ export function ProcessesList() {
       {!processes && (
         <Styled.Box>
           <Styled.Paper>
-            <Typography>
-              Não temos nenhum processo criado, que tal criar um?
-            </Typography>
-            <Styled.Button
-              size="large"
-              variant="contained"
-              onClick={() => toggleIsCreateProcess()}
-            >
-              Novo
-            </Styled.Button>
+            {keycloak.token === undefined ? (
+              <Typography align="center">
+                Você precisa fazer o login para utilizar o site
+              </Typography>
+            ) : (
+              <>
+                <Typography>
+                  Não temos nenhum processo criado, que tal criar um?
+                </Typography>
+                <Styled.Button
+                  size="large"
+                  variant="contained"
+                  onClick={() => toggleIsCreateProcess()}
+                >
+                  Novo
+                </Styled.Button>
+              </>
+            )}
           </Styled.Paper>
         </Styled.Box>
       )}

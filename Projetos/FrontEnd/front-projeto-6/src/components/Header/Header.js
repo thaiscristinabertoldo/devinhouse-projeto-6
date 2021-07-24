@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useKeycloak } from "@react-keycloak/web";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { Login, Logout, DarkMode, LightMode } from "@material-ui/icons";
 import { ThemeContext } from "theme";
@@ -26,17 +26,13 @@ export const Header = () => {
           </Styled.IconButton>
 
           {keycloak.authenticated ? (
-            <Styled.IconButton
-              onClick={() => keycloak.logout({ redirectUri: SELF_URI })}
-            >
-              <Logout />
-            </Styled.IconButton>
+            <Button onClick={() => keycloak.logout({ redirectUri: SELF_URI })}>
+              <Typography color="white">Sair</Typography>
+            </Button>
           ) : (
-            <Styled.IconButton
-              onClick={() => keycloak.login({ redirectUri: SELF_URI })}
-            >
-              <Login />
-            </Styled.IconButton>
+            <Button onClick={() => keycloak.login({ redirectUri: SELF_URI })}>
+              <Typography color="white">Entrar</Typography>
+            </Button>
           )}
         </Styled.Box>
       </Styled.AppBar>
