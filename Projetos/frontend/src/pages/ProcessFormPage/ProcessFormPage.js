@@ -7,8 +7,9 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
-import { createProcess, getProcessById } from '../../services/api/processos-service';
-import { initialProcessValues, registrationSchema } from './RegistrationSchema';
+import { getProcessById } from '../../services/api/processos-service';
+import { processSchema } from './form-utils/form-schema';
+import { processInitialValues } from './form-utils/initial-values';
 
 import { TextInput } from '../../components/TextInput';
 import { BaseLayout } from '../../layouts/BaseLayout';
@@ -44,11 +45,12 @@ export const ProcessFormPage = ({ history, match }) => {
         </SectionTitle>
         <Formik
           enableReinitialize
-          initialValues={initialProcessValues}
+          validateOnBlur
           onSubmit={handleSubmit}
-          validationSchema={registrationSchema}
+          initialValues={processInitialValues}
+          validationSchema={processSchema}
         >
-          {(props) => {
+          {(formProps) => {
             return (
               <Form>
                 {!!processIdFrompath && (
@@ -63,13 +65,15 @@ export const ProcessFormPage = ({ history, match }) => {
                     </Grid>
                   </FormSection>
                 )}
+                <pre>{JSON.stringify(formProps.values, 0, 2)}</pre>
+
                 <FormSection>
                   <SectionTitle>Dados do processo</SectionTitle>
                   <Grid container spacing={1}>
-                    <GridItem>
+                    <GridItem sm={2}>
                       <Field fullWidth name="sgOrgaoSetor" label="Órgão/Setor" as={TextInput} />
                     </GridItem>
-                    <GridItem>
+                    <GridItem sm={2}>
                       <Field name="nuAno" label="Ano do Processo" as={TextInput} />
                     </GridItem>
                     <GridItem>
@@ -130,7 +134,7 @@ export const ProcessFormPage = ({ history, match }) => {
                         style={{ backgroundColor: 'lightcoral', color: 'white' }}
                         variant="contained"
                         startIcon={<CancelRoundedIcon />}
-                        // onClick={resetForm}
+                        onClick={formProps.resetForm}
                         // disabled={isSubmitting}
                       >
                         Limpar
@@ -150,7 +154,6 @@ export const ProcessFormPage = ({ history, match }) => {
                     </GridItem>
                   </Grid>
                 </FormSection>
-                <pre>{JSON.stringify(formInitialValues, 2, 2)}</pre>
               </Form>
             );
           }}
