@@ -10,7 +10,7 @@ import { BACKEND_URI } from "env";
 import { useKeycloak } from "@react-keycloak/web";
 
 export function ProcessesList() {
-  const [processes, setProcesses] = useState({});
+  const [processes, setProcesses] = useState();
 
   const [openAlert, setOpenAlert] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -142,7 +142,7 @@ export function ProcessesList() {
         title="Exclusão de processo"
         description="Você tem certeza que deseja excluir esse processo? Essa operação será permanente."
       />
-      {keycloak.token === undefined && (
+      {keycloak.token === undefined ? (
         <Styled.Box>
           <Styled.Paper>
             <Typography align="center">
@@ -150,73 +150,76 @@ export function ProcessesList() {
             </Typography>
           </Styled.Paper>
         </Styled.Box>
-      )}
-      {processes ? (
-        <Styled.Box>
-          <Styled.Paper>
-            <ProcessHeader
-              changeProcessByMatter={changeProcessByMatter}
-              changeProcessByNumber={changeProcessByNumber}
-              clearButton={clearButton}
-              toggleClearButton={toggleClearButton}
-              toggleIsCreateProcess={toggleIsCreateProcess}
-              emptyFind={emptyFind}
-            />
+      ) : (
+        <>
+          {processes ? (
+            <Styled.Box>
+              <Styled.Paper>
+                <ProcessHeader
+                  changeProcessByMatter={changeProcessByMatter}
+                  changeProcessByNumber={changeProcessByNumber}
+                  clearButton={clearButton}
+                  toggleClearButton={toggleClearButton}
+                  toggleIsCreateProcess={toggleIsCreateProcess}
+                  emptyFind={emptyFind}
+                />
 
-            {emptyFind ? (
-              <Styled.Box>
-                <Styled.Paper>
-                  <Typography>
-                    Opss, não conseguimos encontrar nada parecido com o que foi
-                    informado.
-                  </Typography>
-                  <Button onClick={() => setEmptyFind((old) => !old)}>
-                    Atualizar
-                  </Button>
-                </Styled.Paper>
-              </Styled.Box>
-            ) : (
-              <>
-                {Object.entries(processes).length === 0 ? (
-                  <>
-                    <Typography>
-                      Não temos nenhum processo criado, que tal criar um?
-                    </Typography>
-                  </>
+                {emptyFind ? (
+                  <Styled.Box>
+                    <Styled.Paper>
+                      <Typography>
+                        Opss, não conseguimos encontrar nada parecido com o que
+                        foi informado.
+                      </Typography>
+                      <Button onClick={() => setEmptyFind((old) => !old)}>
+                        Atualizar
+                      </Button>
+                    </Styled.Paper>
+                  </Styled.Box>
                 ) : (
                   <>
-                    {processes.map((process) => (
-                      <ProcessAccordion
-                        key={process.id}
-                        process={process}
-                        onChangeDeleteProcessId={onChangeDeleteProcessId}
-                        toggleIsEditing={toggleIsEditing}
-                      />
-                    ))}
+                    {Object.entries(processes).length === 0 ? (
+                      <>
+                        <Typography>
+                          Não temos nenhum processo criado, que tal criar um?
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        {processes.map((process) => (
+                          <ProcessAccordion
+                            key={process.id}
+                            process={process}
+                            onChangeDeleteProcessId={onChangeDeleteProcessId}
+                            toggleIsEditing={toggleIsEditing}
+                          />
+                        ))}
+                      </>
+                    )}
                   </>
                 )}
-              </>
-            )}
-          </Styled.Paper>
-        </Styled.Box>
-      ) : (
-        <Styled.Box>
-          <Styled.Paper>
-            <ProcessHeader />
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <Skeleton animation="wave" width="100%" key={item}>
-                <ProcessAccordion
-                  process={{
-                    chaveProcesso: item,
-                    descrisao: item,
-                    cdAssunto: { descricao: item },
-                    cdInteressado: { nmInteressado: item },
-                  }}
-                />
-              </Skeleton>
-            ))}
-          </Styled.Paper>
-        </Styled.Box>
+              </Styled.Paper>
+            </Styled.Box>
+          ) : (
+            <Styled.Box>
+              <Styled.Paper>
+                <ProcessHeader />
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                  <Skeleton animation="wave" width="100%" key={item}>
+                    <ProcessAccordion
+                      process={{
+                        chaveProcesso: item,
+                        descrisao: item,
+                        cdAssunto: { descricao: item },
+                        cdInteressado: { nmInteressado: item },
+                      }}
+                    />
+                  </Skeleton>
+                ))}
+              </Styled.Paper>
+            </Styled.Box>
+          )}
+        </>
       )}
     </>
   );
