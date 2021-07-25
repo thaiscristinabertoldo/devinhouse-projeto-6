@@ -13,6 +13,8 @@ export const AutocompleteInput = (props) => {
     renderOption,
   } = props;
 
+  console.log(props);
+
   return (
     <Autocomplete
       options={options}
@@ -22,16 +24,16 @@ export const AutocompleteInput = (props) => {
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
+      renderOption={renderOption}
       onChange={(e, value) => {
         form.setFieldValue(field.name, value !== null ? value : '');
       }}
-      renderOption={renderOption}
       renderInput={(params) => (
         <TextField
           {...params}
           fullWidth
           name={field.name}
-          label={field.label}
+          label={props.label}
           variant="outlined"
           inputProps={{ ...params.inputProps, autoComplete: 'off' }}
         />

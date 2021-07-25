@@ -18,8 +18,8 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ marginBottom: '16px' }}>
-      <CardContent>
+    <Card style={{ marginBottom: '16px', height: "100%" }}>
+      <CardContent style={{height: "86%"}} >
         <Box display="flex" justifyContent="space-between">
           <Typography variant="h5" component="h2">
             {chaveProcesso}
@@ -45,7 +45,7 @@ export const ProcessCard = ({ processData, onDelete, onEdit }) => {
           <strong>Descrição:</strong> {descricao}
         </Typography>
       </CardContent>
-      <CardActions className={classes.cardAction}>
+      <CardActions className={classes.cardAction} style={{marginBottom: "0%", height: "15%"}} >
         <Grid container justifyContent="flex-end">
           <Box color={'#FFF'} marginX={1}>
             <IconButton onClick={() => onDelete(idProcesso)} size="small">
