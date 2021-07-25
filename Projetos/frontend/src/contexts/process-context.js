@@ -17,9 +17,13 @@ export const ProcessProvider = ({ children }) => {
 
   const fetchProcessList = useCallback(() => {
     dispatch({ type: 'loading' });
-    getAllProcess(buildSearchParams(state.searchContext))
-      .then((data) => dispatch({ type: 'loaded', payload: data }))
-      .catch((error) => dispatch({ type: 'error', payload: error?.message }));
+    setTimeout(
+      () =>
+        getAllProcess(buildSearchParams(state.searchContext))
+          .then((data) => dispatch({ type: 'loaded', payload: data }))
+          .catch((error) => dispatch({ type: 'error', payload: error?.message })),
+      2000
+    );
   }, [state.searchTerm]);
 
   const searchProcess = useCallback((searchTerm) => {
