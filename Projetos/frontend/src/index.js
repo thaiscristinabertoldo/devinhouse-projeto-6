@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
+import keycloak from './keycloak';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 
-import { AppThemeProvider } from './contexts/theme-context';
+import { App } from './App';
 import { AuthProvider } from './contexts/auth-context';
-import keycloak from './keycloak';
+import { ProcessProvider } from './contexts/process-context';
+import { AppThemeProvider } from './contexts/theme-context';
 
 import './styles/globals.css';
-import { ProcessProvider } from './contexts/process-context';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -7,6 +7,7 @@ export const AddButton = ({ children: label = 'Adicionar', onClick }) => {
 
   return (
     <Button
+      type="button"
       variant="contained"
       color="primary"
       className={classes.button}

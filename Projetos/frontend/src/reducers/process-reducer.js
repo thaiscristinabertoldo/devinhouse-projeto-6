@@ -12,7 +12,6 @@ export const STATUS = {
 
 export const initialState = {
   processList: [],
-  searchTerm: '',
   searchContext: 'PROCESS',
   status: 'idle',
   error: null,
@@ -26,8 +25,6 @@ export const reducer = (state = initialState, action) => {
       return { ...state, processList: action.payload, status: STATUS.COMPLETE, error: null };
     case 'error':
       return { ...state, status: STATUS.ERROR, error: action.payload };
-    case 'searchTerm':
-      return { ...state, searchTerm: action.payload };
     case 'searchContext':
       return { ...state, searchContext: action.payload };
     default:
