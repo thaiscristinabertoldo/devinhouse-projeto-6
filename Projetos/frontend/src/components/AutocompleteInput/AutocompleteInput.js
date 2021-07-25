@@ -10,12 +10,13 @@ export const AutocompleteInput = (props) => {
     <Autocomplete
       options={options}
       getOptionDisabled={(option) => option['flAtivo']?.toUpperCase() === 'N'}
-      getOptionSelected={(option) => option[labelProperty]}
-      getOptionLabel={(option, value) => option[labelProperty] === value[labelProperty]}
+      // getOptionSelected={(option, value) => option[labelProperty] === value[labelProperty]}
+      getOptionLabel={(option) => option[labelProperty]}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
+      value={form.values[field.name]}
       onChange={(e, value) => {
         form.setFieldValue(field.name, value !== null ? value : '');
       }}

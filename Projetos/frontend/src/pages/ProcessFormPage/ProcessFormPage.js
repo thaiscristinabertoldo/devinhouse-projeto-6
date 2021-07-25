@@ -89,7 +89,7 @@ export const ProcessFormPage = ({ history, match }) => {
             return (
               <Form>
                 {!!processIdFrompath && renderProcessMeta()}
-                <pre>{JSON.stringify(formProps.values, 0, 2)}</pre>
+                {/*<pre>{JSON.stringify(formProps.values, 0, 2)}</pre>*/}
                 <FormSection>
                   <SectionTitle>Dados do processo</SectionTitle>
                   <Grid container spacing={1}>
@@ -110,8 +110,7 @@ export const ProcessFormPage = ({ history, match }) => {
                   <Grid container spacing={1}>
                     <GridItem sm={8}>
                       <Field
-                        label="Descrição"
-                        placeholder="Informe a descrição do assunto"
+                        label="Descrição do assunto"
                         name="cdAssunto"
                         component={AutocompleteInput}
                         options={assuntos}
@@ -130,10 +129,10 @@ export const ProcessFormPage = ({ history, match }) => {
 
                 <FormSection>
                   <SectionTitle>Interessado</SectionTitle>
-                  <Grid container spacing={1}>
-                    <GridItem sm={3}>
+                  <Grid container spacing={2}>
+                    <GridItem sm={8}>
                       <Field
-                        label="Documento"
+                        label="Número de identificação do interessado"
                         placeholder="Informe o número de identificação do interessado"
                         name="cdInteressado"
                         component={AutocompleteInput}
@@ -146,14 +145,6 @@ export const ProcessFormPage = ({ history, match }) => {
                         )}
                       />
                     </GridItem>
-                    <GridItem sm={5}>
-                      <Field
-                        name="cdInteressado.nmInteressado"
-                        label="Nome do Interessado"
-                        disabled="true"
-                        as={TextInput}
-                      />
-                    </GridItem>
                     <GridItem sm={4}>
                       <Field
                         name="cdInteressado.dtNascimento"
@@ -162,14 +153,22 @@ export const ProcessFormPage = ({ history, match }) => {
                         as={TextInput}
                       />
                     </GridItem>
+                    <GridItem>
+                      <Field
+                        name="cdInteressado.nmInteressado"
+                        label="Nome do Interessado"
+                        disabled="true"
+                        as={TextInput}
+                      />
+                    </GridItem>
                   </Grid>
                 </FormSection>
 
                 <FormSection>
-                  <Grid container alignContent="space-between">
+                  <Grid container alignContent="space-between" spacing={2}>
                     <GridItem xs container justifyContent="flex-start">
                       <Button
-                        style={{ backgroundColor: 'gray', color: 'white' }}
+                        color="default"
                         variant="contained"
                         startIcon={<ForwardRoundedIcon style={{ transform: 'rotate(180deg)' }} />}
                         onClick={history.goBack}
@@ -179,11 +178,12 @@ export const ProcessFormPage = ({ history, match }) => {
                     </GridItem>
                     <GridItem xs container justifyContent="center">
                       <Button
-                        style={{ backgroundColor: 'lightcoral', color: 'white' }}
+                        style={{ color: 'white' }}
+                        color="secondary"
                         variant="contained"
                         startIcon={<CancelRoundedIcon />}
                         onClick={formProps.resetForm}
-                        // disabled={isSubmitting}
+                        disabled={formProps.isSubmitting || !!processIdFrompath}
                       >
                         Limpar
                       </Button>
