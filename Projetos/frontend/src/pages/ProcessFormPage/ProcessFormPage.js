@@ -12,24 +12,24 @@ import { processInitialValues } from './form-utils/initial-values';
 
 import { TextInput } from '../../components/TextInput';
 import { BaseLayout } from '../../layouts/BaseLayout';
+import { createProcess, getProcessById } from '../../services/api/processos-service';
 import { Grid, GridItem } from '../../components/Grid';
-import { Section, SectionTitle } from '../../components/Section';
 import { getAllAssuntos } from '../../services/api/assuntos-service';
-import { getAllInteressados } from '../../services/api/interessados-service';
 import { AutocompleteInput } from '../../components/AutocompleteInput';
-import { createProcess } from '../../services/api/processos-service';
+import { getAllInteressados } from '../../services/api/interessados-service';
+import { Section, SectionTitle } from '../../components/Section';
 
 export const ProcessFormPage = ({ history, match }) => {
   const processIdFrompath = useRef(match.params.id || undefined).current;
-  // const [formInitialValues, setFormInitialValues] = useState();
+  const [formInitialValues, setFormInitialValues] = useState(processInitialValues);
   const [assuntos, setAssuntos] = useState([]);
   const [interessados, setInteressados] = useState([]);
 
-  // useEffect(() => {
-  //   (() => {
-  //     getProcessById(processIdFrompath).then(setFormInitialValues);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    if (processIdFrompath) {
+      getProcessById(processIdFrompath).then(setFormInitialValues);
+    }
+  }, [processIdFrompath]);
 
   useEffect(() => {
     Promise.all([getAllAssuntos(), getAllInteressados()]).then(([assuntos, interessados]) => {
@@ -45,6 +45,33 @@ export const ProcessFormPage = ({ history, match }) => {
     history.goBack();
   };
 
+  const renderProcessMeta = () => (
+    <FormSection>
+      <Grid container spacing={1}>
+        <GridItem sm={6}>
+          <Field
+            InputLabelProps={{ shrink: true }}
+            inputProps={{ readOnly: true }}
+            name="chaveProcesso"
+            label="Chave do Processo"
+            variant={'standard'}
+            as={TextInput}
+          />
+        </GridItem>
+        <GridItem sm={6}>
+          <Field
+            InputLabelProps={{ shrink: true }}
+            inputProps={{ readOnly: true }}
+            name="nuProcesso"
+            label="Número do Processo"
+            variant={'standard'}
+            as={TextInput}
+          />
+        </GridItem>
+      </Grid>
+    </FormSection>
+  );
+
   return (
     <BaseLayout>
       <Section display="block" paddingX={4}>
@@ -55,25 +82,14 @@ export const ProcessFormPage = ({ history, match }) => {
           enableReinitialize
           validateOnBlur
           onSubmit={handleSubmit}
-          initialValues={processInitialValues}
+          initialValues={formInitialValues}
           validationSchema={processSchema}
         >
           {(formProps) => {
             return (
               <Form>
-                {!!processIdFrompath && (
-                  <FormSection>
-                    <Grid container spacing={1}>
-                      <GridItem sm={6}>
-                        <Field name="chaveProcesso" label="Chave do Processo" disabled="true" as={TextInput} />
-                      </GridItem>
-                      <GridItem sm={6}>
-                        <Field name="nuProcesso" label="Número do Processo" disabled="true" as={TextInput} />
-                      </GridItem>
-                    </Grid>
-                  </FormSection>
-                )}
-
+                {!!processIdFrompath && renderProcessMeta()}
+                <pre>{JSON.stringify(formProps.values, 0, 2)}</pre>
                 <FormSection>
                   <SectionTitle>Dados do processo</SectionTitle>
                   <Grid container spacing={1}>
