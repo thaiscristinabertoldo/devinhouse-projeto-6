@@ -1,184 +1,200 @@
-import { Box, Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { TextInput } from '../../components/TextInput';
-import { useStyles } from './ProcessRegistrationPage.styles';
+import React, { useEffect, useRef, useState } from 'react';
+import { Field, Form, Formik } from 'formik';
+
+import { Button } from '@material-ui/core';
+
 import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
-import { useHistory, useParams } from 'react-router-dom';
-import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox';
-import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox';
-import { initialProcessValues, registrationSchema } from './RegistrationSchema';
-import { DivError } from '../../components/DivError';
+
+import { processSchema } from './form-utils/form-schema';
+import { processInitialValues } from './form-utils/initial-values';
+
+import { TextInput } from '../../components/TextInput';
 import { BaseLayout } from '../../layouts/BaseLayout';
+import { Grid, GridItem } from '../../components/Grid';
+import { Section, SectionTitle } from '../../components/Section';
+import { getAllAssuntos } from '../../services/api/assuntos-service';
+import { getAllInteressados } from '../../services/api/interessados-service';
+import { AutocompleteInput } from '../../components/AutocompleteInput';
 import { createProcess } from '../../services/api/processos-service';
 
-export const ProcessFormPage = (props) => {
-  const classes = useStyles();
+export const ProcessFormPage = ({ history, match }) => {
+  const processIdFrompath = useRef(match.params.id || undefined).current;
+  // const [formInitialValues, setFormInitialValues] = useState();
+  const [assuntos, setAssuntos] = useState([]);
+  const [interessados, setInteressados] = useState([]);
 
-  const history = useHistory();
+  // useEffect(() => {
+  //   (() => {
+  //     getProcessById(processIdFrompath).then(setFormInitialValues);
+  //   })();
+  // }, []);
 
-  const { id } = useParams();
+  useEffect(() => {
+    Promise.all([getAllAssuntos(), getAllInteressados()]).then(([assuntos, interessados]) => {
+      setAssuntos(assuntos);
+      setInteressados(interessados);
+    });
+  }, []);
 
-  const handleGoBack = () => {
-    history.push('/processos');
+  const handleSubmit = async (values) => {
+    const { cdAssunto, cdInteressado } = values;
+    const dataToPersist = Object.assign({}, values, { cdAssuntoId: cdAssunto?.id, cdInteressadoId: cdInteressado?.id });
+    await createProcess(dataToPersist);
+    history.goBack();
   };
-
-  const handleSubmit = (values, { setSubmitting }) => {
-    createProcess(values);
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-  };
-
-  const nuProcesso = id || 1;
 
   return (
     <BaseLayout>
-      <Grid container justifyContent="center">
-        <Paper elevation={3} className={classes.container}>
-          <Box>
-            <Grid container justifyContent="center">
-              <Typography variant="h1" align="center" gutterBottom className={classes.title}>
-                <strong>Formulário de {id !== undefined ? 'Edição' : 'Cadastro'} de Processo</strong>
-              </Typography>
-              <Formik
-                initialValues={initialProcessValues}
-                onSubmit={handleSubmit}
-                validationSchema={registrationSchema}
-              >
-                {({ values, setFieldValue, isSubmitting, isValid, errors, resetForm, touched }) => (
-                  <Form className={classes.form}>
-                    <Divider orientation="horizontal" variant="fullWidth" />
-                    <Field
-                      name="sgOrgaoSetor"
-                      label="Órgão/Setor"
-                      error={touched?.sgOrgaoSetor && errors.sgOrgaoSetor}
-                      as={TextInput}
-                    />
-                    <ErrorMessage name="sgOrgaoSetor" component={DivError} />
-                    <Field name="nuAno" label="Ano do Processo" error={touched?.nuAno && errors.nuAno} as={TextInput} />
-                    <ErrorMessage name="nuAno" component={DivError} />
-                    <Field
-                      name="descricao"
-                      label="Descrição"
-                      multiline="true"
-                      error={touched?.descricao && errors?.descricao}
-                      as={TextInput}
-                    />
-                    <ErrorMessage name="descricao" component={DivError} />
-                    <Grid container direction="row" justifyContent="space-between">
-                      <div className={classes.halfInput}>
-                        <Field
-                          name="chaveProcesso"
-                          label="Chave do Processo"
-                          value={values?.sgOrgaoSetor + ' ' + nuProcesso + '/' + values?.nuAno}
-                          disabled="true"
-                          as={TextInput}
-                        />
-                      </div>
-                      <div className={classes.halfInput}>
-                        <Field
-                          name="nuProcesso"
-                          label="Número do Processo"
-                          defaultValue={nuProcesso.toString().padStart(4, '0')}
-                          disabled="true"
-                          as={TextInput}
-                        />
-                      </div>
+      <Section display="block" paddingX={4}>
+        <SectionTitle variant={'h4'} align="center" noDivider>
+          Formulário de {!!processIdFrompath ? 'edição' : 'cadastro'} de processo
+        </SectionTitle>
+        <Formik
+          enableReinitialize
+          validateOnBlur
+          onSubmit={handleSubmit}
+          initialValues={processInitialValues}
+          validationSchema={processSchema}
+        >
+          {(formProps) => {
+            return (
+              <Form>
+                {!!processIdFrompath && (
+                  <FormSection>
+                    <Grid container spacing={1}>
+                      <GridItem sm={6}>
+                        <Field name="chaveProcesso" label="Chave do Processo" disabled="true" as={TextInput} />
+                      </GridItem>
+                      <GridItem sm={6}>
+                        <Field name="nuProcesso" label="Número do Processo" disabled="true" as={TextInput} />
+                      </GridItem>
                     </Grid>
-                    <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-                    <Grid container justifyContent="center">
-                      <Typography variant="h2" className={classes.subtitle}>
-                        <strong>Assunto</strong>
-                      </Typography>
-                    </Grid>
-                    <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-                    <Field
-                      autoFocus
-                      name="cdAssunto"
-                      error={touched?.cdAssunto && errors?.cdAssunto}
-                      setFieldValue={setFieldValue}
-                      as={SearchSubjectComboBox}
-                    />
-                    <ErrorMessage name="cdAssunto" component={DivError} />
-                    <Field
-                      autoFocus
-                      name="cdAssunto.dtCadastro"
-                      label="Data do Cadastro"
-                      disabled="true"
-                      as={TextInput}
-                    />
-                    <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-                    <Grid container justifyContent="center">
-                      <Typography variant="h2" className={classes.subtitle}>
-                        <strong>Interessado</strong>
-                      </Typography>
-                    </Grid>
-                    <Divider orientation="horizontal" variant="fullWidth" className={classes.divider} />
-                    <Field
-                      autoFocus
-                      name="cdInteressado"
-                      error={touched?.cdInteressado && errors?.cdInteressado}
-                      setFieldValue={setFieldValue}
-                      as={SearchStakeholderComboBox}
-                    />
-                    <ErrorMessage name="cdInteressado" component={DivError} />
-                    <Field
-                      autoFocus
-                      name="cdInteressado.nmInteressado"
-                      label="Nome do Interessado"
-                      disabled="true"
-                      as={TextInput}
-                    />
-                    <Field
-                      autoFocus
-                      name="cdInteressado.dtNascimento"
-                      label="Data de Nascimento"
-                      disabled="true"
-                      as={TextInput}
-                    />
-                    <br />
-                    <br />
-                    <Grid container justifyContent="space-between">
+                  </FormSection>
+                )}
+
+                <FormSection>
+                  <SectionTitle>Dados do processo</SectionTitle>
+                  <Grid container spacing={1}>
+                    <GridItem sm={6}>
+                      <Field fullWidth name="sgOrgaoSetor" label="Órgão/Setor" as={TextInput} />
+                    </GridItem>
+                    <GridItem sm={6}>
+                      <Field name="nuAno" label="Ano do Processo" as={TextInput} />
+                    </GridItem>
+                    <GridItem>
+                      <Field name="descricao" label="Descrição" multiline={true} rows={4} as={TextInput} />
+                    </GridItem>
+                  </Grid>
+                </FormSection>
+
+                <FormSection>
+                  <SectionTitle>Assunto</SectionTitle>
+                  <Grid container spacing={1}>
+                    <GridItem sm={8}>
+                      <Field
+                        placeholder="Informe a descrição do assunto"
+                        name="cdAssunto"
+                        component={AutocompleteInput}
+                        options={assuntos}
+                        renderOption={(option) => (
+                          <>
+                            {option.id} - {option.descricao} - {option.dtCadastro}
+                          </>
+                        )}
+                      />
+                    </GridItem>
+                    <GridItem sm={4}>
+                      <Field name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={TextInput} />
+                    </GridItem>
+                  </Grid>
+                </FormSection>
+
+                <FormSection>
+                  <SectionTitle>Interessado</SectionTitle>
+                  <Grid container spacing={1}>
+                    <GridItem sm={3}>
+                      <Field
+                        placeholder="Informe o número de identificação do interessado"
+                        name="cdInteressado"
+                        component={AutocompleteInput}
+                        options={interessados}
+                        labelProperty="nuIdentificacao"
+                        renderOption={(option) => (
+                          <>
+                            {option.nuIdentificacao} - {option.nmInteressado}
+                          </>
+                        )}
+                      />
+                    </GridItem>
+                    <GridItem sm={5}>
+                      <Field
+                        name="cdInteressado.nmInteressado"
+                        label="Nome do Interessado"
+                        disabled="true"
+                        as={TextInput}
+                      />
+                    </GridItem>
+                    <GridItem sm={4}>
+                      <Field
+                        name="cdInteressado.dtNascimento"
+                        label="Data de Nascimento"
+                        disabled="true"
+                        as={TextInput}
+                      />
+                    </GridItem>
+                  </Grid>
+                </FormSection>
+
+                <FormSection>
+                  <Grid container alignContent="space-between">
+                    <GridItem xs container justifyContent="flex-start">
                       <Button
-                        style={{ backgroundColor: 'gray' }}
+                        style={{ backgroundColor: 'gray', color: 'white' }}
                         variant="contained"
-                        className={classes.button}
                         startIcon={<ForwardRoundedIcon style={{ transform: 'rotate(180deg)' }} />}
-                        onClick={handleGoBack}
+                        onClick={history.goBack}
                       >
-                        <strong>Voltar</strong>
+                        Voltar
                       </Button>
+                    </GridItem>
+                    <GridItem xs container justifyContent="center">
                       <Button
-                        style={{ backgroundColor: 'lightcoral' }}
+                        style={{ backgroundColor: 'lightcoral', color: 'white' }}
                         variant="contained"
-                        className={classes.button}
                         startIcon={<CancelRoundedIcon />}
-                        onClick={resetForm}
-                        disabled={isSubmitting}
+                        onClick={formProps.resetForm}
+                        // disabled={isSubmitting}
                       >
-                        <strong>Limpar</strong>
+                        Limpar
                       </Button>
+                    </GridItem>
+                    <GridItem xs container justifyContent="flex-end">
                       <Button
-                        type="submit"
+                        type="button"
                         variant="contained"
                         color="primary"
-                        className={classes.button}
                         startIcon={<SaveIcon />}
-                        disabled={isSubmitting || !isValid}
+                        onClick={formProps.handleSubmit}
+                        // disabled={isSubmitting || !isValid}
                       >
-                        <strong>Salvar</strong>
+                        Salvar
                       </Button>
-                    </Grid>
-                  </Form>
-                )}
-              </Formik>
-            </Grid>
-          </Box>
-        </Paper>
-      </Grid>
+                    </GridItem>
+                  </Grid>
+                </FormSection>
+              </Form>
+            );
+          }}
+        </Formik>
+      </Section>
     </BaseLayout>
   );
 };
+
+const FormSection = ({ children, ...rest }) => (
+  <Section display="block" paper padding={2} elevation={1} {...rest}>
+    {children}
+  </Section>
+);

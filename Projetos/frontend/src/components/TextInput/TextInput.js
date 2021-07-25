@@ -1,13 +1,5 @@
-import { makeStyles, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 export const TextInput = (props) => {
-  const classes = useStyles();
-  return <TextField variant="outlined" inputProps={{ autoComplete: 'off' }} {...props} className={classes.input} />;
+  return <TextField variant="outlined" fullWidth inputProps={{ autoComplete: 'off' }} {...props} />;
 };
-
-const useStyles = makeStyles((theme) => ({
-  input: {
-    marginTop: theme.spacing(1.5),
-    width: '100%',
-  },
-}));

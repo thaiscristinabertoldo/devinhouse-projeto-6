@@ -1,5 +1,3 @@
-import keycloak from '../../keycloak';
-
 const { default: axios } = require('axios');
 const { URLS } = require('../constants');
 
@@ -16,7 +14,7 @@ export const read = async (url, config = {}) => {
 };
 
 export const create = async (url, data = {}, config = {}) => {
-  return await axiosInstance.post(url, data, config);
+  return axiosInstance.post(url, data, config);
 };
 
 export const update = async (url, data = {}, headers = {}) => {
