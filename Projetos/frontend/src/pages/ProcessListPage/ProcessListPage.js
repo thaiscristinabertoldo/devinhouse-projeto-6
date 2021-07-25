@@ -4,15 +4,16 @@ import { STATUS } from '../../reducers/process-reducer';
 import { useProcess } from '../../contexts/process-context';
 
 import { Section } from '../../components/Section';
-import { PageError } from '../components/PageError';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
 import { Container } from '../../components/Container';
 import { BaseLayout } from '../../layouts/BaseLayout';
-import { ProcessCard } from '../components/ProcessCard';
-import { ProcessCardSkeleton } from '../components/ProcessCardSkeleton';
-import { NoContentMessageCard } from '../components/NoContentMessageCard';
 import { Selector, SelectorGroup } from '../../components/Selector';
+
+import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
+import { ProcessCard } from './components/ProcessCard';
+import { PageError } from './components/PageError';
+import { NoContentMessageCard } from './components/NoContentMessageCard';
 
 export const ProcessListPage = ({ history }) => {
   const { state, actions } = useProcess();

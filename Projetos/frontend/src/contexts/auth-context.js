@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     setUserInformation(keycloak?.tokenParsed?.name);
     keycloak?.loadUserInfo().then((userInfo) => {
-      console.log(userInfo);
       setUserInformation(userInfo);
     });
   }, [keycloak?.authenticated]);

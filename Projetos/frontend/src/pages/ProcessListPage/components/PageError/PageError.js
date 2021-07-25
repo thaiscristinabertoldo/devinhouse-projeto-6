@@ -1,4 +1,4 @@
-import ErrorImage from '../../../assets/illustrations/ServerDown';
+import ErrorImage from '../../../../assets/illustrations/ServerDown';
 import { Box, Card, createStyles, makeStyles, Typography, useTheme } from '@material-ui/core';
 
 export const PageError = ({ errorMessage = 'Erro desconhecido.' }) => {
@@ -10,7 +10,7 @@ export const PageError = ({ errorMessage = 'Erro desconhecido.' }) => {
         <Typography variant="h4" component={'strong'} color="primary">
           Erro no Servidor!!
         </Typography>
-        <Typography>{errorMessage}</Typography>
+        <Typography>Mensagem: {errorMessage}</Typography>
         <ErrorImage className={classes.svg} darkColor={theme.palette.primary.dark} />
       </Box>
     </Box>

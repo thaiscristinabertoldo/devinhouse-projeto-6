@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 
 import { Button } from '@material-ui/core';
@@ -7,7 +7,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
-import { getProcessById } from '../../services/api/processos-service';
 import { processSchema } from './form-utils/form-schema';
 import { processInitialValues } from './form-utils/initial-values';
 
@@ -15,31 +14,40 @@ import { TextInput } from '../../components/TextInput';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { Grid, GridItem } from '../../components/Grid';
 import { Section, SectionTitle } from '../../components/Section';
-import { SearchSubjectComboBox } from '../../components/SearchSubjectComboBox';
-import { SearchStakeholderComboBox } from '../../components/SearchStakeholderComboBox';
+import { getAllAssuntos } from '../../services/api/assuntos-service';
+import { getAllInteressados } from '../../services/api/interessados-service';
+import { AutocompleteInput } from '../../components/AutocompleteInput';
+import { createProcess } from '../../services/api/processos-service';
 
 export const ProcessFormPage = ({ history, match }) => {
   const processIdFrompath = useRef(match.params.id || undefined).current;
-  const [formInitialValues, setFormInitialValues] = useState();
+  // const [formInitialValues, setFormInitialValues] = useState();
+  const [assuntos, setAssuntos] = useState([]);
+  const [interessados, setInteressados] = useState([]);
+
+  // useEffect(() => {
+  //   (() => {
+  //     getProcessById(processIdFrompath).then(setFormInitialValues);
+  //   })();
+  // }, []);
 
   useEffect(() => {
-    (() => {
-      getProcessById(processIdFrompath).then(setFormInitialValues);
-    })();
+    Promise.all([getAllAssuntos(), getAllInteressados()]).then(([assuntos, interessados]) => {
+      setAssuntos(assuntos);
+      setInteressados(interessados);
+    });
   }, []);
 
-  const handleSubmit = (values) => {
-    alert(JSON.stringify(values, null, 2));
-    // createProcess(values);
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   setSubmitting(false);
-    // }, 400);
+  const handleSubmit = async (values) => {
+    const { cdAssunto, cdInteressado } = values;
+    const dataToPersist = Object.assign({}, values, { cdAssuntoId: cdAssunto?.id, cdInteressadoId: cdInteressado?.id });
+    await createProcess(dataToPersist);
+    history.goBack();
   };
 
   return (
     <BaseLayout>
-      <Section display="block" paddingX={4} marginBottom={4}>
+      <Section display="block" paddingX={4}>
         <SectionTitle variant={'h4'} align="center" noDivider>
           Formulário de {!!processIdFrompath ? 'edição' : 'cadastro'} de processo
         </SectionTitle>
@@ -65,19 +73,18 @@ export const ProcessFormPage = ({ history, match }) => {
                     </Grid>
                   </FormSection>
                 )}
-                <pre>{JSON.stringify(formProps.values, 0, 2)}</pre>
 
                 <FormSection>
                   <SectionTitle>Dados do processo</SectionTitle>
                   <Grid container spacing={1}>
-                    <GridItem sm={2}>
+                    <GridItem sm={6}>
                       <Field fullWidth name="sgOrgaoSetor" label="Órgão/Setor" as={TextInput} />
                     </GridItem>
-                    <GridItem sm={2}>
+                    <GridItem sm={6}>
                       <Field name="nuAno" label="Ano do Processo" as={TextInput} />
                     </GridItem>
                     <GridItem>
-                      <Field name="descricao" label="Descrição" multiline="true" as={TextInput} />
+                      <Field name="descricao" label="Descrição" multiline={true} rows={4} as={TextInput} />
                     </GridItem>
                   </Grid>
                 </FormSection>
@@ -86,7 +93,17 @@ export const ProcessFormPage = ({ history, match }) => {
                   <SectionTitle>Assunto</SectionTitle>
                   <Grid container spacing={1}>
                     <GridItem sm={8}>
-                      <Field autoFocus name="cdAssunto" as={SearchSubjectComboBox} />
+                      <Field
+                        placeholder="Informe a descrição do assunto"
+                        name="cdAssunto"
+                        component={AutocompleteInput}
+                        options={assuntos}
+                        renderOption={(option) => (
+                          <>
+                            {option.id} - {option.descricao} - {option.dtCadastro}
+                          </>
+                        )}
+                      />
                     </GridItem>
                     <GridItem sm={4}>
                       <Field name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={TextInput} />
@@ -97,8 +114,21 @@ export const ProcessFormPage = ({ history, match }) => {
                 <FormSection>
                   <SectionTitle>Interessado</SectionTitle>
                   <Grid container spacing={1}>
-                    <Field autoFocus name="cdInteressado" as={SearchStakeholderComboBox} />
-                    <GridItem sm={8}>
+                    <GridItem sm={3}>
+                      <Field
+                        placeholder="Informe o número de identificação do interessado"
+                        name="cdInteressado"
+                        component={AutocompleteInput}
+                        options={interessados}
+                        labelProperty="nuIdentificacao"
+                        renderOption={(option) => (
+                          <>
+                            {option.nuIdentificacao} - {option.nmInteressado}
+                          </>
+                        )}
+                      />
+                    </GridItem>
+                    <GridItem sm={5}>
                       <Field
                         name="cdInteressado.nmInteressado"
                         label="Nome do Interessado"
@@ -142,11 +172,11 @@ export const ProcessFormPage = ({ history, match }) => {
                     </GridItem>
                     <GridItem xs container justifyContent="flex-end">
                       <Button
-                        type="submit"
+                        type="button"
                         variant="contained"
                         color="primary"
                         startIcon={<SaveIcon />}
-                        onClick={handleSubmit}
+                        onClick={formProps.handleSubmit}
                         // disabled={isSubmitting || !isValid}
                       >
                         Salvar
@@ -163,8 +193,8 @@ export const ProcessFormPage = ({ history, match }) => {
   );
 };
 
-const FormSection = ({ children }) => (
-  <Section display="block" paper padding={2} elevation={0}>
+const FormSection = ({ children, ...rest }) => (
+  <Section display="block" paper padding={2} elevation={1} {...rest}>
     {children}
   </Section>
 );
