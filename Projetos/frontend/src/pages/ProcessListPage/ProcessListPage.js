@@ -36,13 +36,17 @@ export const ProcessListPage = ({ history }) => {
     history.push(generatePath(ROUTER_URLS.PROCESSOS_FORM_ID, { id }));
   };
 
+  const confirmDelete = (id) => {
+    console.log(id);
+  };
+
   const renderProcessList = () => {
     const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
     return (
       <Grid {...gridViewProps}>
         {processList.map((process, idx) => (
           <GridItem key={`${process.id}-${idx}`} sm={viewAsGrid ? 4 : null}>
-            <ProcessCard processData={process} onDelete={deleteProcess} onEdit={(id) => goToEditProcessForm(id)} />
+            <ProcessCard processData={process} onDelete={confirmDelete} onEdit={(id) => goToEditProcessForm(id)} />
           </GridItem>
         ))}
       </Grid>

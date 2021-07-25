@@ -21,10 +21,12 @@ export const AuthProvider = ({ children }) => {
   const [userInformation, setUserInformation] = useState();
 
   useEffect(() => {
-    setUserInformation(keycloak?.tokenParsed?.name);
-    keycloak?.loadUserInfo().then((userInfo) => {
-      setUserInformation(userInfo);
-    });
+    if (keycloak.authenticated) {
+      setUserInformation(keycloak.tokenParsed.name);
+      keycloak.loadUserInfo().then((userInfo) => {
+        setUserInformation(userInfo);
+      });
+    }
   }, [keycloak?.authenticated]);
 
   const logout = useCallback(() => {
