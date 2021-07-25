@@ -24,13 +24,6 @@ export const BaseLayout = ({ children }) => {
   const drawerWidth = 240;
 
   const useStyles = makeStyles((theme) => ({
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
     content: {
       flexGrow: 1,
       transition: theme.transitions.create('margin', {
@@ -58,7 +51,7 @@ export const BaseLayout = ({ children }) => {
         [classes.contentShift]: drawerOpen,
       })}
     >
-      <Container className={classes.drawerHeader}>
+      <Container>
         <AppBar
           onToggleTheme={onToggleTheme}
           isDarkMode={darkMode}
@@ -69,7 +62,7 @@ export const BaseLayout = ({ children }) => {
           handleDrawerClose={handleDrawerClose}
         />
       </Container>
-      <Container className={classes.drawerHeader} drawerOpen={drawerOpen}>
+      <Container drawerOpen={drawerOpen}>
         {children}
       </Container>
       <ScrollToTopButton />

@@ -28,6 +28,8 @@ export const ProcessProvider = ({ children }) => {
 
   const searchProcess = useCallback((searchTerm) => {
     dispatch({ type: 'searchTerm', payload: searchTerm });
+    console.log(searchTerm);
+    setTimeout(() => getAllProcess({ cd_assunto_id: "", chave_processo: searchTerm }), 2000);
   }, []);
 
   const deleteProcess = useCallback((processId) => {
