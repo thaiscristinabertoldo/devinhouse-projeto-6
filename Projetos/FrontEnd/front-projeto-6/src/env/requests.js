@@ -2,25 +2,23 @@ import axios from "axios";
 import { BACKEND_URI, CONTENT_TYPE_JSON, newYear, PROCESS_PATH } from "./env";
 
 const submitNewProcess = (EditedProcess, keycloakToken) => {
-  console.log(
-    JSON.stringify({
-      sgOrgaoSetor: EditedProcess.sgOrgaoSetor,
-      cdassunto: EditedProcess.cdAssunto,
-      cdInteressado: EditedProcess.cdInteressado,
-      descricao: EditedProcess.descricao,
-      nuAno: newYear(),
-    }),
-  );
+  console.log({
+    sgOrgaoSetor: EditedProcess.sgOrgaoSetor,
+    cdAssunto: EditedProcess.cdAssunto,
+    cdInteressado: EditedProcess.cdInteressado,
+    descricao: EditedProcess.descricao,
+    nuAno: newYear(),
+  });
   axios
     .post(
       BACKEND_URI + PROCESS_PATH,
-      JSON.stringify({
+      {
         sgOrgaoSetor: EditedProcess.sgOrgaoSetor,
-        cdaAssunto: EditedProcess.cdAssunto,
+        cdAssunto: EditedProcess.cdAssunto,
         cdInteressado: EditedProcess.cdInteressado,
         descricao: EditedProcess.descricao,
         nuAno: newYear(),
-      }),
+      },
       {
         headers: {
           Authorization: "Bearer " + keycloakToken,
