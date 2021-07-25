@@ -27,6 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:cov": "yarn test -- --coverage --watchAll=false",
     "svg": "svgr --icon --replace-attr-values '#6C63FF=currentColor' -d src/assets/illustrations/"
   },
   "eslintConfig": {
@@ -35,6 +36,18 @@
       "react-app/jest",
       "prettier"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70
+      }
+    }
   },
   "browserslist": {
     "production": [
@@ -49,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "clsx": "^1.1.1",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.3.2"
   }

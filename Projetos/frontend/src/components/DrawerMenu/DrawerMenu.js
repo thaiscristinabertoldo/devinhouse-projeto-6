@@ -15,6 +15,7 @@ import { useStyles } from './DrawerMenu.styles';
 import { useHistory } from 'react-router-dom';
 
 export const DrawerMenu = (props) => {
+  console.log({ props });
   const classes = useStyles();
 
   const { handleDrawerClose, open = false } = props;
