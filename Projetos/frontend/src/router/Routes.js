@@ -1,28 +1,24 @@
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
+
+import { ROUTER_URLS } from './constants';
+import { PrivateRoute } from './components/PrivateRoute';
 
 import { LoginPage } from '../pages/LoginPage';
 import { ProcessListPage } from '../pages/ProcessListPage';
 import { ProcessFormPage } from '../pages/ProcessFormPage';
-import { PrivateRoute } from './components/PrivateRoute';
-import { UserInformationPage } from '../pages/UserInformationPage';
-import { useKeycloak } from '@react-keycloak/web';
 
 export const Routes = () => {
   const { keycloak } = useKeycloak();
 
   return (
-    <BrowserRouter>
+    <Router>
       <Switch>
-        <Route path="/login" exact component={LoginPage} />
-        <PrivateRoute isAuthenticated={keycloak.authenticated} path="/processos" exact component={ProcessListPage} />
-        <PrivateRoute
-          isAuthenticated={keycloak.authenticated}
-          path="/processos/formulario/:id?"
-          component={ProcessFormPage}
-        />
-        <PrivateRoute isAuthenticated={keycloak.authenticated} path="/user" component={UserInformationPage} />
-        <Redirect exact to={'/processos'} />
+        <Route path={ROUTER_URLS.LOGIN} exact component={LoginPage} />
+        <PrivateRoute auth={keycloak.authenticated} path={ROUTER_URLS.PROCESSOS} exact component={ProcessListPage} />
+        <PrivateRoute auth={keycloak.authenticated} path={ROUTER_URLS.PROCESSOS_FORM_ID} component={ProcessFormPage} />
+        <Redirect exact to={ROUTER_URLS.PROCESSOS} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };

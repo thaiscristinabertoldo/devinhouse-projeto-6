@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { generatePath } from 'react-router';
 
 import { STATUS } from '../../reducers/process-reducer';
 import { useProcess } from '../../contexts/process-context';
@@ -17,6 +18,7 @@ import { PageError } from './components/PageError';
 import { ProcessCard } from './components/ProcessCard';
 import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
 import { NoContentMessageCard } from './components/NoContentMessageCard';
+import { ROUTER_URLS } from '../../router/constants';
 
 export const ProcessListPage = ({ history }) => {
   const { viewAsGrid, onToggleView } = useAppTheme();
@@ -27,11 +29,11 @@ export const ProcessListPage = ({ history }) => {
   useEffect(fetchProcessList, [fetchProcessList]);
 
   const goToProcessForm = () => {
-    history.push('/processos/formulario/');
+    history.push(ROUTER_URLS.PROCESSOS_FORM);
   };
 
   const goToEditProcessForm = (id) => {
-    history.push(`/processos/formulario/${id}`);
+    history.push(generatePath(ROUTER_URLS.PROCESSOS_FORM_ID, { id }));
   };
 
   const renderProcessList = () => {
