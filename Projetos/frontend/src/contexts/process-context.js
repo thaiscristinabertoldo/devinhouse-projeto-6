@@ -18,13 +18,11 @@ export const ProcessProvider = ({ children }) => {
 
   const fetchProcessList = useCallback(() => {
     dispatch({ type: 'loading' });
-    setTimeout(
-      () =>
-        getAllProcess()
-          .then((data) => dispatch({ type: 'loaded', payload: data }))
-          .catch((error) => dispatch({ type: 'error', payload: error?.message })),
-      2000
-    );
+    setTimeout(() => {
+      getAllProcess()
+        .then((data) => dispatch({ type: 'loaded', payload: data }))
+        .catch((error) => dispatch({ type: 'error', payload: error?.message }));
+    }, 2000);
   }, []);
 
   const searchProcess = (searchTerm) => {
@@ -35,7 +33,7 @@ export const ProcessProvider = ({ children }) => {
 
   const deleteProcess = useCallback((processId) => {
     deleteProcessById(processId)
-      .then(async () => await getAllProcess())
+      .finally(() => fetchProcessList())
       .catch((error) => dispatch({ type: 'error', payload: error?.message }));
   }, []);
 
