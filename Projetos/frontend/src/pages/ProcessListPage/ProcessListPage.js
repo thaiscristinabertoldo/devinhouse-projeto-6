@@ -21,8 +21,8 @@ import { NoContentMessageCard } from './components/NoContentMessageCard';
 export const ProcessListPage = ({ history }) => {
   const { viewAsGrid, onToggleView } = useAppTheme();
   const { state, actions } = useProcess();
-  const { processList, searchContext, status } = state;
-  const { fetchProcessList, searchProcess, setSearchContext, deleteProcess } = actions;
+  const { processList, status } = state;
+  const { fetchProcessList, searchContext, searchProcess, setSearchContext, deleteProcess } = actions;
 
   useEffect(fetchProcessList, [fetchProcessList]);
 
@@ -57,7 +57,7 @@ export const ProcessListPage = ({ history }) => {
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
           <Section display="flex" width={null}>
             <SelectorGroup value={searchContext} onChange={setSearchContext}>
-              <Selector value={'PROCESS'} label={'Busca por Processo'} />
+              <Selector value={'PROCESS'} label={'Busca por Número do Processo'} />
               <Selector value={'SUBJECT'} label={'Busca por Assunto'} />
             </SelectorGroup>
             <ButtonWithIcon onClick={onToggleView} iconName={viewAsGrid ? 'view_list' : 'grid_view'} />

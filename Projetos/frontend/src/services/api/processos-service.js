@@ -2,11 +2,15 @@ import { URLS } from '../constants';
 import * as Api from './http-service';
 import keycloak from '../../keycloak';
 
-export const getAllProcess = async ({ cdAssunto = '', chaveProcesso = '' }) => {
+export const getAllProcess = async (params) => {
+  const cd_assunto_descricao = params?.assuntoDesc;
+  const nu_processo = params?.nuProcesso;
+
   const reqConfig = {
     headers: { Authorization: `Bearer ${keycloak.token}` },
-    params: { cd_assunto_id: cdAssunto, chave_processo: chaveProcesso },
+    params: { cd_assunto_descricao, nu_processo },
   };
+
   return await Api.read(`${URLS.PROCESSOS}`, reqConfig).then((response) => response.data);
 };
 
