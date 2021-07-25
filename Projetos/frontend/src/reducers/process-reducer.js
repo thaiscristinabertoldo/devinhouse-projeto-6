@@ -1,4 +1,3 @@
-const log = console.log;
 export const SEARCH_BY = {
   PROCESS: 'PROCESS',
   SUBJECT: 'SUBJECT',
@@ -20,22 +19,16 @@ export const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
-  log('CHAMOU REDUCER');
   switch (action.type) {
     case 'loading':
-      log(action);
       return { ...state, status: STATUS.LOADING };
     case 'loaded':
-      log(action);
       return { ...state, processList: action.payload, status: STATUS.COMPLETE, error: null };
     case 'error':
-      log(action);
       return { ...state, status: STATUS.ERROR, error: action.payload };
     case 'searchTerm':
-      log(action);
       return { ...state, searchTerm: action.payload };
     case 'searchContext':
-      log(action);
       return { ...state, searchContext: action.payload };
     default:
       return { ...state };

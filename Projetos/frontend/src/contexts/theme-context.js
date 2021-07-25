@@ -16,10 +16,15 @@ export function useAppTheme() {
 
 export const AppThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [viewAsGrid, setViewAsGrid] = useState(true);
   const [theme, setTheme] = useState(getTheme(darkMode));
 
   const onToggleTheme = () => {
     setDarkMode((prev) => !prev);
+  };
+
+  const onToggleView = () => {
+    setViewAsGrid((prev) => !prev);
   };
 
   const loadInitialThemeFromStorage = () => {
@@ -38,7 +43,7 @@ export const AppThemeProvider = ({ children }) => {
   useEffect(saveCurrentThemeIntoStorage, [darkMode]);
 
   return (
-    <ThemeContext.Provider value={{ onToggleTheme, darkMode }}>
+    <ThemeContext.Provider value={{ onToggleTheme, onToggleView, viewAsGrid, darkMode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

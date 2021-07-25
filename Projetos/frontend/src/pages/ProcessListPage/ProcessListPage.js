@@ -2,20 +2,24 @@ import React, { useEffect } from 'react';
 
 import { STATUS } from '../../reducers/process-reducer';
 import { useProcess } from '../../contexts/process-context';
+import { useAppTheme } from '../../contexts/theme-context';
 
 import { Section } from '../../components/Section';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
 import { Container } from '../../components/Container';
 import { BaseLayout } from '../../layouts/BaseLayout';
+import { ButtonWithIcon } from '../../components/ButtonWithIcon';
+import { Grid, GridItem } from '../../components/Grid';
 import { Selector, SelectorGroup } from '../../components/Selector';
 
-import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
-import { ProcessCard } from './components/ProcessCard';
 import { PageError } from './components/PageError';
+import { ProcessCard } from './components/ProcessCard';
+import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
 import { NoContentMessageCard } from './components/NoContentMessageCard';
 
 export const ProcessListPage = ({ history }) => {
+  const { viewAsGrid, onToggleView } = useAppTheme();
   const { state, actions } = useProcess();
   const { processList, searchContext, status } = state;
   const { fetchProcessList, searchProcess, setSearchContext, deleteProcess } = actions;
@@ -31,14 +35,16 @@ export const ProcessListPage = ({ history }) => {
   };
 
   const renderProcessList = () => {
-    return processList.map((process) => (
-      <ProcessCard
-        key={process.id}
-        processData={process}
-        onDelete={deleteProcess}
-        onEdit={(id) => goToEditProcessForm(id)}
-      />
-    ));
+    const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
+    return (
+      <Grid {...gridViewProps}>
+        {processList.map((process) => (
+          <GridItem key={process.id} sm={viewAsGrid ? 4 : null}>
+            <ProcessCard processData={process} onDelete={deleteProcess} onEdit={(id) => goToEditProcessForm(id)} />
+          </GridItem>
+        ))}
+      </Grid>
+    );
   };
 
   return (
@@ -49,12 +55,15 @@ export const ProcessListPage = ({ history }) => {
         </Section>
         <Section display="flex" justifyContent="space-between" alignItems="center">
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
-          <SelectorGroup value={searchContext} onChange={setSearchContext}>
-            <Selector value={'PROCESS'} label={'Busca por Processo'} />
-            <Selector value={'SUBJECT'} label={'Busca por Assunto'} />
-          </SelectorGroup>
+          <Section display="flex" width={null}>
+            <SelectorGroup value={searchContext} onChange={setSearchContext}>
+              <Selector value={'PROCESS'} label={'Busca por Processo'} />
+              <Selector value={'SUBJECT'} label={'Busca por Assunto'} />
+            </SelectorGroup>
+            <ButtonWithIcon onClick={onToggleView} iconName={viewAsGrid ? 'view_list' : 'grid_view'} />
+          </Section>
         </Section>
-        <Section flexWrap="wrap">
+        <Section>
           {status === STATUS.LOADING && renderLoadingList()}
           {status === STATUS.COMPLETE && renderProcessList()}
           {status === STATUS.ERROR && <PageError errorMessage={state.error} />}
