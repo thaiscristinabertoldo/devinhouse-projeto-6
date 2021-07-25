@@ -1,25 +1,53 @@
 import { useState } from "react";
-import { Button, IconButton, InputAdornment } from "@material-ui/core";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import * as Styled from "./ProcessHeader.styled";
+import { useEffect } from "react";
 
 export const ProcessHeader = ({
-  changeProcessKey,
+  changeProcessByMatter,
+  changeProcessByNumber,
   clearButton,
   toggleClearButton,
   toggleIsCreateProcess,
+  emptyFind,
 }) => {
   const [findProcess, setFindProcess] = useState("");
+  const [alignment, setAlignment] = useState("num");
 
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+    resetSearch();
+  };
+
+  function resetSearch() {
+    setFindProcess("");
+    if (clearButton) toggleClearButton();
+  }
+  useEffect(() => {
+    if (!emptyFind) {
+      setFindProcess("");
+      if (clearButton) toggleClearButton();
+      setAlignment("num");
+    }
+  }, [emptyFind]);
   return (
     <Styled.Box>
       <Styled.TextField
         fullWidth
         value={findProcess}
         onChange={(event) => setFindProcess(event.target.value)}
-        label="Buscar por chave"
-        placeholder="Buscar por chave"
+        label={alignment === "num" ? "Buscar por número" : "Buscar por assunto"}
+        placeholder={
+          alignment === "num" ? "Buscar por número" : "Buscar por assunto"
+        }
         variant="outlined"
         name="TextFind"
         InputProps={{
@@ -28,17 +56,20 @@ export const ProcessHeader = ({
               {clearButton ? (
                 <IconButton
                   className="ResetSearch"
-                  onClick={() => {
-                    setFindProcess("");
-                    toggleClearButton();
-                  }}
+                  onClick={() => resetSearch()}
                 >
                   <HighlightOffIcon />
                 </IconButton>
               ) : (
                 <IconButton
                   className="Search"
-                  onClick={() => changeProcessKey(findProcess)}
+                  onClick={() => {
+                    if (alignment === "num") {
+                      changeProcessByNumber(findProcess);
+                    } else {
+                      changeProcessByMatter(findProcess);
+                    }
+                  }}
                 >
                   <SearchIcon />
                 </IconButton>
@@ -47,6 +78,17 @@ export const ProcessHeader = ({
           ),
         }}
       />
+      <Styled.Box>
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={handleChange}
+        >
+          <ToggleButton value="num">Número</ToggleButton>
+          <ToggleButton value="matter">Assunto</ToggleButton>
+        </ToggleButtonGroup>
+      </Styled.Box>
       <Styled.Box>
         <Button
           size="large"

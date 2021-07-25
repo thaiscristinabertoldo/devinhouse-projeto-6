@@ -55,8 +55,6 @@ export const ProcessForm = (props) => {
     headers: { Authorization: "Bearer " + keycloak.token },
   });
 
-  console.log(isEditing, editingData);
-
   const formik = useFormik(
     isEditing
       ? {

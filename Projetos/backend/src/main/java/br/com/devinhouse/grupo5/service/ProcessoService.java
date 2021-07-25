@@ -100,6 +100,20 @@ public class ProcessoService {
 		return toDTO(processos);
 	}
 
+	public ProcessoOutputDTO buscarUmProcessoPorNumero(Long numeroProcesso) {
+		var processo = processoRepository.findByNuProcesso(numeroProcesso)
+				.orElseThrow(() -> new ProcessoNaoEncontradoException(numeroProcesso));
+		return toDTO(processo);
+	}
+
+
+	public List<ProcessoOutputDTO> buscarUmProcessoPorCdAssuntoDescrisao(String cdAssunto) {
+		var assunto = modelMapper.map(assuntoService.buscarAssuntoPorDescrisao(cdAssunto), Assunto.class);
+		List<Processo> processos = processoRepository.findByCdAssunto(assunto);
+
+		return toDTO(processos);
+	}
+
 	public void atualizarProcesso(ProcessoInputDTO processoInputDTO, Long id) {
 		var processoIndicado = processoRepository.findById(id)
 				.orElseThrow(() -> new ProcessoNaoEncontradoException(id));

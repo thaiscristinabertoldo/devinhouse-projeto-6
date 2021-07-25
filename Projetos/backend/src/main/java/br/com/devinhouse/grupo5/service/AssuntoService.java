@@ -29,6 +29,10 @@ public class AssuntoService {
         return toDTO(assuntoRepository.findById(id).orElseThrow(AssuntoNaoEncontradoException::new));
     }
 
+    public AssuntoOutputDTO buscarAssuntoPorDescrisao(String descrisao) {
+        return toDTO(assuntoRepository.findByDescricao(descrisao).orElseThrow(AssuntoNaoEncontradoException::new));
+    }
+
     public List<AssuntoOutputDTO> buscarTodosAssuntos() {
       return toDTO(assuntoRepository.findAll());
     }
