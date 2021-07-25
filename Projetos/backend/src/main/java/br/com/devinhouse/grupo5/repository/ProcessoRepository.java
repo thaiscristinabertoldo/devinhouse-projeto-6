@@ -15,6 +15,10 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 	List<Processo> findByCdAssunto(Assunto cdAssunto);
 
 	List<Processo> findByCdInteressado(Interessado cdInteressado);
+
+	Optional<Processo> findByNuProcesso(Integer nuProcesso);
+
+	Boolean existsByNuProcesso(Long nuProcesso);
 	
 	Boolean existsByChaveProcesso(String chaveProcesso);
 }

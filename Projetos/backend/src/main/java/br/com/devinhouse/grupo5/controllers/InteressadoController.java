@@ -1,13 +1,10 @@
 package br.com.devinhouse.grupo5.controllers;
 
-import br.com.devinhouse.grupo5.dto.AssuntoOutputDTO;
 import br.com.devinhouse.grupo5.dto.InteressadoInputDTO;
 import br.com.devinhouse.grupo5.dto.InteressadoOutputDTO;
 import br.com.devinhouse.grupo5.service.InteressadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -20,13 +17,8 @@ public class InteressadoController {
 
     @ResponseStatus(value = CREATED)
     @PostMapping
-    public InteressadoOutputDTO cadastrarInteressado(@RequestBody InteressadoInputDTO novoInteressado){
+    public InteressadoOutputDTO cadastrarAssunto(@RequestBody InteressadoInputDTO novoInteressado){
         return interessadoService.cadastrarInteressado(novoInteressado);
-    }
-
-    @GetMapping
-    public List<InteressadoOutputDTO> listaInteressados() {
-        return interessadoService.buscarTodosInteressados();
     }
 
     @GetMapping(value = "/id/{id}")

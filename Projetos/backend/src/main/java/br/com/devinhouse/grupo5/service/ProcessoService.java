@@ -39,6 +39,11 @@ public class ProcessoService {
 	public ProcessoOutputDTO salvarProcesso(ProcessoInputDTO processoInputDTO) {
 		var processo = toProcesso(processoInputDTO);
 
+		Boolean existNuProcesso = processoRepository.existsByNuProcesso(processo.getNuProcesso());
+		if (TRUE.equals(existNuProcesso)) {
+			throw new NuProcessoJaCadastradoException();
+		}
+
 		Boolean existChaveProcesso = processoRepository.existsByChaveProcesso(processo.getChaveProcesso());
 		if (TRUE.equals(existChaveProcesso)) {
 			throw new NuProcessoJaCadastradoException(processo.getChaveProcesso());
@@ -100,6 +105,13 @@ public class ProcessoService {
 				.orElseThrow(() -> new ProcessoNaoEncontradoException(id));
 		var processoAtualizado = toProcesso(processoInputDTO);
 
+		if(!processoAtualizado.getNuProcesso().equals(processoIndicado.getNuProcesso())) {
+
+			Boolean existNuProcesso = processoRepository.existsByNuProcesso(processoAtualizado.getNuProcesso());
+			if (TRUE.equals(existNuProcesso)) {
+				throw new NuProcessoJaCadastradoException();
+			}
+		}
 
 		if(!processoAtualizado.getChaveProcesso().equals(processoIndicado.getChaveProcesso())) {
 
