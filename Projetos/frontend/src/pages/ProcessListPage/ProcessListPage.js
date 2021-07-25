@@ -47,6 +47,24 @@ export const ProcessListPage = ({ history }) => {
     );
   };
 
+  const renderLoadingList = () => {
+    const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
+    const numberOfProcessCardSkeleton = 8;
+    const processSkeletonList = [];
+    for (let i = 0; i < numberOfProcessCardSkeleton; i++) {
+      processSkeletonList.push(<ProcessCardSkeleton />);
+    }
+    return (
+      <Grid {...gridViewProps}>
+        {processSkeletonList.map((processCardSkeleton) => (
+          <GridItem key={process.id} sm={viewAsGrid ? 4 : null}>
+            {processCardSkeleton}
+          </GridItem>
+        ))}
+      </Grid>
+    );
+  };
+
   return (
     <BaseLayout>
       <Container>
@@ -71,15 +89,5 @@ export const ProcessListPage = ({ history }) => {
         </Section>
       </Container>
     </BaseLayout>
-  );
-};
-
-const renderLoadingList = () => {
-  return (
-    <>
-      <ProcessCardSkeleton />
-      <ProcessCardSkeleton />
-      <ProcessCardSkeleton />
-    </>
   );
 };

@@ -4,7 +4,6 @@ import {
   Grid,
   IconButton,
   ListSubheader,
-  makeStyles,
   Menu,
   MenuItem,
   Toolbar,
@@ -13,14 +12,23 @@ import {
 import { AccountCircle } from '@material-ui/icons';
 import DarkThemeIcon from '@material-ui/icons/Brightness4';
 import LightThemeIcon from '@material-ui/icons/Brightness7';
+import MenuIcon from '@material-ui/icons/Menu';
+import clsx from 'clsx';
 
 import { useState } from 'react';
-import { style } from './AppBar.style';
+import { DrawerMenu } from '../DrawerMenu';
+import { useStyles } from './AppBar.styles';
 
-const useStyle = makeStyles(style);
-
-export const AppBar = ({ onToggleTheme, isDarkMode, userName = 'Visitante', onLogout }) => {
-  const classes = useStyle();
+export const AppBar = ({
+  onToggleTheme,
+  isDarkMode,
+  userName = 'Visitante',
+  onLogout,
+  drawerOpen,
+  handleDrawerOpen,
+  handleDrawerClose,
+}) => {
+  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState();
   const open = Boolean(anchorEl);
@@ -35,8 +43,22 @@ export const AppBar = ({ onToggleTheme, isDarkMode, userName = 'Visitante', onLo
 
   return (
     <>
-      <MuiAppBar>
+      <MuiAppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: drawerOpen,
+        })}
+      >
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, drawerOpen && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" style={{ color: 'white' }} className={classes.title}>
             Processos
           </Typography>
@@ -69,6 +91,7 @@ export const AppBar = ({ onToggleTheme, isDarkMode, userName = 'Visitante', onLo
           </Menu>
         </Toolbar>
       </MuiAppBar>
+      <DrawerMenu handleDrawerClose={handleDrawerClose} open={drawerOpen} />
       <Toolbar />
 
       <Grid id="back-to-top-anchor" />
