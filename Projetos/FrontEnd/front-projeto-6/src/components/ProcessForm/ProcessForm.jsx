@@ -129,9 +129,13 @@ export const ProcessForm = (props) => {
                 }
                 helperText={formik.touched.cdAssunto && formik.errors.cdAssunto}
               >
-                {subjects.map((assuntos) => (
-                  <MenuItem key={assuntos.descricao} value={assuntos.id}>
-                    {assuntos.descricao}
+                {subjects.map((subject, index) => (
+                  <MenuItem
+                    key={subject.descricao + index}
+                    value={subject.id}
+                    disabled={!subject.flAtivo}
+                  >
+                    {subject.descricao} {!subject.flAtivo && " (inativo)"}
                   </MenuItem>
                 ))}
               </TextField>
@@ -152,12 +156,14 @@ export const ProcessForm = (props) => {
                   formik.touched.cdInteressado && formik.errors.cdInteressado
                 }
               >
-                {stakeholders.map((interessado) => (
+                {stakeholders.map((stakeholder, index) => (
                   <MenuItem
-                    key={interessado.nmInteressado}
-                    value={interessado.id}
+                    key={stakeholder.nmInteressado + index}
+                    value={stakeholder.id}
+                    disabled={!stakeholder.flAtivo}
                   >
-                    {interessado.nmInteressado}
+                    {stakeholder.nmInteressado}
+                    {!stakeholder.flAtivo && " (inativo)"}
                   </MenuItem>
                 ))}
               </TextField>

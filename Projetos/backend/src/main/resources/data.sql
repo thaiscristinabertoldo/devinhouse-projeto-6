@@ -17,7 +17,7 @@ insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (16, 'Investig
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (17, 'Investigação de Paternidade', '2020-10-01', false);
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (18, 'Regulamentação de Visitas', '2020-12-04', true);
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (19, 'Suspensão ou Extinção do Poder Familiar', '2020-07-22', false);
-insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (20, 'Dispensa', '2021-01-26', true);
+insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (20, 'Danos Morais', '2021-01-26', true);
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (21, 'Nomeação', '2021-02-03', false);
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (22, 'indenização', '2020-08-25', true);
 insert into ASSUNTO (ID, DESCRICAO, DT_CADASTRO, FL_ATIVO) values (23, 'Reconhecimento / Dissolução', '2020-08-16', false);

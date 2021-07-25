@@ -113,19 +113,8 @@ public class ProcessoService {
 			}
 		}
 
-		if(!processoAtualizado.getChaveProcesso().equals(processoIndicado.getChaveProcesso())) {
-
-			Boolean existChaveProcesso = processoRepository.existsByChaveProcesso(processoAtualizado.getChaveProcesso());
-			if (TRUE.equals(existChaveProcesso)) {
-				throw new NuProcessoJaCadastradoException(processoAtualizado.getChaveProcesso());
-			}
-		}
-
 		InteressadoOutputDTO interessadoOut = interessadoService.buscarInteressadoPeloId(processoInputDTO.getCdInteressado());
 		if (interessadoOut != null) {
-			if (FALSE.equals(interessadoOut.getFlAtivo())) {
-				throw new InteressadoInativoException(interessadoOut.getId());
-			}
 			processoAtualizado.setCdInteressado(modelMapper.map(interessadoOut, Interessado.class));
 		} else {
 			throw new InteressadoNaoEncontradoException();
@@ -133,9 +122,6 @@ public class ProcessoService {
 
 		AssuntoOutputDTO assuntoOut = assuntoService.buscarAssuntoPorId(processoInputDTO.getCdAssunto());
 		if (assuntoOut != null) {
-			if (FALSE.equals(assuntoOut.getFlAtivo())) {
-				throw new AssuntoInativoException(assuntoOut.getId());
-			}
 			processoAtualizado.setCdAssunto(modelMapper.map(assuntoOut, Assunto.class));
 		} else {
 			throw new AssuntoNaoEncontradoException();

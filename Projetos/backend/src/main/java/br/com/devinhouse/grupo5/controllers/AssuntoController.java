@@ -6,6 +6,8 @@ import br.com.devinhouse.grupo5.service.AssuntoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -19,6 +21,11 @@ public class AssuntoController {
     @PostMapping
     public AssuntoOutputDTO cadastrarAssunto(@RequestBody AssuntoInputDTO novoAssunto){
         return assuntoService.cadastrarAssunto(novoAssunto);
+    }
+
+    @GetMapping
+    public List<AssuntoOutputDTO> listaAssuntos() {
+        return assuntoService.buscarTodosAssuntos();
     }
 
     @GetMapping(value = "/id/{id}")

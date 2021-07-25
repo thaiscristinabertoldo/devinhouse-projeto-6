@@ -6,6 +6,8 @@ import br.com.devinhouse.grupo5.service.InteressadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -19,6 +21,11 @@ public class InteressadoController {
     @PostMapping
     public InteressadoOutputDTO cadastrarAssunto(@RequestBody InteressadoInputDTO novoInteressado){
         return interessadoService.cadastrarInteressado(novoInteressado);
+    }
+
+    @GetMapping
+    public List<InteressadoOutputDTO> listaInteressados() {
+        return interessadoService.buscarTodosInteressados();
     }
 
     @GetMapping(value = "/id/{id}")
