@@ -1,0 +1,627 @@
+_type: export
+__export_format: 4
+__export_date: 2021-07-11T23:48:19.989Z
+__export_source: insomnia.desktop.app:v2021.3.0
+resources:
+  - _id: req_c2336a8098724e90ab94a19c208d8df8
+    parentId: fld_4dedb2796d8c4aa69d4113fa83dfc99d
+    modified: 1622244869588
+    created: 1622242390397
+    url: http://localhost:8080/backend/v1/interessado
+    name: Criar Interessado
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "nmInteressado": "Paulo",
+            "nuIdentificacao": "45801363068",
+        		"dtNascimento": "2000-05-20",
+            "flAtivo": true
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1622242390397
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_4dedb2796d8c4aa69d4113fa83dfc99d
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1622241779954
+    created: 1622241779954
+    name: Interessado
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1622241779954
+    _type: request_group
+  - _id: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    parentId: null
+    modified: 1621426183917
+    created: 1611271583061
+    name: DEVInHouse - módulo 2 - desafio 2
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_745356dcc703448bb554a732753daf35
+    parentId: fld_4dedb2796d8c4aa69d4113fa83dfc99d
+    modified: 1622245858357
+    created: 1622242159293
+    url: http://localhost:8080/backend/v1/interessado/id/3
+    name: Buscar Interessado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1622242159293
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_791ec48d7024464897c4daa50fa926d5
+    parentId: fld_4dedb2796d8c4aa69d4113fa83dfc99d
+    modified: 1622242358836
+    created: 1622242201816
+    url: http://localhost:8080/backend/v1/interessado/nuidentificacao?valor=65701715000
+    name: Buscar Int. Nº de Id.
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1622241988914.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_aa5c01ba96d747ed978c8b8e9762ba69
+    parentId: fld_04c692531d6d44aaa8baec2d740d2881
+    modified: 1622244822978
+    created: 1621713202964
+    url: http://localhost:8080/backend/v1/assunto
+    name: Cadastrar Assunto
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"descricao": "Descrição de Teste",
+          "dtCadastro": "2021-05-20",
+          "flAtivo": true
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1622242733789
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_04c692531d6d44aaa8baec2d740d2881
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1621713195903
+    created: 1621713195903
+    name: Assunto
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1621713195903
+    _type: request_group
+  - _id: req_676c1e0e18714d4a9d8d7b476a8b2261
+    parentId: fld_04c692531d6d44aaa8baec2d740d2881
+    modified: 1622242748047
+    created: 1622242733739
+    url: http://localhost:8080/backend/v1/assunto/id/1
+    name: Buscar Assunto
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1622242733739
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_da2c92001eaa4b5ab273d777f46ef12e
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1622245887947
+    created: 1611271591094
+    url: http://localhost:8080/backend/v1/processo
+    name: CriaProcesso
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "sgOrgaoSetor": "TJRS",
+          "nuAno": 2010,
+          "descricao": "segund teste descricao",
+          "cdAssunto": 1,
+          "cdInteressado": 1
+        }
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_0871ac0aecf641dd9b757fa4685ab379
+      - name: Content-Type
+        value: application/json
+        id: pair_c9db678312b1417781d87e68fd0d6a12
+    authentication: {}
+    metaSortKey: -1611271591231.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_581ec5705a3d49fa89b5c33e920b8caa
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1622241771960
+    created: 1618440168430
+    name: Processo
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1618440168430
+    _type: request_group
+  - _id: req_fe427a38736d4bfab9b8ac8f79bc4e20
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1621713364909
+    created: 1619374687560
+    url: http://localhost:8080/backend/v1/processo
+    name: listaProcessos
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_34ff92f0309f46dfbe954c0f0ef1f60d
+    authentication: {}
+    metaSortKey: -1611271591181.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_115b7c50d2fb4ce58e6fad60570ee216
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1622245916713
+    created: 1619388072491
+    url: http://localhost:8080/backend/v1/processo/id/3
+    name: buscaUmProcesso
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_7a7bfac6a2cf4274a65dbef565cb1eee
+    authentication: {}
+    metaSortKey: -1611271591175.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d241ba6dae764d9d84e5a9f3d7566947
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1622243420614
+    created: 1622243324453
+    url: http://localhost:8080/backend/v1/processo/cdinteressado?q=1
+    name: Busca Proc. p/ Interessado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_7a7bfac6a2cf4274a65dbef565cb1eee
+    authentication: {}
+    metaSortKey: -1611271591173.6875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b0b77e8d694b4c819a1358e2f11c16ff
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1622243371756
+    created: 1622243355250
+    url: http://localhost:8080/backend/v1/processo/cdassunto?q=1
+    name: Busca Proc. p/ Assunto
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_7a7bfac6a2cf4274a65dbef565cb1eee
+    authentication: {}
+    metaSortKey: -1611271591172.9062
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7cf66045e7864d6b830dd129588e37b6
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1621713394536
+    created: 1619381665077
+    url: http://localhost:8080/backend/v1/processo?chaveProcesso=SOFT 1/2020
+    name: buscaUmProcessoPorChave
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_7a7bfac6a2cf4274a65dbef565cb1eee
+    authentication: {}
+    metaSortKey: -1611271591172.125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e424a15c1987436ba6e33b45624e150c
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1622243396074
+    created: 1619386954589
+    url: http://localhost:8080/backend/v1/processo/id/1
+    name: atualizaProcesso
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "sgOrgaoSetor": "SOFT",
+          "nuAno": 2020,
+          "descricao": "Atualizando2",
+          "cdAssunto": 1,
+          "cdInteressado": 1
+        }
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_0871ac0aecf641dd9b757fa4685ab379
+      - name: Content-Type
+        value: application/json
+        id: pair_c9db678312b1417781d87e68fd0d6a12
+    authentication: {}
+    metaSortKey: -1611271591169
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1d6132d0d8ce445bb3a1a636fadcd035
+    parentId: fld_581ec5705a3d49fa89b5c33e920b8caa
+    modified: 1623450597252
+    created: 1619391976682
+    url: http://localhost:8080/backend/v1/processo/id/3
+    name: deletaProcesso
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: api-version
+        value: 2021-04-21
+        description: ""
+        id: pair_0871ac0aecf641dd9b757fa4685ab379
+    authentication: {}
+    metaSortKey: -1611271591131.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_633eeee7a3ae4488aacdaae28e619f35
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241844295
+    created: 1622241818536
+    url: http://localhost:8080/backend/v1/exception/AssuntoInativo
+    name: AssuntoInativo
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1622241818536
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_af4b570c114b4e32a6faf6e30473d1ab
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1622243726462
+    created: 1622241786606
+    name: Exception
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1618440168380
+    _type: request_group
+  - _id: req_ef401795716b4ebd857caf7cd71503fe
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241866915
+    created: 1622241865110
+    url: http://localhost:8080/backend/v1/exception/AssuntoNaoEncontrado
+    name: AssuntoNaoEncontrado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621977510750
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_45d96b5dc23f47cea12c77ece1e65853
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622242108951
+    created: 1622241880211
+    url: http://localhost:8080/backend/v1/exception/CpfInvalido
+    name: CpfInvalido
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621845356857
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7f027e4d07634ed2a362ad519f592166
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241890712
+    created: 1622241886650
+    url: http://localhost:8080/backend/v1/exception/CpfJaExistente
+    name: CpfJaExistente
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621779279910.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ab1f09f3cd2c44ceb9b11c3da252572f
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241936613
+    created: 1622241934860
+    url: http://localhost:8080/backend/v1/exception/DataDeNascimentoInvalida
+    name: DataDeNascimentoInvalida
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621746241437.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_56e253a78d044974be334ae3c2710b17
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241967020
+    created: 1622241950093
+    url: http://localhost:8080/backend/v1/exception/InteressadoInativo
+    name: InteressadoInativo
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621729722200.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9e8e8595be8e4b16bbc675998655ef33
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241958015
+    created: 1622241956586
+    url: http://localhost:8080/backend/v1/exception/InteressadoNaoEncontrado
+    name: InteressadoNaoEncontrado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621721462582.3125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cd25a8ba32d84954be5bd0964e16a275
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622241981385
+    created: 1622241979210
+    url: http://localhost:8080/backend/v1/exception/NuProcessoJaCadastrado
+    name: NuProcessoJaCadastrado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621717332773.1562
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_87433499ba8a441e95f7f676b7dadfe0
+    parentId: fld_af4b570c114b4e32a6faf6e30473d1ab
+    modified: 1622242090823
+    created: 1622241997756
+    url: http://localhost:8080/backend/v1/exception/ProcessoNaoEncontrado
+    name: ProcessoNaoEncontrado
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1621715267868.5781
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_27ffab2a4b5f3e80c048974cf4d85a50a47370c7
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1611271583188
+    created: 1611271583188
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1611271583188
+    _type: environment
+  - _id: jar_27ffab2a4b5f3e80c048974cf4d85a50a47370c7
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1611271583201
+    created: 1611271583201
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_c1f82b714d72447e9fb14e08366e2af5
+    parentId: wrk_3a2077a48a6344ad947dcfe5f08069ba
+    modified: 1611271583064
+    created: 1611271583064
+    fileName: Insomnia
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_f1b4ca5d87d34e5a97568ae061b98d46
+    parentId: env_27ffab2a4b5f3e80c048974cf4d85a50a47370c7
+    modified: 1618440137485
+    created: 1618440113427
+    name: DevInHouse
+    data: {}
+    dataPropertyOrder: null
+    color: "#1c5aab"
+    isPrivate: false
+    metaSortKey: 1618440113427
+    _type: environment
