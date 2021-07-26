@@ -19,7 +19,7 @@ export const SearchBar = ({ onSearch }) => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  type="button"
+                  type="submit"
                   className={classes.iconButton}
                   aria-label="search"
                   onClick={(e) => {
