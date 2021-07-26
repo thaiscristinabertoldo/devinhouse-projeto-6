@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { generatePath } from 'react-router';
 
 import { STATUS } from '../../reducers/process-reducer';
@@ -9,6 +9,7 @@ import { Section } from '../../components/Section';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
 import { Container } from '../../components/Container';
+import { ConfirmAlert } from '../../components/ConfirmAlert';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { ButtonWithIcon } from '../../components/ButtonWithIcon';
 import { Grid, GridItem } from '../../components/Grid';
@@ -21,6 +22,8 @@ import { NoContentMessageCard } from './components/NoContentMessageCard';
 import { ROUTER_URLS } from '../../router/constants';
 
 export const ProcessListPage = ({ history }) => {
+  const [selectedId, setSelectedId] = useState(null);
+
   const { viewAsGrid, onToggleView } = useAppTheme();
   const { state, actions } = useProcess();
   const { processList, status } = state;
@@ -36,8 +39,27 @@ export const ProcessListPage = ({ history }) => {
     history.push(generatePath(ROUTER_URLS.PROCESSOS_FORM_ID, { id }));
   };
 
-  const confirmDelete = (id) => {
-    console.log(id);
+  const confirmDelete = () => {
+    deleteProcess(selectedId);
+    setSelectedId(null);
+  };
+
+  const renderLoadingList = () => {
+    const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
+    const numberOfProcessCardSkeleton = 8;
+    const processSkeletonList = [];
+    for (let i = 0; i < numberOfProcessCardSkeleton; i++) {
+      processSkeletonList.push(<ProcessCardSkeleton />);
+    }
+    return (
+      <Grid {...gridViewProps}>
+        {processSkeletonList.map((processCardSkeleton) => (
+          <GridItem key={process.id} sm={viewAsGrid ? 4 : null}>
+            {processCardSkeleton}
+          </GridItem>
+        ))}
+      </Grid>
+    );
   };
 
   const renderProcessList = () => {
@@ -46,7 +68,7 @@ export const ProcessListPage = ({ history }) => {
       <Grid {...gridViewProps}>
         {processList.map((process, idx) => (
           <GridItem key={`${process.id}-${idx}`} sm={viewAsGrid ? 4 : null}>
-            <ProcessCard processData={process} onDelete={confirmDelete} onEdit={(id) => goToEditProcessForm(id)} />
+            <ProcessCard processData={process} onDelete={setSelectedId} onEdit={(id) => goToEditProcessForm(id)} />
           </GridItem>
         ))}
       </Grid>
@@ -75,17 +97,19 @@ export const ProcessListPage = ({ history }) => {
           {status === STATUS.ERROR && <PageError errorMessage={state.error} />}
           {status === STATUS.COMPLETE && processList.length === 0 && <NoContentMessageCard />}
         </Section>
+        <ConfirmAlert
+          open={!!selectedId}
+          title={TEXT.ALERT_TITLE}
+          message={TEXT.ALERT_MESSAGE}
+          onConfirm={confirmDelete}
+          onCancel={() => setSelectedId(null)}
+        />
       </Container>
     </BaseLayout>
   );
 };
 
-const renderLoadingList = () => {
-  return (
-    <>
-      <ProcessCardSkeleton />
-      <ProcessCardSkeleton />
-      <ProcessCardSkeleton />
-    </>
-  );
+const TEXT = {
+  ALERT_TITLE: 'Confirmar exclusão de processo',
+  ALERT_MESSAGE: 'Você tem certeza que deseja excluir o processo selecionado?',
 };
