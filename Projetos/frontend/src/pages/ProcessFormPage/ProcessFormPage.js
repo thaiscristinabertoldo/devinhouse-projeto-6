@@ -12,12 +12,13 @@ import { processInitialValues } from './form-utils/initial-values';
 
 import { TextInput } from '../../components/TextInput';
 import { BaseLayout } from '../../layouts/BaseLayout';
-import { createProcess, getProcessById } from '../../services/api/processos-service';
+import { createProcess, getProcessById, updateProcessById } from '../../services/api/processos-service';
 import { Grid, GridItem } from '../../components/Grid';
 import { getAllAssuntos } from '../../services/api/assuntos-service';
 import { AutocompleteInput } from '../../components/AutocompleteInput';
 import { getAllInteressados } from '../../services/api/interessados-service';
 import { Section, SectionTitle } from '../../components/Section';
+import { toast } from 'react-toastify';
 
 export const ProcessFormPage = ({ history, match }) => {
   const processIdFrompath = useRef(match.params.id || undefined).current;
@@ -41,7 +42,13 @@ export const ProcessFormPage = ({ history, match }) => {
   const handleSubmit = async (values) => {
     const { cdAssunto, cdInteressado } = values;
     const dataToPersist = Object.assign({}, values, { cdAssuntoId: cdAssunto?.id, cdInteressadoId: cdInteressado?.id });
-    await createProcess(dataToPersist);
+    if (processIdFrompath) {
+      await updateProcessById(processIdFrompath, dataToPersist);
+      toast.success('Processo atualizado com sucesso!');
+    } else {
+      await createProcess(dataToPersist);
+      toast.success('Processo criado com sucesso!');
+    }
     history.goBack();
   };
 
@@ -207,7 +214,7 @@ export const ProcessFormPage = ({ history, match }) => {
                         color="primary"
                         startIcon={<SaveIcon />}
                         onClick={formProps.handleSubmit}
-                        // disabled={isSubmitting || !isValid}
+                        disabled={formProps.isSubmitting || !formProps.isValid}
                       >
                         Salvar
                       </Button>

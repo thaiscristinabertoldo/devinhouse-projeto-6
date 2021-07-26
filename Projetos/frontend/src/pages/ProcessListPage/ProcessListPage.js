@@ -9,6 +9,7 @@ import { Section } from '../../components/Section';
 import { SearchBar } from '../../components/SearchBar';
 import { AddButton } from '../../components/AddButton';
 import { Container } from '../../components/Container';
+import { ConfirmAlert } from '../../components/ConfirmAlert';
 import { BaseLayout } from '../../layouts/BaseLayout';
 import { ButtonWithIcon } from '../../components/ButtonWithIcon';
 import { Grid, GridItem } from '../../components/Grid';
@@ -19,7 +20,6 @@ import { ProcessCard } from './components/ProcessCard';
 import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
 import { NoContentMessageCard } from './components/NoContentMessageCard';
 import { ROUTER_URLS } from '../../router/constants';
-import { ConfirmAlert } from '../../components/ConfirmAlert';
 
 export const ProcessListPage = ({ history }) => {
   const [selectedId, setSelectedId] = useState(null);
