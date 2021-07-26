@@ -9,9 +9,7 @@ import { Button, Skeleton, Typography } from "@material-ui/core";
 import { BACKEND_URI } from "env";
 import { useKeycloak } from "@react-keycloak/web";
 
-export function ProcessesList() {
-  const [processes, setProcesses] = useState();
-
+export function ProcessesList({ processes, setProcesses }) {
   const [openAlert, setOpenAlert] = useState(false);
   const [openForm, setOpenForm] = useState(false);
   const [deleteProcessId, setDeleteProcessId] = useState("");
@@ -82,9 +80,10 @@ export function ProcessesList() {
   function getProcessByNumber(number) {
     instance
       .get(
-        "http://localhost:8080/backend/v1/processo/numeroprocesso?q=" + number,
+        "http://localhost:8080/backend/v1/processo/buscarpornumero/" + number,
       )
       .then((response) => {
+        console.log(response.data);
         setProcesses(response.data);
       })
       .catch(function (error) {
@@ -112,6 +111,7 @@ export function ProcessesList() {
     instance
       .get("http://localhost:8080/backend/v1/processo")
       .then(function (response) {
+        console.log(response.data);
         setProcesses(response.data);
       })
       .catch(function (error) {

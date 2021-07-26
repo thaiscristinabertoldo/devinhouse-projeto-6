@@ -17,7 +17,6 @@ import { useKeycloak } from "@react-keycloak/web";
 import {
   BACKEND_URI,
   FORM_INITIAL_VALUES,
-  PROCESS_PATH,
   STAKEHOLDER_PATH,
   SUBJECT_PATH,
   validationSchema,
@@ -61,7 +60,16 @@ export const ProcessForm = (props) => {
           initialValues: formEditingValues(editingData),
           validationSchema: validationSchema,
           onSubmit: (formData) =>
-            submitUpdatedProcess(editingData, formData, keycloak.token),
+            submitUpdatedProcess(editingData, formData, keycloak.token)
+              .then((data) => console.log(data))
+              .catch(function (error) {
+                console.log("error: ", error);
+              })
+              .finally(() => {
+                setIsEditing(false);
+                setEditingData({});
+                setOpen(false);
+              }),
         }
       : {
           initialValues: FORM_INITIAL_VALUES,

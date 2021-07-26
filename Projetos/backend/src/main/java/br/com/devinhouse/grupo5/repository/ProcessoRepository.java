@@ -18,6 +18,8 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
 	Optional<Processo> findByNuProcesso(Integer nuProcesso);
 
+	List<Processo> findAllById(Long nuProcesso);
+
 	Optional<Processo> findByNuProcesso(Long nuProcesso);
 
 	Boolean existsByNuProcesso(Long nuProcesso);

@@ -33,27 +33,22 @@ const submitNewProcess = (EditedProcess, keycloakToken) => {
 };
 
 const submitUpdatedProcess = (process, EditedProcess, keycloakToken) => {
-  axios
-    .put(
-      BACKEND_URI + PROCESS_PATH + "/id/" + process.id,
-      JSON.stringify({
-        sgOrgaoSetor: EditedProcess.sgOrgaoSetor,
-        cdAssunto: EditedProcess.cdAssunto,
-        cdInteressado: EditedProcess.cdInteressado,
-        descricao: EditedProcess.descricao,
-        nuAno: process.nuAno,
-      }),
-      {
-        headers: {
-          Authorization: "Bearer " + keycloakToken,
-          "Content-Type": CONTENT_TYPE_JSON,
-        },
+  return axios.put(
+    BACKEND_URI + PROCESS_PATH + "/id/" + process.id,
+    JSON.stringify({
+      sgOrgaoSetor: EditedProcess.sgOrgaoSetor,
+      cdAssunto: EditedProcess.cdAssunto,
+      cdInteressado: EditedProcess.cdInteressado,
+      descricao: EditedProcess.descricao,
+      nuAno: process.nuAno,
+    }),
+    {
+      headers: {
+        Authorization: "Bearer " + keycloakToken,
+        "Content-Type": CONTENT_TYPE_JSON,
       },
-    )
-    .then((data) => console.log(data))
-    .catch(function (error) {
-      console.log("error: ", error);
-    });
+    },
+  );
 };
 
 const getSubjects = (setSubjectState, keycloakToken) => {

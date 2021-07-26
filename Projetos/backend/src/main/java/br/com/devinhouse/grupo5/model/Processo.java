@@ -68,4 +68,10 @@ public class Processo {
 //		this.chaveProcesso = this.sgOrgaoSetor + " " + this.nuProcesso + "/" + this.nuAno;
 	}
 
+	public Long getNuProcesso() {
+//		if (nuProcesso == null) {
+//			nuProcesso = 0L;
+//		}
+		return this.id;
+	}
 }

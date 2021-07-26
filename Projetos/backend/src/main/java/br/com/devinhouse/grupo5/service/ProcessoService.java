@@ -75,6 +75,10 @@ public class ProcessoService {
 		return toDTO(processoRepository.findAll());
 	}
 
+	public List<ProcessoOutputDTO> pesquisarProcessosPorNumero(Long id) {
+		return toDTO(processoRepository.findAllById(id));
+	}
+
 	public ProcessoOutputDTO buscarUmProcesso(Long id) {
 		var processo = processoRepository.findById(id).orElseThrow(() -> new ProcessoNaoEncontradoException(id));
 		return toDTO(processo);
@@ -119,13 +123,13 @@ public class ProcessoService {
 				.orElseThrow(() -> new ProcessoNaoEncontradoException(id));
 		var processoAtualizado = toProcesso(processoInputDTO);
 
-		if(!processoAtualizado.getNuProcesso().equals(processoIndicado.getNuProcesso())) {
-
-			Boolean existNuProcesso = processoRepository.existsByNuProcesso(processoAtualizado.getNuProcesso());
-			if (TRUE.equals(existNuProcesso)) {
-				throw new NuProcessoJaCadastradoException();
-			}
-		}
+//		if(!processoAtualizado.getNuProcesso().equals(processoIndicado.getNuProcesso())) {
+//
+//			Boolean existNuProcesso = processoRepository.existsByNuProcesso(processoAtualizado.getNuProcesso());
+//			if (TRUE.equals(existNuProcesso)) {
+//				throw new NuProcessoJaCadastradoException();
+//			}
+//		}
 
 		InteressadoOutputDTO interessadoOut = interessadoService.buscarInteressadoPeloId(processoInputDTO.getCdInteressado());
 		if (interessadoOut != null) {

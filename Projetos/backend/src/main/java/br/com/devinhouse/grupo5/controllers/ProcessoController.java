@@ -34,6 +34,11 @@ public class ProcessoController {
     return service.buscarUmProcesso(id);
   }
 
+  @GetMapping(path = "/buscarpornumero/{id}")
+  public List<ProcessoOutputDTO> pesquisarProcessos(@PathVariable("id") Long id) {
+    return service.pesquisarProcessosPorNumero(id);
+  }
+
   @GetMapping(path = "/chaveprocesso")
   public ProcessoOutputDTO buscaUmProcessoPorChave(@RequestParam("q") String chaveProcesso) {
     return service.buscarUmProcessoPorChave(chaveProcesso);
