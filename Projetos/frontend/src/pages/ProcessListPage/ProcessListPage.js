@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { generatePath } from 'react-router';
 
 import { STATUS } from '../../reducers/process-reducer';
 import { useProcess } from '../../contexts/process-context';
@@ -17,48 +18,35 @@ import { PageError } from './components/PageError';
 import { ProcessCard } from './components/ProcessCard';
 import { ProcessCardSkeleton } from './components/ProcessCardSkeleton';
 import { NoContentMessageCard } from './components/NoContentMessageCard';
+import { ROUTER_URLS } from '../../router/constants';
 
 export const ProcessListPage = ({ history }) => {
   const { viewAsGrid, onToggleView } = useAppTheme();
   const { state, actions } = useProcess();
-  const { processList, searchContext, status } = state;
-  const { fetchProcessList, searchProcess, setSearchContext, deleteProcess } = actions;
+  const { processList, status } = state;
+  const { fetchProcessList, searchContext, searchProcess, setSearchContext, deleteProcess } = actions;
 
   useEffect(fetchProcessList, [fetchProcessList]);
 
   const goToProcessForm = () => {
-    history.push('/processos/formulario/');
+    history.push(ROUTER_URLS.PROCESSOS_FORM);
   };
 
   const goToEditProcessForm = (id) => {
-    history.push(`/processos/formulario/${id}`);
+    history.push(generatePath(ROUTER_URLS.PROCESSOS_FORM_ID, { id }));
+  };
+
+  const confirmDelete = (id) => {
+    console.log(id);
   };
 
   const renderProcessList = () => {
     const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
     return (
       <Grid {...gridViewProps}>
-        {processList.map((process) => (
-          <GridItem key={process.id} sm={viewAsGrid ? 4 : null}>
-            <ProcessCard processData={process} onDelete={deleteProcess} onEdit={(id) => goToEditProcessForm(id)} />
-          </GridItem>
-        ))}
-      </Grid>
-    );
-  };
-
-  const renderLoadingList = () => {
-    const gridViewProps = viewAsGrid ? { container: true, spacing: 1 } : {};
-    const numberOfProcessCardSkeleton = 8;
-    const processSkeletonList = [];
-    for (let i = 0; i < numberOfProcessCardSkeleton; i++) {
-      processSkeletonList.push(<ProcessCardSkeleton />);
-    }
-    return (
-      <Grid {...gridViewProps}>
-        {processSkeletonList.map((processCardSkeleton) => (
-          <GridItem key={process.id} sm={viewAsGrid ? 4 : null}>
-            {processCardSkeleton}
+        {processList.map((process, idx) => (
+          <GridItem key={`${process.id}-${idx}`} sm={viewAsGrid ? 4 : null}>
+            <ProcessCard processData={process} onDelete={confirmDelete} onEdit={(id) => goToEditProcessForm(id)} />
           </GridItem>
         ))}
       </Grid>
@@ -75,7 +63,7 @@ export const ProcessListPage = ({ history }) => {
           <AddButton onClick={goToProcessForm}>Adicionar</AddButton>
           <Section display="flex" width={null}>
             <SelectorGroup value={searchContext} onChange={setSearchContext}>
-              <Selector value={'PROCESS'} label={'Busca por Processo'} />
+              <Selector value={'PROCESS'} label={'Busca por Número do Processo'} />
               <Selector value={'SUBJECT'} label={'Busca por Assunto'} />
             </SelectorGroup>
             <ButtonWithIcon onClick={onToggleView} iconName={viewAsGrid ? 'view_list' : 'grid_view'} />
@@ -89,5 +77,15 @@ export const ProcessListPage = ({ history }) => {
         </Section>
       </Container>
     </BaseLayout>
+  );
+};
+
+const renderLoadingList = () => {
+  return (
+    <>
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+      <ProcessCardSkeleton />
+    </>
   );
 };

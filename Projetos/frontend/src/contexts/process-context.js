@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import { createContext, useCallback, useContext, useMemo, useReducer, useState } from 'react';
 import { initialState, reducer, SEARCH_BY } from '../reducers/process-reducer';
 import { deleteProcessById, getAllProcess } from '../services/api/processos-service';
 
@@ -14,39 +14,39 @@ export function useProcess() {
 
 export const ProcessProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [searchCtx, setSearchCtx] = useState(SEARCH_BY.PROCESS);
 
   const fetchProcessList = useCallback(() => {
     dispatch({ type: 'loading' });
-    setTimeout(
-      () =>
-        getAllProcess(buildSearchParams(state.searchContext))
-          .then((data) => dispatch({ type: 'loaded', payload: data }))
-          .catch((error) => dispatch({ type: 'error', payload: error?.message })),
-      2000
-    );
-  }, [state.searchTerm]);
-
-  const searchProcess = useCallback((searchTerm) => {
-    dispatch({ type: 'searchTerm', payload: searchTerm });
-    console.log(searchTerm);
-    setTimeout(() => getAllProcess({ cd_assunto_id: "", chave_processo: searchTerm }), 2000);
+    setTimeout(() => {
+      getAllProcess()
+        .then((data) => dispatch({ type: 'loaded', payload: data }))
+        .catch((error) => dispatch({ type: 'error', payload: error?.message }));
+    }, 2000);
   }, []);
+
+  const searchProcess = (searchTerm) => {
+    getAllProcess(buildSearchParams(searchTerm, searchCtx))
+      .then((data) => dispatch({ type: 'loaded', payload: data }))
+      .catch((error) => dispatch({ type: 'error', payload: error?.message }));
+  };
 
   const deleteProcess = useCallback((processId) => {
     deleteProcessById(processId)
-      .then(async () => await getAllProcess())
+      .finally(() => fetchProcessList())
       .catch((error) => dispatch({ type: 'error', payload: error?.message }));
   }, []);
 
-  const setSearchContext = useCallback((type) => {
-    dispatch({ type: 'searchContext', payload: type });
-  }, []);
+  const setSearchContext = (context) => {
+    setSearchCtx(context);
+  };
 
   const actions = useMemo(
     () => ({
       fetchProcessList,
       searchProcess,
       setSearchContext,
+      searchContext: searchCtx,
       deleteProcess,
     }),
     [fetchProcessList, searchProcess, setSearchContext, deleteProcess]
@@ -55,13 +55,12 @@ export const ProcessProvider = ({ children }) => {
   return <ProcessContext.Provider value={{ state, actions }}>{children}</ProcessContext.Provider>;
 };
 
-function buildSearchParams(context) {
-  switch (context) {
-    case SEARCH_BY.PROCESS:
-      return { chaveProcesso: context.searchTerm };
-    case SEARCH_BY.SUBJECT:
-      return { cdAssunto: context.searchTerm };
-    default:
-      return null;
+function buildSearchParams(term, context) {
+  if (context === SEARCH_BY.PROCESS) {
+    return { nuProcesso: term };
   }
+  if (context === SEARCH_BY.SUBJECT) {
+    return { assuntoDesc: term };
+  }
+  return null;
 }

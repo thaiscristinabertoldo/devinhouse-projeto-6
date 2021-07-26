@@ -4,36 +4,30 @@ import TextField from '@material-ui/core/TextField';
 
 export const AutocompleteInput = (props) => {
   const [inputValue, setInputValue] = useState();
-
-  const {
-    options = [],
-    labelProperty = 'descricao',
-    field = { name: 'noname', label: 'nolabel' },
-    form,
-    renderOption,
-  } = props;
-
-  console.log(props);
+  const { options = [], labelProperty = 'descricao', field, form, label, renderOption } = props;
 
   return (
     <Autocomplete
       options={options}
       getOptionDisabled={(option) => option['flAtivo']?.toUpperCase() === 'N'}
+      // getOptionSelected={(option, value) => option[labelProperty] === value[labelProperty]}
       getOptionLabel={(option) => option[labelProperty]}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
-      renderOption={renderOption}
+      value={form.values[field.name]}
       onChange={(e, value) => {
         form.setFieldValue(field.name, value !== null ? value : '');
       }}
+      renderOption={renderOption}
       renderInput={(params) => (
         <TextField
           {...params}
           fullWidth
           name={field.name}
-          label={props.label}
+          label={label}
+          placeholder={field.placeholder}
           variant="outlined"
           inputProps={{ ...params.inputProps, autoComplete: 'off' }}
         />
