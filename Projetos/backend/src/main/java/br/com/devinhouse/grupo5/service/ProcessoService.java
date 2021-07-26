@@ -39,6 +39,11 @@ public class ProcessoService {
 	public ProcessoOutputDTO salvarProcesso(ProcessoInputDTO processoInputDTO) {
 		var processo = toProcesso(processoInputDTO);
 
+		Boolean existNuProcesso = processoRepository.existsByNuProcesso(processo.getNuProcesso());
+		if (TRUE.equals(existNuProcesso)) {
+			throw new NuProcessoJaCadastradoException();
+		}
+
 		Boolean existChaveProcesso = processoRepository.existsByChaveProcesso(processo.getChaveProcesso());
 		if (TRUE.equals(existChaveProcesso)) {
 			throw new NuProcessoJaCadastradoException(processo.getChaveProcesso());
@@ -70,6 +75,10 @@ public class ProcessoService {
 		return toDTO(processoRepository.findAll());
 	}
 
+	public List<ProcessoOutputDTO> pesquisarProcessosPorNumero(Long id) {
+		return toDTO(processoRepository.findAllById(id));
+	}
+
 	public ProcessoOutputDTO buscarUmProcesso(Long id) {
 		var processo = processoRepository.findById(id).orElseThrow(() -> new ProcessoNaoEncontradoException(id));
 		return toDTO(processo);
@@ -95,25 +104,35 @@ public class ProcessoService {
 		return toDTO(processos);
 	}
 
+	public ProcessoOutputDTO buscarUmProcessoPorNumero(Long numeroProcesso) {
+		var processo = processoRepository.findByNuProcesso(numeroProcesso)
+				.orElseThrow(() -> new ProcessoNaoEncontradoException(numeroProcesso));
+		return toDTO(processo);
+	}
+
+
+	public List<ProcessoOutputDTO> buscarUmProcessoPorCdAssuntoDescrisao(String cdAssunto) {
+		var assunto = modelMapper.map(assuntoService.buscarAssuntoPorDescrisao(cdAssunto), Assunto.class);
+		List<Processo> processos = processoRepository.findByCdAssunto(assunto);
+
+		return toDTO(processos);
+	}
+
 	public void atualizarProcesso(ProcessoInputDTO processoInputDTO, Long id) {
 		var processoIndicado = processoRepository.findById(id)
 				.orElseThrow(() -> new ProcessoNaoEncontradoException(id));
 		var processoAtualizado = toProcesso(processoInputDTO);
 
-
-		if(!processoAtualizado.getChaveProcesso().equals(processoIndicado.getChaveProcesso())) {
-
-			Boolean existChaveProcesso = processoRepository.existsByChaveProcesso(processoAtualizado.getChaveProcesso());
-			if (TRUE.equals(existChaveProcesso)) {
-				throw new NuProcessoJaCadastradoException(processoAtualizado.getChaveProcesso());
-			}
-		}
+//		if(!processoAtualizado.getNuProcesso().equals(processoIndicado.getNuProcesso())) {
+//
+//			Boolean existNuProcesso = processoRepository.existsByNuProcesso(processoAtualizado.getNuProcesso());
+//			if (TRUE.equals(existNuProcesso)) {
+//				throw new NuProcessoJaCadastradoException();
+//			}
+//		}
 
 		InteressadoOutputDTO interessadoOut = interessadoService.buscarInteressadoPeloId(processoInputDTO.getCdInteressado());
 		if (interessadoOut != null) {
-			if (FALSE.equals(interessadoOut.getFlAtivo())) {
-				throw new InteressadoInativoException(interessadoOut.getId());
-			}
 			processoAtualizado.setCdInteressado(modelMapper.map(interessadoOut, Interessado.class));
 		} else {
 			throw new InteressadoNaoEncontradoException();
@@ -121,9 +140,6 @@ public class ProcessoService {
 
 		AssuntoOutputDTO assuntoOut = assuntoService.buscarAssuntoPorId(processoInputDTO.getCdAssunto());
 		if (assuntoOut != null) {
-			if (FALSE.equals(assuntoOut.getFlAtivo())) {
-				throw new AssuntoInativoException(assuntoOut.getId());
-			}
 			processoAtualizado.setCdAssunto(modelMapper.map(assuntoOut, Assunto.class));
 		} else {
 			throw new AssuntoNaoEncontradoException();

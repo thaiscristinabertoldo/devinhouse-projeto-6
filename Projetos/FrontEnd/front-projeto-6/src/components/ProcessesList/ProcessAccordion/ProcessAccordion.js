@@ -17,7 +17,11 @@ export const ProcessAccordion = ({
     <>
       <Styled.Accordion>
         <AccordionSummary>
-          <Styled.Typography className="keyProcess" color="primary" variant="h6">
+          <Styled.Typography
+            className="keyProcess"
+            color="primary"
+            variant="h6"
+          >
             {process.chaveProcesso}
           </Styled.Typography>
         </AccordionSummary>
@@ -27,7 +31,11 @@ export const ProcessAccordion = ({
             description={process.descricao}
           />
           <Divider />
-          <Field className="matter" title="Assunto:" description={process.cdAssunto.descricao} />
+          <Field
+            className="matter"
+            title="Assunto:"
+            description={process.cdAssunto.descricao}
+          />
           <Divider />
           <Field
             title="Interessado:"
@@ -44,7 +52,7 @@ export const ProcessAccordion = ({
             <Button
               size="large"
               variant="outlined"
-              onClick={() => toggleIsEditing(process.id)}
+              onClick={() => toggleIsEditing(process)}
             >
               Editar
             </Button>

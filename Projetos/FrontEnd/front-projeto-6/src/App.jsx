@@ -8,8 +8,10 @@ import {
 import { ThemeProvider } from "theme";
 import { KeycloakProvider } from "keycloak";
 import { Header, ProcessesList } from "components";
+import { useState } from "react";
 
 function App() {
+  const [processes, setProcesses] = useState();
   return (
     <Router>
       <Switch>
@@ -27,7 +29,10 @@ function App() {
           <KeycloakProvider>
             <Route>
               <Header />
-              <ProcessesList />
+              <ProcessesList
+                processes={processes}
+                setProcesses={setProcesses}
+              />
             </Route>
           </KeycloakProvider>
         </ThemeProvider>

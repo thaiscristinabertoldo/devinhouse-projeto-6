@@ -20,6 +20,9 @@ public class Processo {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@NotNull
+	@Column
+	private Long nuProcesso;
+	@NotNull
 	@Column(length = 4)
 	private String sgOrgaoSetor;
 	@NotNull
@@ -40,6 +43,20 @@ public class Processo {
 	@ManyToOne
 	private Interessado cdInteressado;
 
+	@PrePersist
+	public void validaCamposAutoGerados() {
+		if (nuProcesso == null) {
+			nuProcesso = 0L;
+		}
+		chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+	}
+
+	@PostPersist
+	public void geraVaLoresCamposAutoGerados() {
+		nuProcesso = this.id;
+		chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+	}
+
 	@Builder(toBuilder = true)
 	public Processo(String sgOrgaoSetor, String nuAno, String descricao, Assunto cdAssunto,
 					Interessado cdInteressado) {
@@ -48,6 +65,13 @@ public class Processo {
 		this.descricao = descricao;
 		this.cdAssunto = cdAssunto;
 		this.cdInteressado = cdInteressado;
-		this.chaveProcesso = this.sgOrgaoSetor + " " + this.id + "/" + this.nuAno;
+//		this.chaveProcesso = this.sgOrgaoSetor + " " + this.nuProcesso + "/" + this.nuAno;
+	}
+
+	public Long getNuProcesso() {
+//		if (nuProcesso == null) {
+//			nuProcesso = 0L;
+//		}
+		return this.id;
 	}
 }

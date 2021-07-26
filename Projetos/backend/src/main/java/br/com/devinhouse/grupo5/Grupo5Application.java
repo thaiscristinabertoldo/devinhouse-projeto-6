@@ -35,5 +35,5 @@ public class Grupo5Application {
 	loggingFilter.setMaxPayloadLength(64000);
 	return loggingFilter;
     }
-    
+
 }

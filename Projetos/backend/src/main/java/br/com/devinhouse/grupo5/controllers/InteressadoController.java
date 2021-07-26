@@ -1,6 +1,5 @@
 package br.com.devinhouse.grupo5.controllers;
 
-import br.com.devinhouse.grupo5.dto.AssuntoOutputDTO;
 import br.com.devinhouse.grupo5.dto.InteressadoInputDTO;
 import br.com.devinhouse.grupo5.dto.InteressadoOutputDTO;
 import br.com.devinhouse.grupo5.service.InteressadoService;
@@ -20,7 +19,7 @@ public class InteressadoController {
 
     @ResponseStatus(value = CREATED)
     @PostMapping
-    public InteressadoOutputDTO cadastrarInteressado(@RequestBody InteressadoInputDTO novoInteressado){
+    public InteressadoOutputDTO cadastrarAssunto(@RequestBody InteressadoInputDTO novoInteressado){
         return interessadoService.cadastrarInteressado(novoInteressado);
     }
 

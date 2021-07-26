@@ -12,6 +12,7 @@ import lombok.*;
 public class ProcessoOutputDTO {
 
   private Long id;
+  private Long nuProcesso;
   private String sgOrgaoSetor;
   private String nuAno;
   private String chaveProcesso;
