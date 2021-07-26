@@ -89,18 +89,38 @@ export const ProcessFormPage = ({ history, match }) => {
             return (
               <Form>
                 {!!processIdFrompath && renderProcessMeta()}
-                {/*<pre>{JSON.stringify(formProps.values, 0, 2)}</pre>*/}
+                {/*<pre>{JSON.stringify(formProps.errors, 0, 2)}</pre>*/}
                 <FormSection>
                   <SectionTitle>Dados do processo</SectionTitle>
                   <Grid container spacing={1}>
                     <GridItem sm={6}>
-                      <Field fullWidth name="sgOrgaoSetor" label="Órgão/Setor" as={TextInput} />
+                      <Field
+                        fullWidth
+                        name="sgOrgaoSetor"
+                        label="Órgão/Setor"
+                        as={TextInput}
+                        {...buildErrorProps('sgOrgaoSetor', formProps)}
+                        inputProps={{ maxLength: 4 }}
+                      />
                     </GridItem>
                     <GridItem sm={6}>
-                      <Field name="nuAno" label="Ano do Processo" as={TextInput} />
+                      <Field
+                        name="nuAno"
+                        label="Ano do Processo"
+                        type="number"
+                        as={TextInput}
+                        {...buildErrorProps('nuAno', formProps)}
+                      />
                     </GridItem>
                     <GridItem>
-                      <Field name="descricao" label="Descrição" multiline={true} rows={4} as={TextInput} />
+                      <Field
+                        name="descricao"
+                        label="Descrição"
+                        multiline={true}
+                        rows={4}
+                        as={TextInput}
+                        {...buildErrorProps('descricao', formProps)}
+                      />
                     </GridItem>
                   </Grid>
                 </FormSection>
@@ -114,6 +134,7 @@ export const ProcessFormPage = ({ history, match }) => {
                         name="cdAssunto"
                         component={AutocompleteInput}
                         options={assuntos}
+                        {...buildErrorProps('cdAssunto', formProps)}
                         renderOption={(option) => (
                           <>
                             {option.id} - {option.descricao} - {option.dtCadastro}
@@ -122,7 +143,7 @@ export const ProcessFormPage = ({ history, match }) => {
                       />
                     </GridItem>
                     <GridItem sm={4}>
-                      <Field name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled="true" as={TextInput} />
+                      <Field name="cdAssunto.dtCadastro" label="Data do Cadastro" disabled as={TextInput} />
                     </GridItem>
                   </Grid>
                 </FormSection>
@@ -138,6 +159,7 @@ export const ProcessFormPage = ({ history, match }) => {
                         component={AutocompleteInput}
                         options={interessados}
                         labelProperty="nuIdentificacao"
+                        {...buildErrorProps('cdInteressado', formProps)}
                         renderOption={(option) => (
                           <>
                             {option.nuIdentificacao} - {option.nmInteressado}
@@ -146,20 +168,10 @@ export const ProcessFormPage = ({ history, match }) => {
                       />
                     </GridItem>
                     <GridItem sm={4}>
-                      <Field
-                        name="cdInteressado.dtNascimento"
-                        label="Data de Nascimento"
-                        disabled="true"
-                        as={TextInput}
-                      />
+                      <Field name="cdInteressado.dtNascimento" label="Data de Nascimento" disabled as={TextInput} />
                     </GridItem>
                     <GridItem>
-                      <Field
-                        name="cdInteressado.nmInteressado"
-                        label="Nome do Interessado"
-                        disabled="true"
-                        as={TextInput}
-                      />
+                      <Field name="cdInteressado.nmInteressado" label="Nome do Interessado" disabled as={TextInput} />
                     </GridItem>
                   </Grid>
                 </FormSection>
@@ -216,3 +228,7 @@ const FormSection = ({ children, ...rest }) => (
     {children}
   </Section>
 );
+
+const buildErrorProps = (field, formProps) => {
+  return { error: formProps.errors[field] && formProps.touched[field], helperText: formProps.errors[field] };
+};

@@ -36,7 +36,6 @@ export const ProcessListPage = ({ history }) => {
   };
 
   const goToEditProcessForm = (id) => {
-    console.log({ id });
     history.push(generatePath(ROUTER_URLS.PROCESSOS_FORM_ID, { id }));
   };
 

@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 export const AutocompleteInput = (props) => {
   const [inputValue, setInputValue] = useState();
-  const { options = [], labelProperty = 'descricao', field, form, label, renderOption } = props;
+  const { options = [], labelProperty = 'descricao', field, form, label, renderOption, error, helperText } = props;
 
   return (
     <Autocomplete
@@ -25,6 +25,8 @@ export const AutocompleteInput = (props) => {
         <TextField
           {...params}
           fullWidth
+          error={error}
+          helperText={helperText}
           name={field.name}
           label={label}
           placeholder={field.placeholder}
