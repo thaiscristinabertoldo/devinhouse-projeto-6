@@ -16,7 +16,7 @@ export function useAppTheme() {
 
 export const AppThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [viewAsGrid, setViewAsGrid] = useState(true);
+  const [viewAsGrid, setViewAsGrid] = useState(false);
   const [theme, setTheme] = useState(getTheme(darkMode));
 
   const onToggleTheme = () => {
