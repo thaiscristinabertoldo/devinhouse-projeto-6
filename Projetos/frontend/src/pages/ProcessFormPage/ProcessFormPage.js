@@ -61,7 +61,8 @@ export const ProcessFormPage = ({ history, match }) => {
             inputProps={{ readOnly: true }}
             name="chaveProcesso"
             label="Chave do Processo"
-            variant={'standard'}
+            variant={'outlined'}
+            disabled
             as={TextInput}
           />
         </GridItem>
@@ -71,7 +72,8 @@ export const ProcessFormPage = ({ history, match }) => {
             inputProps={{ readOnly: true }}
             name="nuProcesso"
             label="Número do Processo"
-            variant={'standard'}
+            variant={'outlined'}
+            disabled
             as={TextInput}
           />
         </GridItem>
